@@ -111,12 +111,17 @@ describe('reading comprehension', () => {
     }
   });
 
-  it('every lesson has a comprehension exercise tied to its reading', () => {
+  it('follows every reading passage with an adjacent comprehension exercise', () => {
     for (const l of lessons) {
-      const hasCompre = l.blocks.some(
-        (b) => b.type === 'exercise' && b.exercise.title.toLowerCase().startsWith('compréhension'),
-      );
-      expect(hasCompre, `lesson ${l.id}`).toBe(true);
+      l.blocks.forEach((b, i) => {
+        if (b.type !== 'reading') return;
+        const next = l.blocks[i + 1];
+        expect(
+          next?.type === 'exercise' &&
+            next.exercise.title.toLowerCase().startsWith('compréhension'),
+          `lesson ${l.id}: reading "${b.title}" must be followed by a comprehension exercise`,
+        ).toBe(true);
+      });
     }
   });
 });

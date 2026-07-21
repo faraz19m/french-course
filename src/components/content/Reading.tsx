@@ -24,12 +24,22 @@ export function Reading({ title, paragraphs }: { title: string; paragraphs: stri
       </p>
       {paragraphs.map((para, pi) => (
         <p className="reading-p" key={pi}>
+          {/* split() with a single capturing group interleaves separators and
+              matches, so word tokens always land at odd indices. */}
           {para.split(WORD_RE).map((token, ti) =>
-            WORD_RE.test(token) ? (
+            ti % 2 === 1 ? (
               <span
                 key={ti}
                 className="tword"
+                role="button"
+                tabIndex={0}
                 onClick={(e) => translateAt(token, e.currentTarget.getBoundingClientRect())}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    translateAt(token, e.currentTarget.getBoundingClientRect());
+                  }
+                }}
               >
                 {token}
               </span>

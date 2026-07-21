@@ -687,6 +687,11 @@ input.fill.wrong {
   background: rgba(224, 163, 62, 0.22);
   box-shadow: 0 1px 0 var(--ochre-dk);
 }
+.tword:focus-visible {
+  outline: 2px solid var(--ochre-dk);
+  outline-offset: 1px;
+  background: rgba(224, 163, 62, 0.22);
+}
 
 /* ---------- Translation popover ---------- */
 .tpop {

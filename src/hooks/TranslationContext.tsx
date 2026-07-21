@@ -29,20 +29,26 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<PopoverState | null>(null);
   // Guards against a slow request overwriting a newer one.
   const requestId = useRef(0);
+  // Lets us actually cancel the in-flight fetch (not just ignore its result).
+  const abort = useRef<AbortController | null>(null);
 
   const translateAt = useCallback((text: string, anchor: DOMRect) => {
     const clean = text.trim();
     if (!clean) return;
+    abort.current?.abort(); // supersede any in-flight lookup
+    const ctrl = new AbortController();
+    abort.current = ctrl;
     const id = ++requestId.current;
     setState({ source: clean, anchor, status: 'loading', result: '' });
-    translate(clean)
+    translate(clean, { signal: ctrl.signal })
       .then((result) => {
         if (requestId.current === id) {
           setState((s) => (s ? { ...s, status: 'done', result } : s));
         }
       })
       .catch(() => {
-        if (requestId.current === id) {
+        // Ignore aborts (superseded or closed); only real failures show an error.
+        if (!ctrl.signal.aborted && requestId.current === id) {
           setState((s) => (s ? { ...s, status: 'error', result: '' } : s));
         }
       });
@@ -50,6 +56,8 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
 
   const close = useCallback(() => {
     requestId.current++; // invalidate any in-flight request
+    abort.current?.abort();
+    abort.current = null;
     setState(null);
   }, []);
 
@@ -66,7 +74,15 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
       const text = selection.toString().trim();
       if (!text || text.length > MAX_SELECTION) return;
 
-      const rect = selection.getRangeAt(0).getBoundingClientRect();
+      const range = selection.getRangeAt(0);
+      // A selection wholly inside one clickable word (e.g. from a double-click)
+      // is already handled by that word's onClick — skip it so we don't fire and
+      // anchor twice for a single gesture.
+      const container = range.commonAncestorContainer;
+      const el = container instanceof Element ? container : container.parentElement;
+      if (el?.closest('.tword')) return;
+
+      const rect = range.getBoundingClientRect();
       if (rect.width === 0 && rect.height === 0) return;
       translateAt(text, rect);
     };

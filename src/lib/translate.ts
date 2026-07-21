@@ -11,8 +11,12 @@
  * and we stay well under any rate limit.
  */
 
+import { readJSON, writeJSON } from './storage';
+
 const LS_KEY = 'le-carnet:translations:v1';
 const MAX_CACHED = 800;
+/** Fail a stalled request rather than leave the popover spinning forever. */
+const REQUEST_TIMEOUT_MS = 8000;
 
 const memCache = new Map<string, string>();
 
@@ -21,60 +25,95 @@ function cacheKey(text: string, from: string, to: string): string {
 }
 
 function loadLsCache(): Record<string, string> {
-  if (typeof localStorage === 'undefined') return {};
-  try {
-    return JSON.parse(localStorage.getItem(LS_KEY) || '{}') as Record<string, string>;
-  } catch {
-    return {};
-  }
+  return readJSON<Record<string, string>>(LS_KEY, {});
 }
 
 function persist(key: string, value: string): void {
-  if (typeof localStorage === 'undefined') return;
+  // Re-read the freshest cache so concurrent lookups don't clobber each other.
+  const cache = loadLsCache();
+  cache[key] = value;
+  // Keep the cache bounded: once it overflows, drop entries in insertion order
+  // (first-written first — not true LRU, but enough to cap localStorage growth).
+  const keys = Object.keys(cache);
+  if (keys.length > MAX_CACHED) {
+    for (const k of keys.slice(0, keys.length - MAX_CACHED)) delete cache[k];
+  }
+  writeJSON(LS_KEY, cache);
+}
+
+/** fetch() with a hard timeout, honouring an optional caller abort signal. */
+async function fetchWithTimeout(url: string, signal?: AbortSignal): Promise<Response> {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), REQUEST_TIMEOUT_MS);
+  const onAbort = () => ctrl.abort();
+  if (signal) {
+    if (signal.aborted) ctrl.abort();
+    else signal.addEventListener('abort', onAbort);
+  }
   try {
-    const cache = loadLsCache();
-    cache[key] = value;
-    // Keep the cache bounded: drop the oldest entries once it grows too large.
-    const keys = Object.keys(cache);
-    if (keys.length > MAX_CACHED) {
-      for (const k of keys.slice(0, keys.length - MAX_CACHED)) delete cache[k];
-    }
-    localStorage.setItem(LS_KEY, JSON.stringify(cache));
-  } catch {
-    // Storage full/blocked — in-memory cache still works for this session.
+    return await fetch(url, { signal: ctrl.signal });
+  } finally {
+    clearTimeout(timer);
+    signal?.removeEventListener('abort', onAbort);
   }
 }
 
-async function viaGoogle(text: string, from: string, to: string): Promise<string> {
+async function viaGoogle(text: string, from: string, to: string, signal?: AbortSignal): Promise<string> {
   const url =
     'https://translate.googleapis.com/translate_a/single?client=gtx' +
     `&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`;
-  const res = await fetch(url);
+  const res = await fetchWithTimeout(url, signal);
   if (!res.ok) throw new Error(`google ${res.status}`);
   // Shape: [[[translatedChunk, originalChunk, ...], ...], ...]
   const data = (await res.json()) as [Array<[string, string]>, ...unknown[]];
   const segments = data[0];
   if (!Array.isArray(segments)) throw new Error('google: unexpected shape');
-  return segments.map((seg) => seg[0]).join('').trim();
+  // Any malformed segment means we don't trust the response — throw so we fall
+  // back to MyMemory rather than silently join a truncated translation.
+  const parts: string[] = [];
+  for (const seg of segments) {
+    if (!Array.isArray(seg) || typeof seg[0] !== 'string') throw new Error('google: bad segment');
+    parts.push(seg[0]);
+  }
+  const out = parts.join('').trim();
+  if (!out) throw new Error('google: empty');
+  return out;
 }
 
-async function viaMyMemory(text: string, from: string, to: string): Promise<string> {
+async function viaMyMemory(text: string, from: string, to: string, signal?: AbortSignal): Promise<string> {
   const url =
     'https://api.mymemory.translated.net/get' +
     `?q=${encodeURIComponent(text)}&langpair=${from}|${to}`;
-  const res = await fetch(url);
+  const res = await fetchWithTimeout(url, signal);
   if (!res.ok) throw new Error(`mymemory ${res.status}`);
-  const data = (await res.json()) as { responseData?: { translatedText?: string } };
-  const out = data.responseData?.translatedText;
+  const data = (await res.json()) as {
+    responseStatus?: number | string;
+    responseData?: { translatedText?: string };
+  };
+  // On quota/error MyMemory replies HTTP 200 but puts a warning string in
+  // translatedText and a non-200 responseStatus — reject those so the warning
+  // never gets shown or cached as if it were a translation.
+  const status = Number(data.responseStatus);
+  if (status && status !== 200) throw new Error(`mymemory status ${status}`);
+  const out = data.responseData?.translatedText?.trim();
   if (!out) throw new Error('mymemory: empty');
-  return out.trim();
+  return out;
+}
+
+interface TranslateOptions {
+  from?: string;
+  to?: string;
+  /** Aborts the in-flight request (e.g. when the popover closes). */
+  signal?: AbortSignal;
 }
 
 /**
- * Translates `text` from `from` to `to` (defaults French → English). Throws only
- * if every provider fails; callers should surface a friendly "unavailable" state.
+ * Translates `text` (defaults French → English). Throws if every provider fails
+ * or the request is aborted; callers should surface a friendly "unavailable"
+ * state. Only non-empty results are cached, so a transient blank never sticks.
  */
-export async function translate(text: string, from = 'fr', to = 'en'): Promise<string> {
+export async function translate(text: string, opts: TranslateOptions = {}): Promise<string> {
+  const { from = 'fr', to = 'en', signal } = opts;
   const clean = text.trim();
   if (!clean) return '';
 
@@ -90,12 +129,14 @@ export async function translate(text: string, from = 'fr', to = 'en'): Promise<s
 
   let result: string;
   try {
-    result = await viaGoogle(clean, from, to);
+    result = await viaGoogle(clean, from, to, signal);
   } catch {
-    result = await viaMyMemory(clean, from, to);
+    result = await viaMyMemory(clean, from, to, signal);
   }
 
-  memCache.set(key, result);
-  persist(key, result);
+  if (result) {
+    memCache.set(key, result);
+    persist(key, result);
+  }
   return result;
 }
