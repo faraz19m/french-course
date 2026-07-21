@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Carnet — French A1 Tutor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Public+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate:#1B3A3A; --slate-2:#24504f; --cream:#F5F1E6; --cream-2:#EAE3D2;
+    --ochre:#E0A33E; --ochre-dk:#b9812a; --brick:#C15B3E; --sage:#7A9B76;
+    --ink:#20302f; --muted:#5d6f6d; --line:#d8cfba;
+    --shadow:0 2px 0 rgba(27,58,58,.08),0 12px 30px -12px rgba(27,58,58,.35);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--cream);color:var(--ink);
+    font-family:'Public Sans',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .mono{font-family:'JetBrains Mono',monospace}
+
+  /* ---------- Layout ---------- */
+  .wrap{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:880px){.wrap{grid-template-columns:1fr}}
+
+  /* ---------- Spine / carnet ---------- */
+  .spine{background:var(--slate);color:var(--cream);padding:28px 22px;position:sticky;top:0;height:100vh;overflow-y:auto}
+  @media(max-width:880px){.spine{position:static;height:auto}}
+  .brand{font-family:'Fraunces',serif;font-weight:900;font-size:26px;line-height:1.05;letter-spacing:-.5px}
+  .brand em{color:var(--ochre);font-style:normal}
+  .brand-sub{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#9db8b6;margin-top:6px}
+  .progress-cap{margin:22px 0 10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#9db8b6}
+  .prog-bar{height:8px;background:rgba(255,255,255,.12);border-radius:20px;overflow:hidden;margin-bottom:6px}
+  .prog-fill{height:100%;background:var(--ochre);width:0;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+  .prog-num{font-size:12px;color:#9db8b6}
+  nav{margin-top:20px;display:flex;flex-direction:column;gap:2px}
+  .nav-item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:9px;cursor:pointer;
+    color:#cfe0de;font-size:14px;border:none;background:none;text-align:left;width:100%;transition:.15s}
+  .nav-item:hover{background:rgba(255,255,255,.06)}
+  .nav-item.active{background:var(--slate-2);color:#fff}
+  .nav-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid #557370;display:grid;place-items:center;
+    font-size:11px;font-weight:700;flex:none;font-family:'JetBrains Mono',monospace}
+  .nav-item.done .nav-dot{background:var(--sage);border-color:var(--sage);color:var(--slate)}
+  .nav-item.active .nav-dot{border-color:var(--ochre);color:var(--ochre)}
+  .nav-item.done.active .nav-dot{color:var(--slate)}
+  .nav-label{flex:1}
+  .nav-fr{display:block;font-family:'Fraunces',serif;font-weight:600}
+  .nav-en{display:block;font-size:11px;color:#8fa8a6}
+
+  /* ---------- Main ---------- */
+  main{padding:44px 56px 90px;max-width:900px}
+  @media(max-width:880px){main{padding:30px 22px 70px}}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ochre-dk)}
+  h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(30px,5vw,46px);line-height:1.02;margin:6px 0 4px;letter-spacing:-1px}
+  h1 .en{display:block;font-size:16px;font-weight:400;color:var(--muted);font-family:'Public Sans';letter-spacing:0;margin-top:8px}
+  h2{font-family:'Fraunces',serif;font-weight:600;font-size:24px;margin:38px 0 4px;display:flex;align-items:baseline;gap:10px}
+  h2 .n{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ochre-dk);font-weight:600}
+  h3{font-family:'Fraunces',serif;font-weight:600;font-size:18px;margin:24px 0 8px;color:var(--slate)}
+  p{margin:8px 0}
+  .lede{font-size:17px;color:var(--muted);max-width:60ch}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;box-shadow:var(--shadow)}
+  .note{background:var(--cream-2);border-left:3px solid var(--ochre);padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0;font-size:14px}
+  .note b{color:var(--slate)}
+
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:8px 12px;text-align:left}
+  th{background:var(--slate);color:var(--cream);font-weight:600;font-family:'Fraunces',serif}
+  tr:nth-child(even) td{background:#faf8f1}
+  td.fr{font-weight:600;color:var(--slate)}
+  td.ph{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:13px}
+
+  .vocab{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin:12px 0}
+  .vchip{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+  .vchip .w{font-family:'Fraunces',serif;font-weight:600;color:var(--slate)}
+  .vchip .p{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ochre-dk)}
+  .vchip .e{font-size:13px;color:var(--muted)}
+
+  /* ---------- Exercises ---------- */
+  .ex{background:var(--cream-2);border:1px dashed var(--ochre-dk);border-radius:14px;padding:20px 22px;margin:20px 0}
+  .ex-head{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .ex-badge{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--ochre);color:var(--slate);padding:3px 9px;border-radius:20px;font-weight:600}
+  .ex-title{font-family:'Fraunces',serif;font-weight:600;font-size:17px}
+  .q{margin:14px 0;padding-bottom:14px;border-bottom:1px solid var(--line)}
+  .q:last-of-type{border-bottom:none}
+  .q-text{font-size:15px;margin-bottom:8px}
+  .q-text .blank{display:inline-block;min-width:70px;border-bottom:2px solid var(--ochre-dk);text-align:center}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .opt{border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:7px 15px;cursor:pointer;font-size:14px;
+    font-family:'Public Sans';transition:.12s}
+  .opt:hover{border-color:var(--ochre-dk)}
+  .opt.sel{border-color:var(--slate);background:var(--slate);color:#fff}
+  .opt.correct{border-color:var(--sage);background:var(--sage);color:#fff}
+  .opt.wrong{border-color:var(--brick);background:var(--brick);color:#fff}
+  input.fill{font-family:'Public Sans';font-size:14px;padding:7px 12px;border:1.5px solid var(--line);border-radius:9px;width:180px;background:#fff}
+  input.fill:focus{outline:none;border-color:var(--ochre-dk)}
+  input.fill.correct{border-color:var(--sage);background:#eef3ed}
+  input.fill.wrong{border-color:var(--brick);background:#f8ece8}
+  .fb{font-size:13px;margin-top:6px;min-height:18px;font-weight:500}
+  .fb.ok{color:var(--sage)}
+  .fb.no{color:var(--brick)}
+  .btn{font-family:'Public Sans';font-weight:700;font-size:14px;border:none;border-radius:10px;padding:10px 20px;cursor:pointer;transition:.15s}
+  .btn-check{background:var(--slate);color:var(--cream)}
+  .btn-check:hover{background:var(--slate-2)}
+  .ex-score{margin-top:14px;font-family:'Fraunces',serif;font-weight:600;font-size:15px;display:none}
+  .ex-score.show{display:block}
+
+  .plan{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:18px 0}
+  .plan-row{display:grid;grid-template-columns:74px 1fr;border-bottom:1px solid var(--line)}
+  .plan-row:last-child{border-bottom:none}
+  .plan-time{background:var(--slate);color:var(--cream);font-family:'JetBrains Mono',monospace;font-size:13px;
+    padding:14px 12px;display:flex;align-items:center;justify-content:center;text-align:center}
+  .plan-body{padding:12px 18px}
+  .plan-body b{color:var(--slate);font-family:'Fraunces',serif}
+
+  .done-btn{margin-top:34px;background:var(--sage);color:#fff;font-weight:700;border:none;border-radius:12px;
+    padding:14px 26px;font-size:15px;cursor:pointer;font-family:'Public Sans';transition:.15s}
+  .done-btn:hover{filter:brightness(1.05)}
+  .done-btn.is-done{background:var(--cream-2);color:var(--muted)}
+
+  .footer-nav{display:flex;justify-content:space-between;margin-top:40px;gap:12px}
+  .fbtn{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 18px;cursor:pointer;font-size:14px;
+    font-family:'Fraunces',serif;font-weight:600;color:var(--slate);transition:.15s}
+  .fbtn:hover{border-color:var(--ochre-dk)}
+  .fbtn:disabled{opacity:.35;cursor:default}
+
+  .hero-card{background:linear-gradient(135deg,var(--slate),var(--slate-2));color:var(--cream);border-radius:18px;padding:30px 32px;margin:22px 0}
+  .hero-card h3{color:var(--ochre);margin-top:0}
+  .hero-card ul{margin:8px 0;padding-left:20px}
+  .hero-card li{margin:5px 0}
+  .pill{display:inline-block;background:rgba(224,163,62,.18);color:var(--ochre);border-radius:20px;padding:3px 12px;font-size:12px;
+    font-family:'JetBrains Mono',monospace;margin:3px 5px 3px 0}
+  ::selection{background:var(--ochre);color:var(--slate)}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+
+<script type="text/babel">
+const {useState} = React;
+
+/* ============ EXERCISE COMPONENTS ============ */
+function MCQ({items}){
+  const [sel,setSel]=useState({});
+  const [checked,setChecked]=useState(false);
+  const score=items.filter((it,i)=>sel[i]===it.a).length;
+  return (
+    <div>
+      {items.map((it,i)=>(
+        <div className="q" key={i}>
+          <div className="q-text" dangerouslySetInnerHTML={{__html:(i+1)+". "+it.q}}/>
+          <div className="opts">
+            {it.o.map(op=>{
+              let cls="opt";
+              if(checked){ if(op===it.a)cls+=" correct"; else if(sel[i]===op)cls+=" wrong"; }
+              else if(sel[i]===op)cls+=" sel";
+              return <button className={cls} key={op} disabled={checked}
+                onClick={()=>setSel({...sel,[i]:op})}>{op}</button>;
+            })}
+          </div>
+          {checked && sel[i]!==it.a && <div className="fb no">→ {it.a}. {it.why||""}</div>}
+        </div>
+      ))}
+      {!checked
+        ? <button className="btn btn-check" onClick={()=>setChecked(true)}>Check answers</button>
+        : <button className="btn btn-check" onClick={()=>{setChecked(false);setSel({});}}>Try again</button>}
+      <div className={"ex-score "+(checked?"show":"")}>Score : {score} / {items.length} {score===items.length?"— Parfait !":""}</div>
+    </div>
+  );
+}
+
+function Fill({items}){
+  const [val,setVal]=useState({});
+  const [checked,setChecked]=useState(false);
+  const norm=s=>(s||"").trim().toLowerCase().replace(/\s+/g," ");
+  const ok=(i)=>items[i].a.map(norm).includes(norm(val[i]));
+  const score=items.filter((_,i)=>ok(i)).length;
+  return (
+    <div>
+      {items.map((it,i)=>{
+        const parts=it.q.split("___");
+        let cls="fill";
+        if(checked)cls+=ok(i)?" correct":" wrong";
+        return (
+          <div className="q" key={i}>
+            <div className="q-text">
+              {i+1}. {parts[0]}
+              <input className={cls} value={val[i]||""} disabled={checked}
+                onChange={e=>setVal({...val,[i]:e.target.value})}
+                placeholder="…"/>
+              {parts[1]}
+            </div>
+            {checked && !ok(i) && <div className="fb no">→ {it.a[0]}</div>}
+            {checked && ok(i) && <div className="fb ok">✓</div>}
+          </div>
+        );
+      })}
+      {!checked
+        ? <button className="btn btn-check" onClick={()=>setChecked(true)}>Check answers</button>
+        : <button className="btn btn-check" onClick={()=>{setChecked(false);setVal({});}}>Try again</button>}
+      <div className={"ex-score "+(checked?"show":"")}>Score : {score} / {items.length} {score===items.length?"— Excellent !":""}</div>
+    </div>
+  );
+}
+
+function Exercise({title,children}){
+  return (
+    <div className="ex">
+      <div className="ex-head"><span className="ex-badge">Exercice</span><span className="ex-title">{title}</span></div>
+      {children}
+    </div>
+  );
+}
+
+/* ============ REUSABLE CONTENT BITS ============ */
+const Tab=({head,rows})=>(
+  <table><thead><tr>{head.map(h=><th key={h}>{h}</th>)}</tr></thead>
+  <tbody>{rows.map((r,i)=><tr key={i}>{r.map((c,j)=><td key={j} className={j===0?"fr":""}>{c}</td>)}</tr>)}</tbody></table>
+);
+const Vocab=({items})=>(
+  <div className="vocab">{items.map((v,i)=>(
+    <div className="vchip" key={i}><span className="w">{v[0]}</span> <span className="p">{v[1]}</span><br/><span className="e">{v[2]}</span></div>
+  ))}</div>
+);
+
+/* ============ LESSONS ============ */
+const LESSONS = [
+  {fr:"Bonjour !",en:"Greetings & introductions", body:()=>(<>
+    <div className="hero-card">
+      <h3>What you'll master this hour</h3>
+      <ul>
+        <li>Greeting people formally and informally</li>
+        <li>The subject pronouns (<i>je, tu, vous…</i>)</li>
+        <li>Your first verb: <b>être</b> (to be)</li>
+        <li>Saying your name and asking someone's</li>
+      </ul>
+      <div style={{marginTop:12}}>
+        <span className="pill">tu vs vous</span><span className="pill">être</span><span className="pill">accents</span>
+      </div>
+    </div>
+
+    <h2><span className="n">1.1</span> Greetings</h2>
+    <p className="lede">French draws a hard line between formal (<i>vous</i>) and informal (<i>tu</i>). Use <i>vous</i> with strangers, elders, and in shops.</p>
+    <Tab head={["French","Pronunciation","English"]} rows={[
+      ["Bonjour","bon-ZHOOR","Hello / Good day"],
+      ["Bonsoir","bon-SWAHR","Good evening"],
+      ["Salut","sa-LU","Hi / Bye (informal)"],
+      ["Au revoir","oh ruh-VWAHR","Goodbye"],
+      ["Merci","mair-SEE","Thank you"],
+      ["S'il vous plaît","seel voo PLEH","Please (formal)"],
+    ]}/>
+    <div className="note"><b>Comment ça va ?</b> = How's it going? Reply: <i>Ça va bien, merci</i> (I'm well) or just <i>Ça va</i>.</div>
+
+    <h2><span className="n">1.2</span> Subject pronouns</h2>
+    <Tab head={["French","English","Note"]} rows={[
+      ["je","I","→ j' before a vowel"],
+      ["tu","you (informal)","one person you know"],
+      ["il / elle","he / she","also 'it'"],
+      ["nous","we","—"],
+      ["vous","you (formal / plural)","polite OR more than one"],
+      ["ils / elles","they","elles = all-female group"],
+    ]}/>
+
+    <h2><span className="n">1.3</span> The verb <i>être</i> (to be)</h2>
+    <Tab head={["French","English","Pron."]} rows={[
+      ["je suis","I am","zhuh swee"],
+      ["tu es","you are","tu eh"],
+      ["il/elle est","he/she is","eel eh"],
+      ["nous sommes","we are","noo som"],
+      ["vous êtes","you are","voo zet"],
+      ["ils/elles sont","they are","eel son"],
+    ]}/>
+    <div className="note"><b>Introducing yourself:</b> <i>Je m'appelle Marie.</i> (My name is Marie.) — <i>Et vous ?</i> (And you?)</div>
+
+    <Vocab items={[
+      ["oui","wee","yes"],["non","non","no"],["et","eh","and"],
+      ["monsieur","muh-SYUH","sir / Mr"],["madame","ma-DAM","ma'am / Mrs"],["enchanté","on-shon-TAY","pleased to meet you"],
+    ]}/>
+
+    <Exercise title="Choose the correct form of être">
+      <MCQ items={[
+        {q:"Je ___ étudiant.",o:["suis","es","est"],a:"suis"},
+        {q:"Vous ___ français ?",o:["sont","êtes","es"],a:"êtes"},
+        {q:"Elle ___ professeur.",o:["est","es","suis"],a:"est"},
+        {q:"Nous ___ à Paris.",o:["sont","sommes","êtes"],a:"sommes"},
+      ]}/>
+    </Exercise>
+    <Exercise title="Fill in the blank — greetings">
+      <Fill items={[
+        {q:"— ___, comment ça va ? (informal hello)",a:["salut"]},
+        {q:"Je m'___ Thomas.",a:["appelle"]},
+        {q:"— Merci ! — De ___ ! (you're welcome)",a:["rien"]},
+      ]}/>
+    </Exercise>
+  </>)},
+
+  {fr:"Les articles",en:"Nouns, gender & articles", body:()=>(<>
+    <div className="hero-card"><h3>This hour</h3>
+      <ul><li>Every French noun is masculine or feminine</li><li>Definite articles: <i>le, la, les</i></li>
+      <li>Indefinite articles: <i>un, une, des</i></li><li>Making nouns plural</li></ul></div>
+
+    <h2><span className="n">2.1</span> Gender of nouns</h2>
+    <p>Every noun has a gender. There's no perfect rule, so <b>learn each noun with its article</b>. Endings give hints:</p>
+    <Tab head={["Often masculine","Often feminine"]} rows={[
+      ["-age, -ment, -eau","-tion, -té, -ette"],["le fromage, le moment","la nation, la liberté"],
+    ]}/>
+
+    <h2><span className="n">2.2</span> Definite vs indefinite</h2>
+    <Tab head={["","Masc.","Fem.","Plural"]} rows={[
+      ["the (definite)","le","la","les"],
+      ["a / some (indef.)","un","une","des"],
+    ]}/>
+    <div className="note"><b>l'</b> replaces <i>le/la</i> before a vowel or silent h: <i>l'ami, l'école, l'hôtel</i>.</div>
+
+    <h2><span className="n">2.3</span> Plurals</h2>
+    <p>Usually add <b>-s</b> (silent!). Words ending in <i>-eau</i> → <b>-eaux</b>. Words ending in <i>-s, -x, -z</i> don't change.</p>
+    <Tab head={["Singular","Plural"]} rows={[
+      ["le livre","les livres"],["un château","des châteaux"],["le bus","les bus"],
+    ]}/>
+
+    <Vocab items={[
+      ["la maison","mai-ZON","house"],["le chat","shah","cat"],["l'école","ay-KOL","school (f)"],
+      ["le café","ka-FAY","coffee/café"],["la table","TAH-bl","table"],["l'ami","a-MEE","friend (m)"],
+    ]}/>
+
+    <Exercise title="Pick le, la, or l'">
+      <MCQ items={[
+        {q:"___ maison (f)",o:["le","la","l'"],a:"la"},
+        {q:"___ école (f, vowel)",o:["la","l'","le"],a:"l'"},
+        {q:"___ chat (m)",o:["le","la","l'"],a:"le"},
+        {q:"___ hôtel (m, silent h)",o:["le","l'","la"],a:"l'"},
+      ]}/>
+    </Exercise>
+    <Exercise title="Make it plural">
+      <Fill items={[
+        {q:"un livre → deux ___",a:["livres"]},
+        {q:"le château → les ___",a:["châteaux","chateaux"]},
+        {q:"une table → des ___",a:["tables"]},
+      ]}/>
+    </Exercise>
+  </>)},
+
+  {fr:"Avoir & l'âge",en:"The verb avoir, age & numbers", body:()=>(<>
+    <div className="hero-card"><h3>This hour</h3>
+      <ul><li>The verb <b>avoir</b> (to have)</li><li>Numbers 0–69</li><li>Telling your age</li><li>There is / there are — <i>il y a</i></li></ul></div>
+
+    <h2><span className="n">3.1</span> The verb <i>avoir</i> (to have)</h2>
+    <Tab head={["French","English"]} rows={[
+      ["j'ai","I have"],["tu as","you have"],["il/elle a","he/she has"],
+      ["nous avons","we have"],["vous avez","you have"],["ils/elles ont","they have"],
+    ]}/>
+    <div className="note"><b>Careful:</b> <i>ils ont</i> (they have) vs <i>ils sont</i> (they are). The link-sound differs: "eelz-ON" vs "eel-SON".</div>
+
+    <h2><span className="n">3.2</span> Numbers 0–20</h2>
+    <Tab head={["0–5","6–10","11–15","16–20"]} rows={[
+      ["zéro","six","onze","seize"],["un","sept","douze","dix-sept"],["deux","huit","treize","dix-huit"],
+      ["trois","neuf","quatorze","dix-neuf"],["quatre / cinq","dix","quinze","vingt"],
+    ]}/>
+    <p><b>Tens:</b> vingt (20), trente (30), quarante (40), cinquante (50), soixante (60). Combine: <i>vingt et un</i> (21), <i>trente-deux</i> (32).</p>
+
+    <h2><span className="n">3.3</span> Age uses <i>avoir</i>, not <i>être</i>!</h2>
+    <div className="note">French says <i>"I <b>have</b> 25 years"</i>: <b>J'ai vingt-cinq ans.</b> — <i>Quel âge avez-vous ?</i> = How old are you?</div>
+
+    <h3>Il y a — there is / there are</h3>
+    <p><i>Il y a un chat.</i> (There is a cat.) — <i>Il y a des livres.</i> (There are books.)</p>
+
+    <Exercise title="Conjugate avoir">
+      <MCQ items={[
+        {q:"J'___ un frère.",o:["ai","as","a"],a:"ai"},
+        {q:"Ils ___ deux enfants.",o:["sont","ont","avez"],a:"ont"},
+        {q:"Vous ___ un stylo ?",o:["avez","avons","as"],a:"avez"},
+      ]}/>
+    </Exercise>
+    <Exercise title="Age & numbers">
+      <Fill items={[
+        {q:"How old are you? → Quel âge ___-vous ?",a:["avez"]},
+        {q:"I am 30 → J'ai ___ ans. (write the number in French)",a:["trente"]},
+        {q:"21 in French =",a:["vingt et un","vingt-et-un"]},
+      ]}/>
+    </Exercise>
+  </>)},
+
+  {fr:"Verbes en -ER",en:"Regular -ER verbs (present)", body:()=>(<>
+    <div className="hero-card"><h3>This hour</h3>
+      <ul><li>The biggest verb group: <b>-ER verbs</b></li><li>One ending pattern unlocks ~1000 verbs</li><li>Common everyday verbs</li></ul></div>
+
+    <h2><span className="n">4.1</span> The -ER pattern</h2>
+    <p>Drop <b>-er</b> from the infinitive, add these endings. Example: <b>parler</b> (to speak) → stem <i>parl-</i>.</p>
+    <Tab head={["Pronoun","Ending","parler"]} rows={[
+      ["je","-e","parle"],["tu","-es","parles"],["il/elle","-e","parle"],
+      ["nous","-ons","parlons"],["vous","-ez","parlez"],["ils/elles","-ent","parlent"],
+    ]}/>
+    <div className="note"><b>Pronunciation trick:</b> <i>parle, parles, parlent</i> all sound identical — the endings <i>-e/-es/-ent</i> are silent. Only <i>-ons</i> and <i>-ez</i> are pronounced.</div>
+
+    <h2><span className="n">4.2</span> High-frequency -ER verbs</h2>
+    <Vocab items={[
+      ["parler","par-LAY","to speak"],["aimer","ay-MAY","to like/love"],["habiter","a-bee-TAY","to live"],
+      ["travailler","tra-va-YAY","to work"],["manger","mon-ZHAY","to eat"],["regarder","ruh-gar-DAY","to watch"],
+      ["écouter","ay-koo-TAY","to listen"],["étudier","ay-tu-DYAY","to study"],
+    ]}/>
+
+    <Exercise title="Conjugate the -ER verb">
+      <Fill items={[
+        {q:"Je (parler) → je ___ français.",a:["parle"]},
+        {q:"Nous (habiter) → nous ___ à Lyon.",a:["habitons"]},
+        {q:"Ils (aimer) → ils ___ le café.",a:["aiment"]},
+        {q:"Tu (travailler) → tu ___ ?",a:["travailles"]},
+        {q:"Vous (manger) → vous ___ ?",a:["mangez"]},
+      ]}/>
+    </Exercise>
+    <Exercise title="Choose the right ending">
+      <MCQ items={[
+        {q:"Elle ___ la musique.",o:["écoute","écoutes","écoutent"],a:"écoute"},
+        {q:"Nous ___ le week-end.",o:["regardez","regardons","regarde"],a:"regardons"},
+        {q:"Vous ___ l'anglais.",o:["étudie","étudiez","étudient"],a:"étudiez"},
+      ]}/>
+    </Exercise>
+  </>)},
+
+  {fr:"La négation",en:"Negation & asking questions", body:()=>(<>
+    <div className="hero-card"><h3>This hour</h3>
+      <ul><li>Saying "not" with <b>ne … pas</b></li><li>Three ways to ask a question</li><li>Question words (who, what, where…)</li></ul></div>
+
+    <h2><span className="n">5.1</span> Negation: ne … pas</h2>
+    <p>Wrap the verb: <b>ne</b> + verb + <b>pas</b>. Before a vowel, <i>ne</i> → <b>n'</b>.</p>
+    <Tab head={["Positive","Negative"]} rows={[
+      ["Je parle anglais.","Je ne parle pas anglais."],
+      ["Il a un chien.","Il n'a pas de chien."],
+      ["Nous sommes prêts.","Nous ne sommes pas prêts."],
+    ]}/>
+    <div className="note"><b>de rule:</b> after a negative, <i>un/une/des</i> become <b>de</b>: <i>J'ai un chat → Je n'ai pas <b>de</b> chat.</i></div>
+
+    <h2><span className="n">5.2</span> Three ways to ask yes/no questions</h2>
+    <Tab head={["Method","Example","Register"]} rows={[
+      ["Intonation","Tu parles français ?","casual"],
+      ["Est-ce que","Est-ce que tu parles français ?","neutral"],
+      ["Inversion","Parles-tu français ?","formal"],
+    ]}/>
+
+    <h2><span className="n">5.3</span> Question words</h2>
+    <Vocab items={[
+      ["qui","kee","who"],["que / quoi","kuh / kwah","what"],["où","oo","where"],
+      ["quand","kon","when"],["comment","ko-MON","how"],["pourquoi","poor-KWAH","why"],
+      ["combien","kom-BYAN","how much/many"],["quel(le)","kel","which/what"],
+    ]}/>
+
+    <Exercise title="Make it negative">
+      <Fill items={[
+        {q:"Je parle → Je ___ parle ___ . (fill both words, space between)",a:["ne … pas","ne pas"]},
+        {q:"Il a un chien → Il n'a pas ___ chien.",a:["de"]},
+      ]}/>
+    </Exercise>
+    <Exercise title="Choose the question word">
+      <MCQ items={[
+        {q:"___ habites-tu ? (place)",o:["Où","Quand","Qui"],a:"Où"},
+        {q:"___ ça coûte ? (price)",o:["Comment","Combien","Pourquoi"],a:"Combien"},
+        {q:"___ est-ce ? (identity)",o:["Qui","Où","Quand"],a:"Qui"},
+      ]}/>
+    </Exercise>
+  </>)},
+
+  {fr:"Les adjectifs",en:"Adjectives & descriptions", body:()=>(<>
+    <div className="hero-card"><h3>This hour</h3>
+      <ul><li>Adjectives agree in gender & number</li><li>Where adjectives go (usually after!)</li><li>Colours & common descriptors</li></ul></div>
+
+    <h2><span className="n">6.1</span> Agreement</h2>
+    <p>Adjectives change to match the noun. Default: add <b>-e</b> for feminine, <b>-s</b> for plural.</p>
+    <Tab head={["Masc.","Fem.","Masc. pl.","Fem. pl."]} rows={[
+      ["grand","grande","grands","grandes"],["petit","petite","petits","petites"],["vert","verte","verts","vertes"],
+    ]}/>
+    <div className="note">Already ending in <b>-e</b>? No change for feminine: <i>rouge, jeune, calme</i> stay the same.</div>
+
+    <h2><span className="n">6.2</span> Position — mostly AFTER the noun</h2>
+    <p><i>une voiture <b>rouge</b></i> (a red car), <i>un livre <b>intéressant</b></i>. But a small set go BEFORE — remember <b>BAGS</b>: Beauty, Age, Goodness, Size.</p>
+    <Tab head={["Before (BAGS)","Example"]} rows={[
+      ["beau/joli","une jolie maison"],["jeune/vieux","un vieux film"],["bon/mauvais","un bon café"],["grand/petit","une petite table"],
+    ]}/>
+
+    <h2><span className="n">6.3</span> Colours</h2>
+    <Vocab items={[
+      ["rouge","roozh","red"],["bleu","bluh","blue"],["vert","vair","green"],
+      ["jaune","zhohn","yellow"],["noir","nwahr","black"],["blanc","blon","white"],
+    ]}/>
+
+    <Exercise title="Agree the adjective">
+      <Fill items={[
+        {q:"une maison (grand) → une maison ___",a:["grande"]},
+        {q:"des livres (petit) → des ___ livres",a:["petits"]},
+        {q:"une voiture (vert) → une voiture ___",a:["verte"]},
+      ]}/>
+    </Exercise>
+    <Exercise title="Before or after?">
+      <MCQ items={[
+        {q:"a red car =",o:["une rouge voiture","une voiture rouge"],a:"une voiture rouge"},
+        {q:"a beautiful house =",o:["une belle maison","une maison belle"],a:"une belle maison"},
+      ]}/>
+    </Exercise>
+  </>)},
+
+  {fr:"Verbes -IR / -RE",en:"-IR, -RE & irregular verbs", body:()=>(<>
+    <div className="hero-card"><h3>This hour</h3>
+      <ul><li>Regular <b>-IR</b> verbs (finir)</li><li>Regular <b>-RE</b> verbs (vendre)</li><li>Two must-know irregulars: <b>aller</b> & <b>faire</b></li></ul></div>
+
+    <h2><span className="n">7.1</span> -IR verbs — <i>finir</i> (to finish)</h2>
+    <Tab head={["Pronoun","Form"]} rows={[
+      ["je","finis"],["tu","finis"],["il/elle","finit"],["nous","finissons"],["vous","finissez"],["ils/elles","finissent"],
+    ]}/>
+
+    <h2><span className="n">7.2</span> -RE verbs — <i>vendre</i> (to sell)</h2>
+    <Tab head={["Pronoun","Form"]} rows={[
+      ["je","vends"],["tu","vends"],["il/elle","vend"],["nous","vendons"],["vous","vendez"],["ils/elles","vendent"],
+    ]}/>
+
+    <h2><span className="n">7.3</span> Irregulars you use daily</h2>
+    <Tab head={["aller (to go)","faire (to do/make)"]} rows={[
+      ["je vais","je fais"],["tu vas","tu fais"],["il/elle va","il/elle fait"],
+      ["nous allons","nous faisons"],["vous allez","vous faites"],["ils/elles vont","ils/elles font"],
+    ]}/>
+    <div className="note"><b>Aller</b> also means "to feel": <i>Comment allez-vous ? — Je vais bien.</i></div>
+
+    <Exercise title="Conjugate">
+      <Fill items={[
+        {q:"nous (finir) → nous ___",a:["finissons"]},
+        {q:"il (vendre) → il ___",a:["vend"]},
+        {q:"je (aller) → je ___",a:["vais"]},
+        {q:"vous (faire) → vous ___",a:["faites"]},
+      ]}/>
+    </Exercise>
+    <Exercise title="Pick the correct form">
+      <MCQ items={[
+        {q:"Ils ___ au cinéma. (aller)",o:["vont","allez","va"],a:"vont"},
+        {q:"Nous ___ nos devoirs. (faire)",o:["faisons","faites","font"],a:"faisons"},
+        {q:"Tu ___ le travail. (finir)",o:["finit","finis","finissent"],a:"finis"},
+      ]}/>
+    </Exercise>
+  </>)},
+
+  {fr:"L'heure & les jours",en:"Time, days & routines", body:()=>(<>
+    <div className="hero-card"><h3>This hour</h3>
+      <ul><li>Telling the time</li><li>Days of the week & months</li><li>Talking about your daily routine</li></ul></div>
+
+    <h2><span className="n">8.1</span> Telling time</h2>
+    <p>Use <b>Il est …</b>. <i>Il est deux heures</i> (2:00). Add minutes: <i>deux heures dix</i>. Quarter/half: <i>et quart</i> (:15), <i>et demie</i> (:30), <i>moins le quart</i> (:45).</p>
+    <Tab head={["Clock","French"]} rows={[
+      ["1:00","Il est une heure"],["3:30","Il est trois heures et demie"],["6:15","Il est six heures et quart"],["8:45","Il est neuf heures moins le quart"],
+    ]}/>
+
+    <h2><span className="n">8.2</span> Days & months</h2>
+    <p><b>Jours:</b> lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche. <br/><b>Note:</b> not capitalised in French.</p>
+    <Vocab items={[
+      ["aujourd'hui","oh-zhoor-DWEE","today"],["demain","duh-MAN","tomorrow"],["hier","yair","yesterday"],
+      ["le matin","ma-TAN","morning"],["le soir","swahr","evening"],["la semaine","suh-MEN","week"],
+    ]}/>
+
+    <h2><span className="n">8.3</span> Reflexive verbs for routine</h2>
+    <p>Daily actions often use reflexive verbs: <i>je <b>me</b> lève</i> (I get up), <i>je <b>me</b> couche</i> (I go to bed).</p>
+
+    <Exercise title="Write the time in French">
+      <Fill items={[
+        {q:"2:00 → Il est deux ___ .",a:["heures"]},
+        {q:"4:30 → Il est quatre heures et ___ .",a:["demie"]},
+        {q:"Monday in French =",a:["lundi"]},
+      ]}/>
+    </Exercise>
+    <Exercise title="Vocabulary check">
+      <MCQ items={[
+        {q:"'tomorrow' =",o:["hier","demain","aujourd'hui"],a:"demain"},
+        {q:"'the morning' =",o:["le soir","le matin","la nuit"],a:"le matin"},
+      ]}/>
+    </Exercise>
+  </>)},
+
+  {fr:"Au restaurant",en:"Food, ordering & partitives", body:()=>(<>
+    <div className="hero-card"><h3>This hour</h3>
+      <ul><li>Partitive articles: <b>du, de la, des</b> ("some")</li><li>Food & drink vocabulary</li><li>Ordering politely with <i>je voudrais</i></li></ul></div>
+
+    <h2><span className="n">9.1</span> Partitive — "some / any"</h2>
+    <p>For unspecified quantities (some water, some bread):</p>
+    <Tab head={["Masc.","Fem.","Vowel","Plural"]} rows={[
+      ["du (pain)","de la (salade)","de l' (eau)","des (frites)"],
+    ]}/>
+    <div className="note">After a negative, all become <b>de</b>: <i>Je ne mange pas <b>de</b> viande.</i></div>
+
+    <h2><span className="n">9.2</span> Food vocabulary</h2>
+    <Vocab items={[
+      ["le pain","pan","bread"],["l'eau","oh","water (f)"],["le café","ka-FAY","coffee"],
+      ["la viande","VYAND","meat"],["le poisson","pwa-SON","fish"],["les légumes","lay-GUUM","vegetables"],
+      ["le fromage","fro-MAZH","cheese"],["le vin","van","wine"],["l'addition","a-dee-SYON","the bill (f)"],
+    ]}/>
+
+    <h2><span className="n">9.3</span> Ordering politely</h2>
+    <p><b>Je voudrais…</b> (I would like) is softer than <i>je veux</i> (I want). <br/><i>Je voudrais un café, s'il vous plaît. — L'addition, s'il vous plaît.</i></p>
+
+    <Exercise title="Choose the partitive">
+      <MCQ items={[
+        {q:"Je bois ___ eau.",o:["du","de la","de l'"],a:"de l'"},
+        {q:"Il mange ___ pain.",o:["du","de la","des"],a:"du"},
+        {q:"Nous voulons ___ frites.",o:["du","de la","des"],a:"des"},
+        {q:"Je ne mange pas ___ viande.",o:["de la","de","du"],a:"de"},
+      ]}/>
+    </Exercise>
+    <Exercise title="Ordering">
+      <Fill items={[
+        {q:"'I would like a coffee' → Je ___ un café.",a:["voudrais"]},
+        {q:"'The bill, please' → L'___, s'il vous plaît.",a:["addition"]},
+      ]}/>
+    </Exercise>
+  </>)},
+
+  {fr:"La famille",en:"Family & possessives", body:()=>(<>
+    <div className="hero-card"><h3>This hour</h3>
+      <ul><li>Family vocabulary</li><li>Possessive adjectives (<i>mon, ma, mes…</i>)</li><li>Describing relationships</li></ul></div>
+
+    <h2><span className="n">10.1</span> Family words</h2>
+    <Vocab items={[
+      ["le père","pair","father"],["la mère","mair","mother"],["le frère","frair","brother"],
+      ["la sœur","suhr","sister"],["le fils","feess","son"],["la fille","fee-yuh","daughter/girl"],
+      ["les parents","pa-RON","parents"],["le mari","ma-REE","husband"],["la femme","fam","wife/woman"],
+    ]}/>
+
+    <h2><span className="n">10.2</span> Possessive adjectives</h2>
+    <p>They agree with the <b>thing owned</b>, not the owner.</p>
+    <Tab head={["","Masc.","Fem.","Plural"]} rows={[
+      ["my","mon","ma","mes"],["your (tu)","ton","ta","tes"],["his/her","son","sa","ses"],
+      ["our","notre","notre","nos"],["your (vous)","votre","votre","vos"],["their","leur","leur","leurs"],
+    ]}/>
+    <div className="note"><b>son/sa</b> means BOTH his and her — gender follows the noun: <i>sa mère</i> = his OR her mother. Before a vowel, <i>ma/ta/sa</i> → <b>mon/ton/son</b>: <i>mon amie</i>.</div>
+
+    <Exercise title="Choose the possessive">
+      <MCQ items={[
+        {q:"___ père (my, m)",o:["mon","ma","mes"],a:"mon"},
+        {q:"___ sœur (my, f)",o:["mon","ma","mes"],a:"ma"},
+        {q:"___ parents (my, pl)",o:["ma","mon","mes"],a:"mes"},
+        {q:"___ amie (my + vowel, f)",o:["ma","mon","mes"],a:"mon"},
+      ]}/>
+    </Exercise>
+    <Exercise title="Family vocabulary">
+      <Fill items={[
+        {q:"mother in French =",a:["la mère","mère","mere"]},
+        {q:"brother in French =",a:["le frère","frère","frere"]},
+      ]}/>
+    </Exercise>
+  </>)},
+
+  {fr:"En ville",en:"The city, directions & prepositions", body:()=>(<>
+    <div className="hero-card"><h3>This hour</h3>
+      <ul><li>Places in town</li><li>Prepositions of place</li><li>Asking for & giving directions</li><li><i>à + le = au</i> contractions</li></ul></div>
+
+    <h2><span className="n">11.1</span> Places</h2>
+    <Vocab items={[
+      ["la gare","gar","station"],["la banque","bonk","bank"],["l'hôpital","o-pee-TAL","hospital"],
+      ["le magasin","ma-ga-ZAN","shop"],["la pharmacie","far-ma-SEE","pharmacy"],["la rue","ruu","street"],
+    ]}/>
+
+    <h2><span className="n">11.2</span> Contractions with à and de</h2>
+    <Tab head={["à + article","→","de + article","→"]} rows={[
+      ["à + le","au","de + le","du"],["à + les","aux","de + les","des"],["à + la","à la (no change)","de + la","de la"],
+    ]}/>
+    <p><i>Je vais <b>au</b> restaurant. Je viens <b>du</b> café.</i></p>
+
+    <h2><span className="n">11.3</span> Prepositions of place</h2>
+    <Vocab items={[
+      ["sur","suur","on"],["sous","soo","under"],["dans","don","in"],
+      ["devant","duh-VON","in front of"],["derrière","dair-YAIR","behind"],["à côté de","a ko-TAY","next to"],
+    ]}/>
+    <div className="note"><b>Directions:</b> <i>tout droit</i> (straight ahead), <i>à gauche</i> (left), <i>à droite</i> (right).</div>
+
+    <Exercise title="Contractions">
+      <Fill items={[
+        {q:"Je vais à + le cinéma → Je vais ___ cinéma.",a:["au"]},
+        {q:"Je viens de + les magasins → Je viens ___ magasins.",a:["des"]},
+        {q:"Il va à + les toilettes → Il va ___ toilettes.",a:["aux"]},
+      ]}/>
+    </Exercise>
+    <Exercise title="Prepositions">
+      <MCQ items={[
+        {q:"The cat is ON the table → Le chat est ___ la table.",o:["sous","sur","dans"],a:"sur"},
+        {q:"'turn left' → tournez à ___",o:["droite","gauche","droit"],a:"gauche"},
+      ]}/>
+    </Exercise>
+  </>)},
+
+  {fr:"Le passé composé",en:"Past tense — passé composé", body:()=>(<>
+    <div className="hero-card"><h3>Final hour — the past tense</h3>
+      <ul><li>Talking about completed past actions</li><li><b>avoir</b> + past participle</li><li>The <b>être</b> verbs (movement)</li><li>Putting your whole A1 together</li></ul></div>
+
+    <h2><span className="n">12.1</span> Formula</h2>
+    <p>The passé composé = <b>helper verb (avoir/être) in present</b> + <b>past participle</b>.</p>
+    <Tab head={["Verb type","Past participle","Example"]} rows={[
+      ["-ER → -é","parler → parlé","J'ai parlé"],["-IR → -i","finir → fini","J'ai fini"],["-RE → -u","vendre → vendu","J'ai vendu"],
+    ]}/>
+    <p><i>Hier, j'<b>ai mangé</b> une pizza.</i> (Yesterday I ate a pizza.)</p>
+
+    <h2><span className="n">12.2</span> The être verbs</h2>
+    <p>A group of ~14 verbs (mostly movement) use <b>être</b> instead. The participle then agrees with the subject. Remember <b>DR & MRS VANDERTRAMP</b> — key ones:</p>
+    <Tab head={["Verb","Participle","Example"]} rows={[
+      ["aller","allé","je suis allé(e)"],["venir","venu","il est venu"],["arriver","arrivé","elle est arrivée"],
+      ["partir","parti","nous sommes parti(e)s"],["naître","né","je suis né(e)"],
+    ]}/>
+    <div className="note"><b>Agreement:</b> with <i>être</i>, add -e (fem), -s (plural): <i>Elle est allé<b>e</b>. Ils sont allé<b>s</b>.</i></div>
+
+    <h2><span className="n">12.3</span> Irregular participles to memorise</h2>
+    <Vocab items={[
+      ["avoir → eu","u","had"],["être → été","ay-TAY","been"],["faire → fait","feh","done"],
+      ["voir → vu","vu","seen"],["prendre → pris","pree","taken"],["boire → bu","bu","drunk"],
+    ]}/>
+
+    <Exercise title="Form the passé composé">
+      <Fill items={[
+        {q:"je (parler) → j'ai ___",a:["parlé","parle"]},
+        {q:"nous (finir) → nous avons ___",a:["fini"]},
+        {q:"elle (aller) → elle est ___ (agree!)",a:["allée"]},
+        {q:"ils (faire) → ils ont ___",a:["fait"]},
+      ]}/>
+    </Exercise>
+    <Exercise title="avoir or être helper?">
+      <MCQ items={[
+        {q:"J'___ mangé une pomme.",o:["ai","suis"],a:"ai"},
+        {q:"Elle ___ arrivée à Paris.",o:["a","est"],a:"est"},
+        {q:"Nous ___ vu le film.",o:["avons","sommes"],a:"avons"},
+        {q:"Ils ___ partis tôt.",o:["ont","sont"],a:"sont"},
+      ]}/>
+    </Exercise>
+
+    <div className="hero-card" style={{marginTop:30}}>
+      <h3>🎉 Félicitations !</h3>
+      <p>You've covered the full A1 grammar map: être & avoir, all three verb groups plus key irregulars, articles, gender, adjectives, negation, questions, time, possessives, prepositions, and the past tense. Cycle back through the lessons and re-run every exercise until you score 100% without hesitation — that's A1 mastery.</p>
+    </div>
+  </>)},
+];
+
+/* ============ STUDY PLAN (shown on the intro) ============ */
+function StudyPlan(){
+  const rows=[
+    ["0–5 min","Warm-up","Read the lesson's goals card aloud. Recall last lesson's verbs from memory."],
+    ["5–25 min","New grammar","Work through the numbered sections (1.1, 1.2…). Say every example sentence out loud."],
+    ["25–40 min","Vocabulary","Cover the English column and test yourself on the vocab chips. Write 3 of your own sentences."],
+    ["40–55 min","Exercises","Do every exercise. Aim for full marks; hit 'Try again' on any you miss."],
+    ["55–60 min","Consolidate","Mark the lesson complete. Write down 3 things you'll review tomorrow."],
+  ];
+  return (
+    <>
+      <div className="eyebrow">The method · une heure par jour</div>
+      <h1>Le Carnet<span className="en">Your complete French A1 course — 12 one-hour lessons, from "Bonjour" to the past tense.</span></h1>
+      <p className="lede">Study one lesson per sitting. Each is built for a focused 60-minute block: grammar, vocabulary, and self-checking exercises with instant feedback. Work top to bottom, then mark it complete to fill your progress spine.</p>
+
+      <h2><span className="n">◷</span> How to spend each hour</h2>
+      <div className="plan">
+        {rows.map((r,i)=>(
+          <div className="plan-row" key={i}>
+            <div className="plan-time">{r[0]}</div>
+            <div className="plan-body"><b>{r[1]}</b> — {r[2]}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="card">
+        <h3 style={{marginTop:0}}>The 12-lesson arc</h3>
+        <Tab head={["#","Lesson","Grammar focus"]} rows={[
+          ["1","Bonjour !","être, pronouns, tu/vous"],
+          ["2","Les articles","gender, le/la/les, un/une/des, plurals"],
+          ["3","Avoir & l'âge","avoir, numbers 0–69, il y a"],
+          ["4","Verbes en -ER","regular -ER present tense"],
+          ["5","La négation","ne…pas, questions, question words"],
+          ["6","Les adjectifs","agreement, position, colours"],
+          ["7","Verbes -IR/-RE","finir, vendre, aller, faire"],
+          ["8","L'heure","time, days, months, routines"],
+          ["9","Au restaurant","partitives du/de la/des, food, ordering"],
+          ["10","La famille","family, possessives mon/ma/mes"],
+          ["11","En ville","places, à/de contractions, directions"],
+          ["12","Passé composé","past tense with avoir & être"],
+        ]}/>
+      </div>
+      <div className="note"><b>Tip:</b> progress isn't saved between browser sessions here — finish a lesson in one sitting, or note where you stopped. Speaking out loud beats silent reading every time.</div>
+    </>
+  );
+}
+
+/* ============ APP SHELL ============ */
+function App(){
+  const [idx,setIdx]=useState(-1); // -1 = intro/plan
+  const [done,setDone]=useState({});
+  const total=LESSONS.length;
+  const completed=Object.values(done).filter(Boolean).length;
+  const pct=Math.round(completed/total*100);
+
+  const go=(i)=>{setIdx(i);window.scrollTo(0,0);};
+  const toggleDone=()=>setDone({...done,[idx]:!done[idx]});
+
+  const L = idx>=0 ? LESSONS[idx] : null;
+
+  return (
+    <div className="wrap">
+      <aside className="spine">
+        <div className="brand">Le <em>Carnet</em></div>
+        <div className="brand-sub">Français · Niveau A1</div>
+
+        <div className="progress-cap">Progress</div>
+        <div className="prog-bar"><div className="prog-fill" style={{width:pct+"%"}}/></div>
+        <div className="prog-num">{completed} / {total} lessons complete</div>
+
+        <nav>
+          <button className={"nav-item"+(idx===-1?" active":"")} onClick={()=>go(-1)}>
+            <span className="nav-dot">◈</span>
+            <span className="nav-label"><span className="nav-fr">Le plan</span><span className="nav-en">Course overview</span></span>
+          </button>
+          {LESSONS.map((l,i)=>(
+            <button key={i} className={"nav-item"+(idx===i?" active":"")+(done[i]?" done":"")} onClick={()=>go(i)}>
+              <span className="nav-dot">{done[i]?"✓":i+1}</span>
+              <span className="nav-label"><span className="nav-fr">{l.fr}</span><span className="nav-en">{l.en}</span></span>
+            </button>
+          ))}
+        </nav>
+      </aside>
+
+      <main>
+        {idx===-1 ? <StudyPlan/> : (
+          <>
+            <div className="eyebrow">Leçon {idx+1} sur {total}</div>
+            <h1>{L.fr}<span className="en">{L.en}</span></h1>
+            {L.body()}
+            <button className={"done-btn"+(done[idx]?" is-done":"")} onClick={toggleDone}>
+              {done[idx]?"✓ Lesson complete — click to unmark":"Mark this lesson complete"}
+            </button>
+            <div className="footer-nav">
+              <button className="fbtn" disabled={idx===0} onClick={()=>go(idx-1)}>← Précédent</button>
+              <button className="fbtn" disabled={idx===total-1} onClick={()=>go(idx+1)}>Suivant →</button>
+            </div>
+          </>
+        )}
+      </main>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
