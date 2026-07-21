@@ -48,9 +48,7 @@ describe('exercise integrity', () => {
 
   it('has unique exercise titles within each lesson (scores are keyed by title)', () => {
     for (const l of lessons) {
-      const titles = l.blocks
-        .filter((b) => b.type === 'exercise')
-        .map((b) => b.exercise.title);
+      const titles = l.blocks.filter((b) => b.type === 'exercise').map((b) => b.exercise.title);
       expect(new Set(titles).size, `lesson ${l.id}`).toBe(titles.length);
     }
   });
@@ -75,7 +73,9 @@ describe('exercise integrity', () => {
         expect(blankCount, `lesson ${lesson}: "${item.q}" should contain ___`).toBeGreaterThan(0);
         expect(item.blanks.length, `lesson ${lesson}: "${item.q}" blank count`).toBe(blankCount);
         for (const accepted of item.blanks) {
-          expect(accepted.length, `lesson ${lesson}: "${item.q}" empty answer-set`).toBeGreaterThan(0);
+          expect(accepted.length, `lesson ${lesson}: "${item.q}" empty answer-set`).toBeGreaterThan(
+            0,
+          );
           expect(accepted.every((a) => a.trim().length > 0)).toBe(true);
         }
       }

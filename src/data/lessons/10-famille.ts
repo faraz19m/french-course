@@ -62,7 +62,12 @@ export const lesson10: Lesson = {
           { q: '___ père (my, m)', options: ['mon', 'ma', 'mes'], answer: 'mon' },
           { q: '___ sœur (my, f)', options: ['mon', 'ma', 'mes'], answer: 'ma' },
           { q: '___ parents (my, pl)', options: ['ma', 'mon', 'mes'], answer: 'mes' },
-          { q: '___ amie (my + vowel, f)', options: ['ma', 'mon', 'mes'], answer: 'mon', why: 'Before a vowel, ma → mon.' },
+          {
+            q: '___ amie (my + vowel, f)',
+            options: ['ma', 'mon', 'mes'],
+            answer: 'mon',
+            why: 'Before a vowel, ma → mon.',
+          },
         ],
       },
     },
@@ -92,9 +97,17 @@ export const lesson10: Lesson = {
         kind: 'mcq',
         title: 'Compréhension : la famille de Nadia',
         items: [
-          { q: 'Quel est le travail du père de Nadia ?', options: ['Médecin', 'Professeur', 'Musicien'], answer: 'Médecin' },
+          {
+            q: 'Quel est le travail du père de Nadia ?',
+            options: ['Médecin', 'Professeur', 'Musicien'],
+            answer: 'Médecin',
+          },
           { q: 'Combien de frères a Nadia ?', options: ['Deux', 'Un', 'Trois'], answer: 'Deux' },
-          { q: 'La sœur de Nadia adore la musique. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
+          {
+            q: 'La sœur de Nadia adore la musique. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Vrai',
+          },
         ],
       },
     },

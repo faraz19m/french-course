@@ -13,7 +13,13 @@ import { Exercise } from './exercises/Exercise';
  * knows how each block type is presented. Exercises additionally need the
  * lesson id and their running index so their scores can be saved.
  */
-export function ContentRenderer({ blocks, lessonId }: { blocks: ContentBlock[]; lessonId: number }) {
+export function ContentRenderer({
+  blocks,
+  lessonId,
+}: {
+  blocks: ContentBlock[];
+  lessonId: number;
+}) {
   return (
     <>
       {blocks.map((block, i) => {

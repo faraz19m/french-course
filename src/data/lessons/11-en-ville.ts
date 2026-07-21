@@ -79,8 +79,16 @@ export const lesson11: Lesson = {
         kind: 'mcq',
         title: 'Prepositions',
         items: [
-          { q: 'The cat is ON the table → Le chat est ___ la table.', options: ['sous', 'sur', 'dans'], answer: 'sur' },
-          { q: "'turn left' → tournez à ___", options: ['droite', 'gauche', 'droit'], answer: 'gauche' },
+          {
+            q: 'The cat is ON the table → Le chat est ___ la table.',
+            options: ['sous', 'sur', 'dans'],
+            answer: 'sur',
+          },
+          {
+            q: "'turn left' → tournez à ___",
+            options: ['droite', 'gauche', 'droit'],
+            answer: 'gauche',
+          },
         ],
       },
     },
@@ -101,9 +109,22 @@ export const lesson11: Lesson = {
         kind: 'mcq',
         title: 'Compréhension : où est la pharmacie ?',
         items: [
-          { q: 'Où est la pharmacie ?', options: ['À côté de la banque', 'À côté de la gare', 'Dans le café'], answer: 'À côté de la banque' },
-          { q: 'La pharmacie est loin. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Faux', why: 'C’est à cinq minutes, tout près.' },
-          { q: 'Pour aller à la pharmacie, on tourne à…', options: ['gauche', 'droite', 'tout droit'], answer: 'gauche' },
+          {
+            q: 'Où est la pharmacie ?',
+            options: ['À côté de la banque', 'À côté de la gare', 'Dans le café'],
+            answer: 'À côté de la banque',
+          },
+          {
+            q: 'La pharmacie est loin. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Faux',
+            why: 'C’est à cinq minutes, tout près.',
+          },
+          {
+            q: 'Pour aller à la pharmacie, on tourne à…',
+            options: ['gauche', 'droite', 'tout droit'],
+            answer: 'gauche',
+          },
         ],
       },
     },

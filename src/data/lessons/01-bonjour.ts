@@ -138,9 +138,24 @@ export const lesson01: Lesson = {
         kind: 'mcq',
         title: 'tu or vous?',
         items: [
-          { q: 'Talking to a close friend →', options: ['tu', 'vous'], answer: 'tu', why: 'Informal, one person you know.' },
-          { q: 'Addressing a shopkeeper →', options: ['tu', 'vous'], answer: 'vous', why: 'Strangers and service situations take vous.' },
-          { q: 'Speaking to two people at once →', options: ['tu', 'vous'], answer: 'vous', why: 'vous is also the plural "you".' },
+          {
+            q: 'Talking to a close friend →',
+            options: ['tu', 'vous'],
+            answer: 'tu',
+            why: 'Informal, one person you know.',
+          },
+          {
+            q: 'Addressing a shopkeeper →',
+            options: ['tu', 'vous'],
+            answer: 'vous',
+            why: 'Strangers and service situations take vous.',
+          },
+          {
+            q: 'Speaking to two people at once →',
+            options: ['tu', 'vous'],
+            answer: 'vous',
+            why: 'vous is also the plural "you".',
+          },
         ],
       },
     },
@@ -162,7 +177,7 @@ export const lesson01: Lesson = {
       title: 'Les présentations',
       paragraphs: [
         "Bonjour ! Je m'appelle Camille. Je suis française et j'habite à Paris. Je suis étudiante à l'université.",
-        "Voici mon ami Tom. Il est anglais, mais il habite à Nice. Il travaille dans un café. Nous sommes amis. Enchanté !",
+        'Voici mon ami Tom. Il est anglais, mais il habite à Nice. Il travaille dans un café. Nous sommes amis. Enchanté !',
       ],
     },
     {
@@ -171,7 +186,11 @@ export const lesson01: Lesson = {
         kind: 'mcq',
         title: 'Compréhension : les présentations',
         items: [
-          { q: 'Comment s’appelle la femme ?', options: ['Camille', 'Tom', 'Marie'], answer: 'Camille' },
+          {
+            q: 'Comment s’appelle la femme ?',
+            options: ['Camille', 'Tom', 'Marie'],
+            answer: 'Camille',
+          },
           { q: 'Camille est française. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
           { q: 'Où habite Tom ?', options: ['À Paris', 'À Nice', 'À Londres'], answer: 'À Nice' },
           {

@@ -90,7 +90,11 @@ export const lesson05: Lesson = {
         title: 'Choose the question word',
         items: [
           { q: '___ habites-tu ? (place)', options: ['Où', 'Quand', 'Qui'], answer: 'Où' },
-          { q: '___ ça coûte ? (price)', options: ['Comment', 'Combien', 'Pourquoi'], answer: 'Combien' },
+          {
+            q: '___ ça coûte ? (price)',
+            options: ['Comment', 'Combien', 'Pourquoi'],
+            answer: 'Combien',
+          },
           { q: '___ est-ce ? (identity)', options: ['Qui', 'Où', 'Quand'], answer: 'Qui' },
         ],
       },
@@ -113,9 +117,21 @@ export const lesson05: Lesson = {
         kind: 'mcq',
         title: 'Compréhension : au téléphone',
         items: [
-          { q: 'Où est Paul ?', options: ['Au café', 'À la maison', 'À la gare'], answer: 'Au café' },
-          { q: 'Paul mange quelque chose. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Faux' },
-          { q: 'Qui est à la gare ?', options: ["L'autre personne", 'Paul', 'Le serveur'], answer: "L'autre personne" },
+          {
+            q: 'Où est Paul ?',
+            options: ['Au café', 'À la maison', 'À la gare'],
+            answer: 'Au café',
+          },
+          {
+            q: 'Paul mange quelque chose. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Faux',
+          },
+          {
+            q: 'Qui est à la gare ?',
+            options: ["L'autre personne", 'Paul', 'Le serveur'],
+            answer: "L'autre personne",
+          },
         ],
       },
     },

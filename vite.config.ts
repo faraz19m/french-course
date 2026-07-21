@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -9,4 +10,12 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   base: '/french-course/',
   plugins: [react()],
+  test: {
+    // jsdom gives tests a DOM + localStorage; browser-only modules (storage,
+    // useProgress, Testing Library) rely on it. Pure-logic tests run fine here too.
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/test/setup.ts'],
+    css: false,
+  },
 });

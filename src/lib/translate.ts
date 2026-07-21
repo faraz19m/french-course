@@ -58,7 +58,12 @@ async function fetchWithTimeout(url: string, signal?: AbortSignal): Promise<Resp
   }
 }
 
-async function viaGoogle(text: string, from: string, to: string, signal?: AbortSignal): Promise<string> {
+async function viaGoogle(
+  text: string,
+  from: string,
+  to: string,
+  signal?: AbortSignal,
+): Promise<string> {
   const url =
     'https://translate.googleapis.com/translate_a/single?client=gtx' +
     `&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`;
@@ -80,7 +85,12 @@ async function viaGoogle(text: string, from: string, to: string, signal?: AbortS
   return out;
 }
 
-async function viaMyMemory(text: string, from: string, to: string, signal?: AbortSignal): Promise<string> {
+async function viaMyMemory(
+  text: string,
+  from: string,
+  to: string,
+  signal?: AbortSignal,
+): Promise<string> {
   const url =
     'https://api.mymemory.translated.net/get' +
     `?q=${encodeURIComponent(text)}&langpair=${from}|${to}`;

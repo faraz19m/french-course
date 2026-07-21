@@ -23,7 +23,13 @@ const WIDTH = 280;
  * otherwise dismiss it the instant it opens); instead it tracks the scroll
  * offset so it stays pinned to the anchored text.
  */
-export function TranslationPopover({ source, anchor, status, result, onClose }: TranslationPopoverProps) {
+export function TranslationPopover({
+  source,
+  anchor,
+  status,
+  result,
+  onClose,
+}: TranslationPopoverProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ top: anchor.bottom + 8, left: anchor.left, width: WIDTH });
   // How far the page has scrolled since the popover opened, so a fixed-position

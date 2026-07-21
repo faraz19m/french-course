@@ -126,9 +126,17 @@ export const lesson02: Lesson = {
         kind: 'mcq',
         title: 'Compréhension : la chambre de Léa',
         items: [
-          { q: 'Qu’est-ce qu’il y a sur la table ?', options: ['Des livres et un ordinateur', 'Un lit', 'Un chat'], answer: 'Des livres et un ordinateur' },
+          {
+            q: 'Qu’est-ce qu’il y a sur la table ?',
+            options: ['Des livres et un ordinateur', 'Un lit', 'Un chat'],
+            answer: 'Des livres et un ordinateur',
+          },
           { q: 'Léa aime lire. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
-          { q: 'Où dort le chat ?', options: ['Sur le lit', 'Sur la table', 'Sur la chaise'], answer: 'Sur le lit' },
+          {
+            q: 'Où dort le chat ?',
+            options: ['Sur le lit', 'Sur la table', 'Sur la chaise'],
+            answer: 'Sur le lit',
+          },
         ],
       },
     },

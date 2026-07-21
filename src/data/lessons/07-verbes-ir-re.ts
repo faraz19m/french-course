@@ -107,8 +107,16 @@ export const lesson07: Lesson = {
         title: 'Pick the correct form',
         items: [
           { q: 'Ils ___ au cinéma. (aller)', options: ['vont', 'allez', 'va'], answer: 'vont' },
-          { q: 'Nous ___ nos devoirs. (faire)', options: ['faisons', 'faites', 'font'], answer: 'faisons' },
-          { q: 'Tu ___ le travail. (finir)', options: ['finit', 'finis', 'finissent'], answer: 'finis' },
+          {
+            q: 'Nous ___ nos devoirs. (faire)',
+            options: ['faisons', 'faites', 'font'],
+            answer: 'faisons',
+          },
+          {
+            q: 'Tu ___ le travail. (finir)',
+            options: ['finit', 'finis', 'finissent'],
+            answer: 'finis',
+          },
         ],
       },
     },
@@ -139,9 +147,21 @@ export const lesson07: Lesson = {
         kind: 'mcq',
         title: 'Compréhension : les projets du week-end',
         items: [
-          { q: 'Quand Julie va-t-elle au marché ?', options: ['Samedi', 'Dimanche', 'Lundi'], answer: 'Samedi' },
-          { q: 'Dimanche, Julie finit ses devoirs. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
-          { q: 'Avec qui Julie va-t-elle voir un film ?', options: ['Léo', 'Marie', 'Paul'], answer: 'Léo' },
+          {
+            q: 'Quand Julie va-t-elle au marché ?',
+            options: ['Samedi', 'Dimanche', 'Lundi'],
+            answer: 'Samedi',
+          },
+          {
+            q: 'Dimanche, Julie finit ses devoirs. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Vrai',
+          },
+          {
+            q: 'Avec qui Julie va-t-elle voir un film ?',
+            options: ['Léo', 'Marie', 'Paul'],
+            answer: 'Léo',
+          },
         ],
       },
     },

@@ -77,7 +77,11 @@ export const lesson12: Lesson = {
         items: [
           { q: "je (parler) → j'ai ___", blanks: [['parlé', 'parle']] },
           { q: 'nous (finir) → nous avons ___', blanks: [['fini']] },
-          { q: 'elle (aller) → elle est ___', blanks: [['allée']], hint: 'Agree with the subject!' },
+          {
+            q: 'elle (aller) → elle est ___',
+            blanks: [['allée']],
+            hint: 'Agree with the subject!',
+          },
           { q: 'ils (faire) → ils ont ___', blanks: [['fait']] },
         ],
       },
@@ -119,9 +123,21 @@ export const lesson12: Lesson = {
         kind: 'mcq',
         title: 'Compréhension : le week-end de Lucas',
         items: [
-          { q: 'Où est allé Lucas le week-end dernier ?', options: ['À Paris', 'À Lyon', 'À Nice'], answer: 'À Paris' },
-          { q: 'Ils ont visité le Louvre. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
-          { q: 'Quand Lucas est-il rentré à la maison ?', options: ['Dimanche', 'Samedi', 'Lundi'], answer: 'Dimanche' },
+          {
+            q: 'Où est allé Lucas le week-end dernier ?',
+            options: ['À Paris', 'À Lyon', 'À Nice'],
+            answer: 'À Paris',
+          },
+          {
+            q: 'Ils ont visité le Louvre. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Vrai',
+          },
+          {
+            q: 'Quand Lucas est-il rentré à la maison ?',
+            options: ['Dimanche', 'Samedi', 'Lundi'],
+            answer: 'Dimanche',
+          },
         ],
       },
     },

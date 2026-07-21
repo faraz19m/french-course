@@ -91,9 +91,21 @@ export const lesson09: Lesson = {
         kind: 'mcq',
         title: 'Compréhension : au restaurant',
         items: [
-          { q: 'Qu’est-ce que Claire voudrait manger ?', options: ['Du poisson', 'De la viande', 'Des frites'], answer: 'Du poisson' },
-          { q: 'Marc préfère la viande. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
-          { q: 'Qu’est-ce qu’ils boivent ?', options: ["De l'eau et du vin", 'Du café', 'Du lait'], answer: "De l'eau et du vin" },
+          {
+            q: 'Qu’est-ce que Claire voudrait manger ?',
+            options: ['Du poisson', 'De la viande', 'Des frites'],
+            answer: 'Du poisson',
+          },
+          {
+            q: 'Marc préfère la viande. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Vrai',
+          },
+          {
+            q: 'Qu’est-ce qu’ils boivent ?',
+            options: ["De l'eau et du vin", 'Du café', 'Du lait'],
+            answer: "De l'eau et du vin",
+          },
         ],
       },
     },

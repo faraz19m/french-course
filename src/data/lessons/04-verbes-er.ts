@@ -75,9 +75,21 @@ export const lesson04: Lesson = {
         kind: 'mcq',
         title: 'Choose the right ending',
         items: [
-          { q: 'Elle ___ la musique.', options: ['écoute', 'écoutes', 'écoutent'], answer: 'écoute' },
-          { q: 'Nous ___ le week-end.', options: ['regardez', 'regardons', 'regarde'], answer: 'regardons' },
-          { q: "Vous ___ l'anglais.", options: ['étudie', 'étudiez', 'étudient'], answer: 'étudiez' },
+          {
+            q: 'Elle ___ la musique.',
+            options: ['écoute', 'écoutes', 'écoutent'],
+            answer: 'écoute',
+          },
+          {
+            q: 'Nous ___ le week-end.',
+            options: ['regardez', 'regardons', 'regarde'],
+            answer: 'regardons',
+          },
+          {
+            q: "Vous ___ l'anglais.",
+            options: ['étudie', 'étudiez', 'étudient'],
+            answer: 'étudiez',
+          },
         ],
       },
     },
@@ -97,8 +109,17 @@ export const lesson04: Lesson = {
         title: 'Compréhension : la journée de Sophie',
         items: [
           { q: 'Où habite Sophie ?', options: ['À Lyon', 'À Paris', 'À Nice'], answer: 'À Lyon' },
-          { q: 'Quel est le travail de Sophie ?', options: ['Professeur', 'Médecin', 'Étudiante'], answer: 'Professeur' },
-          { q: 'Le soir, Sophie travaille. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Faux', why: 'Le soir, elle regarde un film ou parle avec ses amis.' },
+          {
+            q: 'Quel est le travail de Sophie ?',
+            options: ['Professeur', 'Médecin', 'Étudiante'],
+            answer: 'Professeur',
+          },
+          {
+            q: 'Le soir, Sophie travaille. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Faux',
+            why: 'Le soir, elle regarde un film ou parle avec ses amis.',
+          },
         ],
       },
     },

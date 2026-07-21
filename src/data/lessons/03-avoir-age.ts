@@ -89,7 +89,11 @@ export const lesson03: Lesson = {
         title: 'Age & numbers',
         items: [
           { q: 'How old are you? → Quel âge ___-vous ?', blanks: [['avez']] },
-          { q: 'I am 30 → J’ai ___ ans.', blanks: [['trente']], hint: 'Write the number as a French word.' },
+          {
+            q: 'I am 30 → J’ai ___ ans.',
+            blanks: [['trente']],
+            hint: 'Write the number as a French word.',
+          },
           { q: '21 in French = ___', blanks: [['vingt et un', 'vingt-et-un']] },
         ],
       },
@@ -124,7 +128,11 @@ export const lesson03: Lesson = {
         kind: 'mcq',
         title: 'Compréhension : la famille de Marc',
         items: [
-          { q: 'Quel âge a Marc ?', options: ['Vingt-cinq ans', 'Trente ans', 'Dix-huit ans'], answer: 'Vingt-cinq ans' },
+          {
+            q: 'Quel âge a Marc ?',
+            options: ['Vingt-cinq ans', 'Trente ans', 'Dix-huit ans'],
+            answer: 'Vingt-cinq ans',
+          },
           { q: 'Combien de chats y a-t-il ?', options: ['Deux', 'Un', 'Trois'], answer: 'Deux' },
           { q: 'Marc a une sœur. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
         ],
