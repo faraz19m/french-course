@@ -66,7 +66,11 @@ Text fields may contain a small set of trusted inline tags (`<b>`, `<i>`, `<br/>
 
 ## Deployment
 
-Pushing to `master` triggers `.github/workflows/deploy.yml`, which builds the app and publishes
-`dist/` to **GitHub Pages**. The Vite `base` is set to `/french-course/` for production so assets
-resolve under the project subpath. Enable Pages once under _Settings → Pages → Source: GitHub
-Actions_.
+The live site tracks **version tags**, not the tip of `master`:
+
+- **Push to `master`** → `.github/workflows/deploy.yml` runs CI only (type-check, tests, build). Nothing is published.
+- **Push a tag `v*`** (e.g. `git tag v1.0.0 && git push origin v1.0.0`) → the same workflow builds and publishes `dist/` to **GitHub Pages**.
+
+So the site changes only when you cut a release, and merging PRs never affects what's live. As a safety net, the `github-pages` environment is locked to `v*` tags, so nothing else (not even a manual run from `master`) can publish.
+
+The Vite `base` is `/french-course/` so assets resolve under the project subpath. Pages source is set to **GitHub Actions** (_Settings → Pages → Source_).
