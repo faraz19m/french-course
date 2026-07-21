@@ -91,9 +91,10 @@ Text fields may contain a small set of trusted inline tags (`<b>`, `<i>`, `<br/>
 ## Continuous integration
 
 `.github/workflows/ci.yml` runs on **every pull request** (and every commit pushed to a PR
-branch) and on pushes to `master`. It type-checks, lints, checks formatting, runs the unit
-tests, and builds. `master` is protected so the `verify` check must pass before a PR can be
-merged — a red build blocks the merge button.
+branch) and on pushes to `master`. It runs five independent jobs in parallel — `typecheck`,
+`lint`, `format`, `test`, and `build` — so a failing PR shows exactly which gate broke.
+`master` is protected so **all five** must pass before a PR can be merged; a red build blocks
+the merge button.
 
 ## Deployment
 
