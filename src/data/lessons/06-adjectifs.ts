@@ -121,5 +121,26 @@ export const lesson06: Lesson = {
         ],
       },
     },
+
+    {
+      type: 'reading',
+      title: 'Le nouvel appartement',
+      paragraphs: [
+        'Marie a un nouvel appartement. Il est petit mais joli. Les murs sont blancs et la porte est bleue.',
+        'Dans le salon, il y a un grand canapé rouge et une petite table noire. Marie est très contente : c’est un bel appartement !',
+      ],
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'Compréhension : le nouvel appartement',
+        items: [
+          { q: 'De quelle couleur est la porte ?', options: ['Bleue', 'Rouge', 'Blanche'], answer: 'Bleue' },
+          { q: 'L’appartement est grand. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Faux', why: 'Il est petit mais joli.' },
+          { q: 'Comment est le canapé ?', options: ['Grand et rouge', 'Petit et noir', 'Bleu'], answer: 'Grand et rouge' },
+        ],
+      },
+    },
   ],
 };

@@ -124,5 +124,26 @@ export const lesson07: Lesson = {
         ],
       },
     },
+
+    {
+      type: 'reading',
+      title: 'Les projets du week-end',
+      paragraphs: [
+        'Ce week-end, Julie va faire beaucoup de choses. Samedi, elle va aller au marché et elle va faire la cuisine.',
+        'Dimanche, elle finit ses devoirs, puis elle va voir un film avec Léo. « Nous allons passer un bon week-end ! » dit-elle.',
+      ],
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'Compréhension : les projets du week-end',
+        items: [
+          { q: 'Quand Julie va-t-elle au marché ?', options: ['Samedi', 'Dimanche', 'Lundi'], answer: 'Samedi' },
+          { q: 'Dimanche, Julie finit ses devoirs. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
+          { q: 'Avec qui Julie va-t-elle voir un film ?', options: ['Léo', 'Marie', 'Paul'], answer: 'Léo' },
+        ],
+      },
+    },
   ],
 };

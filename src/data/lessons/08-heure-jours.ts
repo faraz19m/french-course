@@ -122,5 +122,26 @@ export const lesson08: Lesson = {
         ],
       },
     },
+
+    {
+      type: 'reading',
+      title: 'La semaine de Thomas',
+      paragraphs: [
+        'Thomas se lève à sept heures. Le lundi et le mercredi, il travaille. Le samedi, il ne travaille pas : il fait du sport.',
+        'En hiver, il fait froid, alors il reste à la maison. Son anniversaire est le premier mars. Aujourd’hui, il fait beau et Thomas est content.',
+      ],
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'Compréhension : la semaine de Thomas',
+        items: [
+          { q: 'À quelle heure Thomas se lève-t-il ?', options: ['À sept heures', 'À huit heures', 'À six heures'], answer: 'À sept heures' },
+          { q: 'Quand est l’anniversaire de Thomas ?', options: ['Le premier mars', 'Le premier mai', 'Le 14 juillet'], answer: 'Le premier mars' },
+          { q: 'Le samedi, Thomas travaille. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Faux', why: 'Le samedi, il fait du sport.' },
+        ],
+      },
+    },
   ],
 };

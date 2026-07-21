@@ -95,5 +95,29 @@ export const lesson05: Lesson = {
         ],
       },
     },
+
+    {
+      type: 'reading',
+      title: 'Au téléphone',
+      paragraphs: [
+        '— Allô Paul ? Est-ce que tu es à la maison ?',
+        '— Non, je ne suis pas à la maison. Je suis au café.',
+        '— Tu manges quelque chose ?',
+        '— Non, je ne mange pas. Et toi, où es-tu ?',
+        '— Je suis à la gare. Je n’aime pas attendre !',
+      ],
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'Compréhension : au téléphone',
+        items: [
+          { q: 'Où est Paul ?', options: ['Au café', 'À la maison', 'À la gare'], answer: 'Au café' },
+          { q: 'Paul mange quelque chose. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Faux' },
+          { q: 'Qui est à la gare ?', options: ["L'autre personne", 'Paul', 'Le serveur'], answer: "L'autre personne" },
+        ],
+      },
+    },
   ],
 };

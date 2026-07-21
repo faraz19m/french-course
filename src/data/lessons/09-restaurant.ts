@@ -76,5 +76,26 @@ export const lesson09: Lesson = {
         ],
       },
     },
+
+    {
+      type: 'reading',
+      title: 'Au restaurant',
+      paragraphs: [
+        'Au restaurant, Claire regarde le menu. Elle voudrait du poisson avec des légumes. Son ami Marc préfère de la viande et des frites.',
+        'Ils boivent de l’eau et un verre de vin. Après le repas, Claire demande l’addition : « L’addition, s’il vous plaît ! »',
+      ],
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'Compréhension : au restaurant',
+        items: [
+          { q: 'Qu’est-ce que Claire voudrait manger ?', options: ['Du poisson', 'De la viande', 'Des frites'], answer: 'Du poisson' },
+          { q: 'Marc préfère la viande. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
+          { q: 'Qu’est-ce qu’ils boivent ?', options: ["De l'eau et du vin", 'Du café', 'Du lait'], answer: "De l'eau et du vin" },
+        ],
+      },
+    },
   ],
 };

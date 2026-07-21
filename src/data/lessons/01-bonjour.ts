@@ -156,5 +156,32 @@ export const lesson01: Lesson = {
         ],
       },
     },
+
+    {
+      type: 'reading',
+      title: 'Les présentations',
+      paragraphs: [
+        "Bonjour ! Je m'appelle Camille. Je suis française et j'habite à Paris. Je suis étudiante à l'université.",
+        "Voici mon ami Tom. Il est anglais, mais il habite à Nice. Il travaille dans un café. Nous sommes amis. Enchanté !",
+      ],
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'Compréhension : les présentations',
+        items: [
+          { q: 'Comment s’appelle la femme ?', options: ['Camille', 'Tom', 'Marie'], answer: 'Camille' },
+          { q: 'Camille est française. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
+          { q: 'Où habite Tom ?', options: ['À Paris', 'À Nice', 'À Londres'], answer: 'À Nice' },
+          {
+            q: 'Tom est professeur. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Faux',
+            why: 'Il travaille dans un café.',
+          },
+        ],
+      },
+    },
   ],
 };

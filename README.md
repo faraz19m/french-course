@@ -1,10 +1,15 @@
 # Le Carnet — French A1 Course
 
 A complete, self-paced French **A1** course: 12 one-hour lessons from _"Bonjour"_ to the
-_passé composé_, each with reference tables, vocabulary, and interactive self-checking exercises.
+_passé composé_, each with reference tables, vocabulary, a **reading-comprehension passage**
+with follow-up questions, and interactive self-checking exercises.
 
 Built as a small React + TypeScript single-page app. Progress (completed lessons and best
 exercise scores) is saved in the browser, so you can pick up where you left off.
+
+**Inline translation:** in a reading passage, click any word for its English meaning; anywhere in
+the app, select a phrase to translate it. Powered by the free Google Translate endpoint (with a
+MyMemory fallback), cached locally — no API key required.
 
 ## The course
 

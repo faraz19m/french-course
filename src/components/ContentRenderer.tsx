@@ -5,6 +5,7 @@ import { Prose } from './content/Prose';
 import { Note } from './content/Note';
 import { Table } from './content/Table';
 import { Vocab } from './content/Vocab';
+import { Reading } from './content/Reading';
 import { Exercise } from './exercises/Exercise';
 
 /**
@@ -31,6 +32,8 @@ export function ContentRenderer({ blocks, lessonId }: { blocks: ContentBlock[]; 
             return <Table key={i} head={block.head} rows={block.rows} />;
           case 'vocab':
             return <Vocab key={i} items={block.items} />;
+          case 'reading':
+            return <Reading key={i} title={block.title} paragraphs={block.paragraphs} />;
           case 'exercise':
             return <Exercise key={i} exercise={block.exercise} lessonId={lessonId} />;
           default: {

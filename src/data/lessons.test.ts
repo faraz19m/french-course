@@ -97,3 +97,26 @@ describe('exercise integrity', () => {
     }
   });
 });
+
+describe('reading comprehension', () => {
+  it('every lesson has a reading passage with non-empty paragraphs', () => {
+    for (const l of lessons) {
+      const readings = l.blocks.filter((b) => b.type === 'reading');
+      expect(readings.length, `lesson ${l.id}`).toBeGreaterThan(0);
+      for (const r of readings) {
+        expect(r.title.trim().length, `lesson ${l.id}`).toBeGreaterThan(0);
+        expect(r.paragraphs.length, `lesson ${l.id}`).toBeGreaterThan(0);
+        expect(r.paragraphs.every((p) => p.trim().length > 0)).toBe(true);
+      }
+    }
+  });
+
+  it('every lesson has a comprehension exercise tied to its reading', () => {
+    for (const l of lessons) {
+      const hasCompre = l.blocks.some(
+        (b) => b.type === 'exercise' && b.exercise.title.toLowerCase().startsWith('compréhension'),
+      );
+      expect(hasCompre, `lesson ${l.id}`).toBe(true);
+    }
+  });
+});
