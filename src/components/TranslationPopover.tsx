@@ -4,12 +4,15 @@ import { createPortal } from 'react-dom';
 export type TranslationStatus = 'loading' | 'done' | 'error';
 
 interface TranslationPopoverProps {
-  /** The French source text being looked up. */
+  /** The source text being looked up. */
   source: string;
   /** Viewport-relative rectangle of the clicked word / selected text. */
   anchor: DOMRect;
   status: TranslationStatus;
   result: string;
+  /** Resolved translation direction (e.g. 'fr' → 'en'), shown in the footer. */
+  from?: string;
+  to?: string;
   onClose: () => void;
 }
 
@@ -28,6 +31,8 @@ export function TranslationPopover({
   anchor,
   status,
   result,
+  from,
+  to,
   onClose,
 }: TranslationPopoverProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -86,7 +91,9 @@ export function TranslationPopover({
         {status === 'done' && (result || '—')}
         {status === 'error' && 'Translation unavailable — check your connection.'}
       </div>
-      <div className="tpop-cite">fr → en · Google Translate</div>
+      <div className="tpop-cite">
+        {from && to ? `${from} → ${to} · ` : ''}Google Translate
+      </div>
     </div>,
     document.body,
   );

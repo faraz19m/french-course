@@ -7,8 +7,9 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { translate } from '../lib/translate';
+import { smartTranslate } from '../lib/translate';
 import { TranslationPopover, type TranslationStatus } from '../components/TranslationPopover';
+import { useSettings } from './SettingsContext';
 
 interface TranslationContextValue {
   /** Look up `text` and show the result anchored to `anchor` (a viewport rect). */
@@ -22,6 +23,9 @@ interface PopoverState {
   anchor: DOMRect;
   status: TranslationStatus;
   result: string;
+  /** Resolved translation direction, known once the lookup completes. */
+  from?: string;
+  to?: string;
 }
 
 /** Longest selection we'll auto-translate — avoids firing on stray whole-page selects. */
@@ -35,10 +39,15 @@ const MAX_SELECTION = 240;
  */
 export function TranslationProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<PopoverState | null>(null);
+  const { baseLanguage } = useSettings();
   // Guards against a slow request overwriting a newer one.
   const requestId = useRef(0);
   // Lets us actually cancel the in-flight fetch (not just ignore its result).
   const abort = useRef<AbortController | null>(null);
+  // Kept in a ref so `translateAt` stays stable while always reading the latest
+  // choice (the global selection listener binds to one `translateAt` instance).
+  const baseRef = useRef(baseLanguage);
+  baseRef.current = baseLanguage;
 
   const translateAt = useCallback((text: string, anchor: DOMRect) => {
     const clean = text.trim();
@@ -48,10 +57,10 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
     abort.current = ctrl;
     const id = ++requestId.current;
     setState({ source: clean, anchor, status: 'loading', result: '' });
-    translate(clean, { signal: ctrl.signal })
-      .then((result) => {
+    smartTranslate(clean, { base: baseRef.current, signal: ctrl.signal })
+      .then(({ result, from, to }) => {
         if (requestId.current === id) {
-          setState((s) => (s ? { ...s, status: 'done', result } : s));
+          setState((s) => (s ? { ...s, status: 'done', result, from, to } : s));
         }
       })
       .catch(() => {
@@ -107,6 +116,8 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
           anchor={state.anchor}
           status={state.status}
           result={state.result}
+          from={state.from}
+          to={state.to}
           onClose={close}
         />
       )}

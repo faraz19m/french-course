@@ -1,5 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import { ProgressProvider } from './hooks/ProgressContext';
+import { SettingsProvider } from './hooks/SettingsContext';
 import { TranslationProvider } from './hooks/TranslationContext';
 import { Layout } from './components/Layout';
 import { HomePage } from './pages/HomePage';
@@ -14,17 +15,19 @@ import { NotFound } from './pages/NotFound';
 export function App() {
   return (
     <ProgressProvider>
-      <TranslationProvider>
-        <HashRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
-              <Route path="lesson/:slug" element={<LessonPage />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-        </HashRouter>
-      </TranslationProvider>
+      <SettingsProvider>
+        <TranslationProvider>
+          <HashRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<HomePage />} />
+                <Route path="lesson/:slug" element={<LessonPage />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </HashRouter>
+        </TranslationProvider>
+      </SettingsProvider>
     </ProgressProvider>
   );
 }
