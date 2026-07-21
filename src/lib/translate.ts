@@ -58,19 +58,23 @@ async function fetchWithTimeout(url: string, signal?: AbortSignal): Promise<Resp
   }
 }
 
-async function viaGoogle(
+/**
+ * Calls Google's `gtx` endpoint and returns both the translation and the source
+ * language it detected. Pass `from='auto'` to let Google detect the source.
+ * Shape: `[[[translatedChunk, originalChunk, ...], ...], null, detectedLang, ...]`.
+ */
+async function viaGoogleDetect(
   text: string,
   from: string,
   to: string,
   signal?: AbortSignal,
-): Promise<string> {
+): Promise<{ result: string; detected: string }> {
   const url =
     'https://translate.googleapis.com/translate_a/single?client=gtx' +
     `&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`;
   const res = await fetchWithTimeout(url, signal);
   if (!res.ok) throw new Error(`google ${res.status}`);
-  // Shape: [[[translatedChunk, originalChunk, ...], ...], ...]
-  const data = (await res.json()) as [Array<[string, string]>, ...unknown[]];
+  const data = (await res.json()) as [Array<[string, string]>, unknown, unknown, ...unknown[]];
   const segments = data[0];
   if (!Array.isArray(segments)) throw new Error('google: unexpected shape');
   // Any malformed segment means we don't trust the response — throw so we fall
@@ -82,7 +86,19 @@ async function viaGoogle(
   }
   const out = parts.join('').trim();
   if (!out) throw new Error('google: empty');
-  return out;
+  // data[2] is the detected source language (e.g. "fr"). Fall back to the
+  // requested `from` when it's absent so callers always get a usable code.
+  const detected = typeof data[2] === 'string' && data[2] ? data[2] : from;
+  return { result: out, detected };
+}
+
+async function viaGoogle(
+  text: string,
+  from: string,
+  to: string,
+  signal?: AbortSignal,
+): Promise<string> {
+  return (await viaGoogleDetect(text, from, to, signal)).result;
 }
 
 async function viaMyMemory(
@@ -149,4 +165,68 @@ export async function translate(text: string, opts: TranslateOptions = {}): Prom
     persist(key, result);
   }
   return result;
+}
+
+/** The language being learned. Fixed — the base language is what varies. */
+const LEARNING = 'fr';
+
+/**
+ * Direction we've already resolved for a given source text this session, so a
+ * repeat lookup skips re-detecting and goes straight to the (cached) translate.
+ */
+const resolvedCache = new Map<string, { from: string; to: string }>();
+
+export interface SmartTranslation {
+  result: string;
+  from: string;
+  to: string;
+}
+
+/**
+ * Auto-directional translation for the learner. The rule: translate into your
+ * `base` language, unless the text already *is* your base language — then
+ * translate it into French. So highlighting French shows it in your language,
+ * and highlighting your own language shows the French.
+ *
+ * The common path (French → base) resolves in a single Google request via
+ * source auto-detection; base → French costs one extra request the first time.
+ */
+export async function smartTranslate(
+  text: string,
+  opts: { base: string; signal?: AbortSignal },
+): Promise<SmartTranslation> {
+  const { base, signal } = opts;
+  const clean = text.trim();
+  if (!clean) return { result: '', from: LEARNING, to: base };
+
+  // Already resolved this text's direction — let translate()'s cache serve it.
+  const known = resolvedCache.get(clean);
+  if (known) {
+    const result = await translate(clean, { ...known, signal });
+    return { ...known, result };
+  }
+
+  try {
+    // One shot: auto-detect the source and translate into the base language.
+    const { result, detected } = await viaGoogleDetect(clean, 'auto', base, signal);
+    if (detected !== base) {
+      // Foreign text (French or otherwise): "→ base" is what we want. Seed the
+      // shared cache under the resolved pair so repeats are instant.
+      const key = cacheKey(clean, detected, base);
+      memCache.set(key, result);
+      persist(key, result);
+      resolvedCache.set(clean, { from: detected, to: base });
+      return { result, from: detected, to: base };
+    }
+    // The text is already in the base language → translate it into French.
+    const learned = await translate(clean, { from: base, to: LEARNING, signal });
+    resolvedCache.set(clean, { from: base, to: LEARNING });
+    return { result: learned, from: base, to: LEARNING };
+  } catch {
+    // Auto-detect failed: assume the dominant case (French source) and go
+    // through the full provider fallback chain. Re-throws on a real failure.
+    const result = await translate(clean, { from: LEARNING, to: base, signal });
+    resolvedCache.set(clean, { from: LEARNING, to: base });
+    return { result, from: LEARNING, to: base };
+  }
 }

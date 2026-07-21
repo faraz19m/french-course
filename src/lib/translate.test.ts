@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { translate } from './translate';
+import { smartTranslate, translate } from './translate';
 
 // The module keeps a process-wide in-memory cache we can't reset between tests,
 // so every test translates a UNIQUE phrase to avoid cross-test cache hits.
@@ -11,6 +11,16 @@ function googleOk(text: string): Response {
     ok: true,
     status: 200,
     json: async () => [[[text, 'orig']]],
+  } as unknown as Response;
+}
+
+// Like googleOk but carries a detected source language at index 2, as the real
+// gtx endpoint does — what `smartTranslate` reads to pick a direction.
+function googleDetect(text: string, detected: string): Response {
+  return {
+    ok: true,
+    status: 200,
+    json: async () => [[[text, 'orig']], null, detected],
   } as unknown as Response;
 }
 
@@ -77,5 +87,42 @@ describe('translate', () => {
     await translate(q);
     const raw = localStorage.getItem('le-carnet:translations:v1');
     expect(raw).toContain('persisted');
+  });
+});
+
+describe('smartTranslate', () => {
+  afterEach(() => vi.restoreAllMocks());
+
+  it('translates foreign text into the base language in one request', async () => {
+    const q = unique();
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(googleDetect('hello', 'fr'));
+    const out = await smartTranslate(q, { base: 'en' });
+    expect(out).toEqual({ result: 'hello', from: 'fr', to: 'en' });
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('respects a non-English base language (fr → es)', async () => {
+    const q = unique();
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(googleDetect('hola', 'fr'));
+    const out = await smartTranslate(q, { base: 'es' });
+    expect(out).toEqual({ result: 'hola', from: 'fr', to: 'es' });
+  });
+
+  it('flips direction when the text is already in the base language (en → fr)', async () => {
+    const q = unique();
+    vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(googleDetect(q, 'en')) // auto-detect: it's English
+      .mockResolvedValueOnce(googleOk('bonjour')); // second request: en → fr
+    const out = await smartTranslate(q, { base: 'en' });
+    expect(out).toEqual({ result: 'bonjour', from: 'en', to: 'fr' });
+  });
+
+  it('falls back to assuming French when auto-detect fails', async () => {
+    const q = unique();
+    vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(httpError(500)) // auto-detect request fails
+      .mockResolvedValueOnce(googleOk('rescued')); // fallback fr → base
+    const out = await smartTranslate(q, { base: 'en' });
+    expect(out).toEqual({ result: 'rescued', from: 'fr', to: 'en' });
   });
 });

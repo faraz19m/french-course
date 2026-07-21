@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { adjacentLessons, lessonBySlug, lessons } from '../data/lessons';
 import { ContentRenderer } from '../components/ContentRenderer';
+import { LanguageSelector } from '../components/LanguageSelector';
 import { useProgress } from '../hooks/ProgressContext';
 import { NotFound } from './NotFound';
 
@@ -19,6 +20,9 @@ export function LessonPage() {
 
   return (
     <>
+      <div className="lesson-top">
+        <LanguageSelector />
+      </div>
       <div className="eyebrow">
         Leçon {lesson.id} sur {lessons.length}
       </div>

@@ -204,6 +204,44 @@ main {
     padding: 30px 22px 70px;
   }
 }
+/* Top bar of a lesson: holds the base-language selector, aligned right. */
+.lesson-top {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+.lang-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.lang-select select {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--slate);
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 9px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: 0.12s;
+}
+.lang-select select:hover {
+  border-color: var(--ochre-dk);
+}
+.lang-select select:focus-visible {
+  outline: 2px solid var(--ochre);
+  outline-offset: 1px;
+}
+
 .eyebrow {
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
