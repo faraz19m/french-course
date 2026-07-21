@@ -59,8 +59,9 @@ export function HomePage() {
       </div>
 
       <div className="note">
-        <b>Tip:</b> your progress is saved in this browser automatically — completed lessons and your
-        best exercise scores persist across visits. Speaking out loud beats silent reading every time.
+        <b>Tip:</b> your progress is saved in this browser automatically — completed lessons and
+        your best exercise scores persist across visits. Speaking out loud beats silent reading
+        every time.
       </div>
     </>
   );

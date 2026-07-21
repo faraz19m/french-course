@@ -104,8 +104,16 @@ export const lesson06: Lesson = {
         kind: 'mcq',
         title: 'Before or after?',
         items: [
-          { q: 'a red car =', options: ['une rouge voiture', 'une voiture rouge'], answer: 'une voiture rouge' },
-          { q: 'a beautiful house =', options: ['une belle maison', 'une maison belle'], answer: 'une belle maison' },
+          {
+            q: 'a red car =',
+            options: ['une rouge voiture', 'une voiture rouge'],
+            answer: 'une voiture rouge',
+          },
+          {
+            q: 'a beautiful house =',
+            options: ['une belle maison', 'une maison belle'],
+            answer: 'une belle maison',
+          },
         ],
       },
     },
@@ -115,9 +123,24 @@ export const lesson06: Lesson = {
         kind: 'mcq',
         title: 'c’est or il/elle est?',
         items: [
-          { q: '___ un bon film.', options: ["C'est", 'Il est'], answer: "C'est", why: "c'est + noun." },
-          { q: '___ très intéressant.', options: ["C'est", 'Il est'], answer: 'Il est', why: 'il est + adjective.' },
-          { q: 'Voici Marie. ___ anglaise.', options: ["C'est", 'Elle est'], answer: 'Elle est', why: 'elle est + adjective/nationality.' },
+          {
+            q: '___ un bon film.',
+            options: ["C'est", 'Il est'],
+            answer: "C'est",
+            why: "c'est + noun.",
+          },
+          {
+            q: '___ très intéressant.',
+            options: ["C'est", 'Il est'],
+            answer: 'Il est',
+            why: 'il est + adjective.',
+          },
+          {
+            q: 'Voici Marie. ___ anglaise.',
+            options: ["C'est", 'Elle est'],
+            answer: 'Elle est',
+            why: 'elle est + adjective/nationality.',
+          },
         ],
       },
     },
@@ -136,9 +159,22 @@ export const lesson06: Lesson = {
         kind: 'mcq',
         title: 'Compréhension : le nouvel appartement',
         items: [
-          { q: 'De quelle couleur est la porte ?', options: ['Bleue', 'Rouge', 'Blanche'], answer: 'Bleue' },
-          { q: 'L’appartement est grand. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Faux', why: 'Il est petit mais joli.' },
-          { q: 'Comment est le canapé ?', options: ['Grand et rouge', 'Petit et noir', 'Bleu'], answer: 'Grand et rouge' },
+          {
+            q: 'De quelle couleur est la porte ?',
+            options: ['Bleue', 'Rouge', 'Blanche'],
+            answer: 'Bleue',
+          },
+          {
+            q: 'L’appartement est grand. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Faux',
+            why: 'Il est petit mais joli.',
+          },
+          {
+            q: 'Comment est le canapé ?',
+            options: ['Grand et rouge', 'Petit et noir', 'Bleu'],
+            answer: 'Grand et rouge',
+          },
         ],
       },
     },

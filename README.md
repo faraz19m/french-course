@@ -13,20 +13,20 @@ MyMemory fallback), cached locally — no API key required.
 
 ## The course
 
-| #   | Lesson             | Grammar focus                                |
-| --- | ------------------ | -------------------------------------------- |
-| 1   | Bonjour !          | être, pronouns, tu/vous, nationalities       |
-| 2   | Les articles       | gender, le/la/les, un/une/des, plurals       |
-| 3   | Avoir & l'âge      | avoir, numbers 0–100, il y a                 |
-| 4   | Verbes en -ER      | regular -ER present tense                    |
-| 5   | La négation        | ne…pas, questions, question words            |
-| 6   | Les adjectifs      | agreement, position, colours, c'est/il est   |
-| 7   | Verbes -IR / -RE   | finir, vendre, aller, faire, futur proche    |
-| 8   | L'heure & les jours| time, dates, seasons, weather, routines      |
-| 9   | Au restaurant      | partitives du/de la/des, food, ordering      |
-| 10  | La famille         | family, possessives mon/ma/mes               |
-| 11  | En ville           | places, à/de contractions, directions        |
-| 12  | Le passé composé   | past tense with avoir & être                 |
+| #   | Lesson              | Grammar focus                              |
+| --- | ------------------- | ------------------------------------------ |
+| 1   | Bonjour !           | être, pronouns, tu/vous, nationalities     |
+| 2   | Les articles        | gender, le/la/les, un/une/des, plurals     |
+| 3   | Avoir & l'âge       | avoir, numbers 0–100, il y a               |
+| 4   | Verbes en -ER       | regular -ER present tense                  |
+| 5   | La négation         | ne…pas, questions, question words          |
+| 6   | Les adjectifs       | agreement, position, colours, c'est/il est |
+| 7   | Verbes -IR / -RE    | finir, vendre, aller, faire, futur proche  |
+| 8   | L'heure & les jours | time, dates, seasons, weather, routines    |
+| 9   | Au restaurant       | partitives du/de la/des, food, ordering    |
+| 10  | La famille          | family, possessives mon/ma/mes             |
+| 11  | En ville            | places, à/de contractions, directions      |
+| 12  | Le passé composé    | past tense with avoir & être               |
 
 ## Getting started
 
@@ -36,6 +36,25 @@ npm run dev     # start the dev server (http://localhost:5173)
 npm run build   # type-check + production build into dist/
 npm run preview # preview the production build locally
 ```
+
+### Quality checks
+
+The same checks CI enforces can all be run locally:
+
+```bash
+npm run typecheck    # tsc, no emit
+npm run lint         # ESLint
+npm run format       # Prettier — write (fix formatting)
+npm run format:check # Prettier — verify only (what CI runs)
+npm test             # Vitest unit tests (one-shot)
+npm run test:watch   # Vitest in watch mode
+npm run test:coverage
+```
+
+Unit tests live next to the code they cover as `*.test.ts(x)` files and run under
+[Vitest](https://vitest.dev/) (jsdom environment). They cover answer normalisation, the
+localStorage helpers, the translation layer (network mocked), the progress store, and the
+integrity of the course data.
 
 ## Project structure
 
@@ -69,12 +88,20 @@ type is displayed. To add or edit content, edit the data file — no component c
 Text fields may contain a small set of trusted inline tags (`<b>`, `<i>`, `<br/>`) rendered via the
 `Rich` component. All content is static and authored in-repo; no user input is ever rendered as HTML.
 
+## Continuous integration
+
+`.github/workflows/ci.yml` runs on **every pull request** (and every commit pushed to a PR
+branch) and on pushes to `master`. It runs five independent jobs in parallel — `typecheck`,
+`lint`, `format`, `test`, and `build` — so a failing PR shows exactly which gate broke.
+`master` is protected so **all five** must pass before a PR can be merged; a red build blocks
+the merge button.
+
 ## Deployment
 
 The live site tracks **version tags**, not the tip of `master`:
 
-- **Push to `master`** → `.github/workflows/deploy.yml` runs CI only (type-check, tests, build). Nothing is published.
-- **Push a tag `v*`** (e.g. `git tag v1.0.0 && git push origin v1.0.0`) → the same workflow builds and publishes `dist/` to **GitHub Pages**.
+- **Push to `master` / open a PR** → `.github/workflows/ci.yml` runs the full check suite. Nothing is published.
+- **Push a tag `v*`** (e.g. `git tag v1.0.0 && git push origin v1.0.0`) → `.github/workflows/deploy.yml` re-runs the checks, builds, and publishes `dist/` to **GitHub Pages**.
 
 So the site changes only when you cut a release, and merging PRs never affects what's live. As a safety net, the `github-pages` environment is locked to `v*` tags, so nothing else (not even a manual run from `master`) can publish.
 

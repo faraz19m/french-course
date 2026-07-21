@@ -7,16 +7,18 @@
  * the feedback.
  */
 export function normalizeAnswer(s: string): string {
-  return (s || '')
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, ' ')
-    // Mobile "smart punctuation" types a curly ’ (and variants); course data uses
-    // a straight '. Treat them as equal so a correct elision isn't marked wrong.
-    .replace(/[‘’ʼ]/g, "'")
-    // NFD leaves these ligatures intact, so expand them explicitly.
-    .replace(/œ/g, 'oe')
-    .replace(/æ/g, 'ae')
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '');
+  return (
+    (s || '')
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, ' ')
+      // Mobile "smart punctuation" types a curly ’ (and variants); course data uses
+      // a straight '. Treat them as equal so a correct elision isn't marked wrong.
+      .replace(/[‘’ʼ]/g, "'")
+      // NFD leaves these ligatures intact, so expand them explicitly.
+      .replace(/œ/g, 'oe')
+      .replace(/æ/g, 'ae')
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+  );
 }
