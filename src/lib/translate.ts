@@ -209,19 +209,28 @@ export async function smartTranslate(
   try {
     // One shot: auto-detect the source and translate into the base language.
     const { result, detected } = await viaGoogleDetect(clean, 'auto', base, signal);
-    if (detected !== base) {
-      // Foreign text (French or otherwise): "→ base" is what we want. Seed the
-      // shared cache under the resolved pair so repeats are instant.
-      const key = cacheKey(clean, detected, base);
+    if (detected === base) {
+      // The text is already in the base language → translate it into French.
+      const learned = await translate(clean, { from: base, to: LEARNING, signal });
+      resolvedCache.set(clean, { from: base, to: LEARNING });
+      return { result: learned, from: base, to: LEARNING };
+    }
+    if (detected === LEARNING) {
+      // French → base, already done in this one shot. Seed the shared cache
+      // under the resolved pair so repeats are instant.
+      const key = cacheKey(clean, LEARNING, base);
       memCache.set(key, result);
       persist(key, result);
-      resolvedCache.set(clean, { from: detected, to: base });
-      return { result, from: detected, to: base };
+      resolvedCache.set(clean, { from: LEARNING, to: base });
+      return { result, from: LEARNING, to: base };
     }
-    // The text is already in the base language → translate it into French.
-    const learned = await translate(clean, { from: base, to: LEARNING, signal });
-    resolvedCache.set(clean, { from: base, to: LEARNING });
-    return { result: learned, from: base, to: LEARNING };
+    // Anything else is a mis-detection: short or ambiguous French reads to
+    // Google as Catalan, Latin, etc. We only ever translate French or the base
+    // language, so treat it as French and re-translate explicitly — the auto
+    // result was computed for the wrong source and can't be trusted.
+    const forced = await translate(clean, { from: LEARNING, to: base, signal });
+    resolvedCache.set(clean, { from: LEARNING, to: base });
+    return { result: forced, from: LEARNING, to: base };
   } catch {
     // Auto-detect failed: assume the dominant case (French source) and go
     // through the full provider fallback chain. Re-throws on a real failure.
