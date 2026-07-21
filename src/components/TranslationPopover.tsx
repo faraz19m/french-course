@@ -91,9 +91,7 @@ export function TranslationPopover({
         {status === 'done' && (result || '—')}
         {status === 'error' && 'Translation unavailable — check your connection.'}
       </div>
-      <div className="tpop-cite">
-        {from && to ? `${from} → ${to} · ` : ''}Google Translate
-      </div>
+      <div className="tpop-cite">{from && to ? `${from} → ${to} · ` : ''}Google Translate</div>
     </div>,
     document.body,
   );
