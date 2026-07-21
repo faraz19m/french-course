@@ -2,7 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [master]
+    branches: [master] # CI only: type-check, test, build (no publish)
+    tags: ['v*'] # release: build + publish to the live site
   workflow_dispatch:
 
 # Allow the workflow to publish to GitHub Pages.
@@ -17,23 +18,34 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Runs on every push to master (as CI) and on version tags. Only tag builds
+  # get packaged for Pages — master pushes just prove the app still builds.
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm test
       - run: npm run build
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - name: Package for Pages
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
+  # Publishes to the live site ONLY for version tags (e.g. v1.0.0). The
+  # github-pages environment is additionally locked to `v*` tags, so nothing
+  # else — not even a manual run from master — can change what's live.
   deploy:
     needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     environment:
       name: github-pages
