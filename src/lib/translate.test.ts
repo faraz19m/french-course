@@ -117,6 +117,15 @@ describe('smartTranslate', () => {
     expect(out).toEqual({ result: 'bonjour', from: 'en', to: 'fr' });
   });
 
+  it('treats a mis-detected source (not base, not French) as French', async () => {
+    const q = unique();
+    vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(googleDetect('garbled', 'ca')) // Google mis-detects Catalan
+      .mockResolvedValueOnce(googleOk('correct')); // forced fr → base re-translate
+    const out = await smartTranslate(q, { base: 'en' });
+    expect(out).toEqual({ result: 'correct', from: 'fr', to: 'en' });
+  });
+
   it('falls back to assuming French when auto-detect fails', async () => {
     const q = unique();
     vi.spyOn(globalThis, 'fetch')
