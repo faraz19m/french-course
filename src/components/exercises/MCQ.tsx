@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { McqItem } from '../../types';
+import { Rich } from '../Rich';
 
 interface MCQProps {
   items: McqItem[];
@@ -27,7 +28,7 @@ export function MCQ({ items, onChecked }: MCQProps) {
     <div>
       {items.map((it, i) => (
         <div className="q" key={i}>
-          <div className="q-text" dangerouslySetInnerHTML={{ __html: `${i + 1}. ${it.q}` }} />
+          <Rich as="div" className="q-text" html={`${i + 1}. ${it.q}`} />
           <div className="opts">
             {it.options.map((op) => {
               let cls = 'opt';

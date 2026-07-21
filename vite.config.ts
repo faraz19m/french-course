@@ -2,9 +2,11 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 // The site is served from https://<user>.github.io/french-course/ on GitHub Pages,
-// so assets must be resolved against that sub-path in production. Locally (dev) the
-// base is '/'. See .github/workflows/deploy.yml.
-export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/french-course/' : '/',
+// so assets must resolve against that sub-path. We use the same base everywhere —
+// dev, build, and preview — because a build-only base makes `npm run preview` 404
+// on every asset: preview serves the production build (whose URLs are baked with
+// this base) but runs with command 'serve'. See .github/workflows/deploy.yml.
+export default defineConfig({
+  base: '/french-course/',
   plugins: [react()],
-}));
+});

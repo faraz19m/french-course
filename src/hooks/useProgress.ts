@@ -7,7 +7,8 @@ import { useCallback, useEffect, useState } from 'react';
  * Two things are tracked:
  *  - `completed`: which lessons the learner marked done (the progress spine).
  *  - `scores`:    the best score achieved on each exercise, keyed by
- *                 `"<lessonId>:<exerciseIndex>"`.
+ *                 `"<lessonId>:<exercise title>"` — a stable identity that
+ *                 survives reordering exercises within a lesson.
  */
 
 const STORAGE_KEY = 'le-carnet:progress:v1';
@@ -40,8 +41,8 @@ function load(): ProgressState {
   }
 }
 
-export function exerciseKey(lessonId: number, exerciseIndex: number): string {
-  return `${lessonId}:${exerciseIndex}`;
+export function exerciseKey(lessonId: number, exerciseId: string): string {
+  return `${lessonId}:${exerciseId}`;
 }
 
 export interface UseProgress {
@@ -50,8 +51,8 @@ export interface UseProgress {
   toggleDone: (lessonId: number) => void;
   completedCount: number;
   /** Records a score, keeping only the learner's best attempt. */
-  recordScore: (lessonId: number, exerciseIndex: number, score: number, total: number) => void;
-  bestScore: (lessonId: number, exerciseIndex: number) => ExerciseScore | undefined;
+  recordScore: (lessonId: number, exerciseId: string, score: number, total: number) => void;
+  bestScore: (lessonId: number, exerciseId: string) => ExerciseScore | undefined;
   reset: () => void;
 }
 
@@ -74,7 +75,10 @@ export function useProgressStore(): UseProgress {
     }
   }, [state]);
 
-  const isDone = useCallback((lessonId: number) => Boolean(state.completed[lessonId]), [state]);
+  const isDone = useCallback(
+    (lessonId: number) => Boolean(state.completed[lessonId]),
+    [state.completed],
+  );
 
   const toggleDone = useCallback((lessonId: number) => {
     setState((prev) => ({
@@ -84,12 +88,15 @@ export function useProgressStore(): UseProgress {
   }, []);
 
   const recordScore = useCallback(
-    (lessonId: number, exerciseIndex: number, score: number, total: number) => {
-      const key = exerciseKey(lessonId, exerciseIndex);
+    (lessonId: number, exerciseId: string, score: number, total: number) => {
+      const key = exerciseKey(lessonId, exerciseId);
       setState((prev) => {
         const existing = prev.scores[key];
-        // Keep the best attempt (higher score, or same score first recorded).
-        if (existing && existing.score >= score) return prev;
+        // Keep the best attempt by *fraction* correct. Comparing raw scores would
+        // wrongly reject a genuine improvement when an exercise's item count
+        // changed between versions (e.g. a stored 5/5 blocking a new 4/4).
+        // Cross-multiplied to avoid a divide-by-zero on a hypothetical 0-item set.
+        if (existing && existing.score * total >= score * existing.total) return prev;
         return { ...prev, scores: { ...prev.scores, [key]: { score, total } } };
       });
     },
@@ -97,9 +104,9 @@ export function useProgressStore(): UseProgress {
   );
 
   const bestScore = useCallback(
-    (lessonId: number, exerciseIndex: number): ExerciseScore | undefined =>
-      state.scores[exerciseKey(lessonId, exerciseIndex)],
-    [state],
+    (lessonId: number, exerciseId: string): ExerciseScore | undefined =>
+      state.scores[exerciseKey(lessonId, exerciseId)],
+    [state.scores],
   );
 
   const reset = useCallback(() => setState(EMPTY), []);

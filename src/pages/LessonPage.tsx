@@ -27,7 +27,13 @@ export function LessonPage() {
         <span className="en">{lesson.en}</span>
       </h1>
 
-      <ContentRenderer blocks={lesson.blocks} lessonId={lesson.id} />
+      {/*
+        Keyed by lesson id so navigating between lessons remounts the whole
+        subtree. Without this, React reuses the exercise instances (they sit at
+        the same block positions across lessons) and their local answer/checked
+        state leaks from the previous lesson into the next.
+      */}
+      <ContentRenderer key={lesson.id} blocks={lesson.blocks} lessonId={lesson.id} />
 
       <button
         className={'done-btn' + (done ? ' is-done' : '')}

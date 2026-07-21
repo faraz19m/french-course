@@ -46,6 +46,15 @@ describe('exercise integrity', () => {
     }
   });
 
+  it('has unique exercise titles within each lesson (scores are keyed by title)', () => {
+    for (const l of lessons) {
+      const titles = l.blocks
+        .filter((b) => b.type === 'exercise')
+        .map((b) => b.exercise.title);
+      expect(new Set(titles).size, `lesson ${l.id}`).toBe(titles.length);
+    }
+  });
+
   it("every MCQ's answer is one of its options", () => {
     for (const { lesson, ex } of exercises) {
       if (ex.kind !== 'mcq') continue;

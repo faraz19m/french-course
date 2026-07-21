@@ -13,8 +13,6 @@ import { Exercise } from './exercises/Exercise';
  * lesson id and their running index so their scores can be saved.
  */
 export function ContentRenderer({ blocks, lessonId }: { blocks: ContentBlock[]; lessonId: number }) {
-  let exerciseIndex = 0;
-
   return (
     <>
       {blocks.map((block, i) => {
@@ -34,9 +32,7 @@ export function ContentRenderer({ blocks, lessonId }: { blocks: ContentBlock[]; 
           case 'vocab':
             return <Vocab key={i} items={block.items} />;
           case 'exercise':
-            return (
-              <Exercise key={i} exercise={block.exercise} lessonId={lessonId} index={exerciseIndex++} />
-            );
+            return <Exercise key={i} exercise={block.exercise} lessonId={lessonId} />;
           default: {
             // Exhaustiveness guard: adding a new block type without handling it
             // here becomes a compile error.

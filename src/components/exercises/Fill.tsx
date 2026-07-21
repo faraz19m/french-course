@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react';
 import type { FillItem } from '../../types';
 import { normalizeAnswer } from '../../lib/text';
+import { Rich } from '../Rich';
 
 interface FillProps {
   items: FillItem[];
@@ -42,7 +43,7 @@ export function Fill({ items, onChecked }: FillProps) {
               {qi + 1}.{' '}
               {parts.map((part, bi) => (
                 <Fragment key={bi}>
-                  <span dangerouslySetInnerHTML={{ __html: part }} />
+                  <Rich html={part} />
                   {bi < it.blanks.length && (
                     <input
                       className={

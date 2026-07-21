@@ -4,13 +4,14 @@ import { Sidebar } from './Sidebar';
 
 /** App shell: persistent sidebar + routed main content, with scroll reset on navigation. */
 export function Layout() {
-  const { pathname } = useLocation();
+  // `key` is unique per history entry, so this fires on *every* navigation —
+  // including re-clicking the link for the page you're already on, which a
+  // `pathname` dependency would miss. Mirrors the original's scroll-to-top.
+  const { key } = useLocation();
 
-  // Each lesson/overview should open at the top, mirroring the original's
-  // scroll-to-top on navigation.
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [key]);
 
   return (
     <div className="wrap">
