@@ -10,14 +10,14 @@ exercise scores) is saved in the browser, so you can pick up where you left off.
 
 | #   | Lesson             | Grammar focus                                |
 | --- | ------------------ | -------------------------------------------- |
-| 1   | Bonjour !          | être, pronouns, tu/vous                      |
+| 1   | Bonjour !          | être, pronouns, tu/vous, nationalities       |
 | 2   | Les articles       | gender, le/la/les, un/une/des, plurals       |
-| 3   | Avoir & l'âge      | avoir, numbers 0–69, il y a                  |
+| 3   | Avoir & l'âge      | avoir, numbers 0–100, il y a                 |
 | 4   | Verbes en -ER      | regular -ER present tense                    |
 | 5   | La négation        | ne…pas, questions, question words            |
-| 6   | Les adjectifs      | agreement, position, colours                 |
-| 7   | Verbes -IR / -RE   | finir, vendre, aller, faire                  |
-| 8   | L'heure & les jours| time, days, months, routines                 |
+| 6   | Les adjectifs      | agreement, position, colours, c'est/il est   |
+| 7   | Verbes -IR / -RE   | finir, vendre, aller, faire, futur proche    |
+| 8   | L'heure & les jours| time, dates, seasons, weather, routines      |
 | 9   | Au restaurant      | partitives du/de la/des, food, ordering      |
 | 10  | La famille         | family, possessives mon/ma/mes               |
 | 11  | En ville           | places, à/de contractions, directions        |

@@ -5,7 +5,7 @@ export const lesson01: Lesson = {
   slug: 'bonjour',
   fr: 'Bonjour !',
   en: 'Greetings & introductions',
-  grammarFocus: 'être, pronouns, tu/vous',
+  grammarFocus: 'être, pronouns, tu/vous, nationalities',
   blocks: [
     {
       type: 'hero',
@@ -15,8 +15,9 @@ export const lesson01: Lesson = {
         'The subject pronouns (<i>je, tu, vous…</i>)',
         'Your first verb: <b>être</b> (to be)',
         "Saying your name and asking someone's",
+        "Your nationality and where you're from",
       ],
-      pills: ['tu vs vous', 'être', 'accents'],
+      pills: ['tu vs vous', 'être', 'accents', 'nationalités'],
     },
 
     { type: 'heading', level: 2, n: '1.1', text: 'Greetings' },
@@ -85,6 +86,27 @@ export const lesson01: Lesson = {
       ],
     },
 
+    { type: 'heading', level: 2, n: '1.4', text: "Nationalities & where you're from" },
+    {
+      type: 'prose',
+      text: "Give your nationality with <b>être</b>, and where you're from with <b>venir de</b> and <b>habiter à</b>. Nationalities have a masculine and a feminine form — and are never capitalised.",
+    },
+    {
+      type: 'table',
+      head: ['Masculine', 'Feminine', 'English'],
+      rows: [
+        ['français', 'française', 'French'],
+        ['anglais', 'anglaise', 'English'],
+        ['canadien', 'canadienne', 'Canadian'],
+        ['américain', 'américaine', 'American'],
+        ['indien', 'indienne', 'Indian'],
+      ],
+    },
+    {
+      type: 'note',
+      text: "<i>Je suis <b>indien</b></i> (m) / <i>Je suis <b>indienne</b></i> (f). — <i>Je viens <b>d'Inde</b>. J'habite <b>à</b> Londres.</i> (The masculine/feminine agreement is covered in Lesson 6.)",
+    },
+
     {
       type: 'exercise',
       exercise: {
@@ -119,6 +141,18 @@ export const lesson01: Lesson = {
           { q: 'Talking to a close friend →', options: ['tu', 'vous'], answer: 'tu', why: 'Informal, one person you know.' },
           { q: 'Addressing a shopkeeper →', options: ['tu', 'vous'], answer: 'vous', why: 'Strangers and service situations take vous.' },
           { q: 'Speaking to two people at once →', options: ['tu', 'vous'], answer: 'vous', why: 'vous is also the plural "you".' },
+        ],
+      },
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'fill',
+        title: 'Nationalities & origin',
+        items: [
+          { q: 'Paul is Canadian (m) → Paul est ___.', blanks: [['canadien']] },
+          { q: 'Sophie is English (f) → Sophie est ___.', blanks: [['anglaise']] },
+          { q: 'I live in London → J’habite ___ Londres.', blanks: [['à']] },
         ],
       },
     },

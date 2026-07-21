@@ -5,7 +5,7 @@ export const lesson06: Lesson = {
   slug: 'adjectifs',
   fr: 'Les adjectifs',
   en: 'Adjectives & descriptions',
-  grammarFocus: 'agreement, position, colours',
+  grammarFocus: 'agreement, position, colours, c’est vs il est',
   blocks: [
     {
       type: 'hero',
@@ -14,8 +14,9 @@ export const lesson06: Lesson = {
         'Adjectives agree in gender & number',
         'Where adjectives go (usually after!)',
         'Colours & common descriptors',
+        'Identifying vs describing: <b>c’est</b> vs <b>il est</b>',
       ],
-      pills: ['agreement', 'BAGS', 'colours'],
+      pills: ['agreement', 'BAGS', 'colours', "c'est / il est"],
     },
 
     { type: 'heading', level: 2, n: '6.1', text: 'Agreement' },
@@ -66,6 +67,25 @@ export const lesson06: Lesson = {
       ],
     },
 
+    { type: 'heading', level: 2, n: '6.4', text: 'c’est vs il/elle est' },
+    {
+      type: 'prose',
+      text: 'Use <b>c’est</b> + a noun to <i>identify</i> something, and <b>il/elle est</b> + an adjective to <i>describe</i> it. <i>C’est un livre. Il est intéressant.</i>',
+    },
+    {
+      type: 'table',
+      head: ['Use', 'Structure', 'Example'],
+      rows: [
+        ['Identify', 'c’est + noun', 'C’est un café.'],
+        ['Describe', 'il/elle est + adjective', 'Elle est grande.'],
+        ['Job / nationality', 'il/elle est + noun (no article)', 'Elle est médecin.'],
+      ],
+    },
+    {
+      type: 'note',
+      text: 'After <i>être</i>, jobs and nationalities drop the article: <i>Il est professeur</i>. But with <b>c’est</b>, keep it: <i>C’est un professeur.</i>',
+    },
+
     {
       type: 'exercise',
       exercise: {
@@ -86,6 +106,18 @@ export const lesson06: Lesson = {
         items: [
           { q: 'a red car =', options: ['une rouge voiture', 'une voiture rouge'], answer: 'une voiture rouge' },
           { q: 'a beautiful house =', options: ['une belle maison', 'une maison belle'], answer: 'une belle maison' },
+        ],
+      },
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'c’est or il/elle est?',
+        items: [
+          { q: '___ un bon film.', options: ["C'est", 'Il est'], answer: "C'est", why: "c'est + noun." },
+          { q: '___ très intéressant.', options: ["C'est", 'Il est'], answer: 'Il est', why: 'il est + adjective.' },
+          { q: 'Voici Marie. ___ anglaise.', options: ["C'est", 'Elle est'], answer: 'Elle est', why: 'elle est + adjective/nationality.' },
         ],
       },
     },
