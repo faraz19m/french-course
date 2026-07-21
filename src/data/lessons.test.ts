@@ -97,3 +97,31 @@ describe('exercise integrity', () => {
     }
   });
 });
+
+describe('reading comprehension', () => {
+  it('every lesson has a reading passage with non-empty paragraphs', () => {
+    for (const l of lessons) {
+      const readings = l.blocks.filter((b) => b.type === 'reading');
+      expect(readings.length, `lesson ${l.id}`).toBeGreaterThan(0);
+      for (const r of readings) {
+        expect(r.title.trim().length, `lesson ${l.id}`).toBeGreaterThan(0);
+        expect(r.paragraphs.length, `lesson ${l.id}`).toBeGreaterThan(0);
+        expect(r.paragraphs.every((p) => p.trim().length > 0)).toBe(true);
+      }
+    }
+  });
+
+  it('follows every reading passage with an adjacent comprehension exercise', () => {
+    for (const l of lessons) {
+      l.blocks.forEach((b, i) => {
+        if (b.type !== 'reading') return;
+        const next = l.blocks[i + 1];
+        expect(
+          next?.type === 'exercise' &&
+            next.exercise.title.toLowerCase().startsWith('compréhension'),
+          `lesson ${l.id}: reading "${b.title}" must be followed by a comprehension exercise`,
+        ).toBe(true);
+      });
+    }
+  });
+});

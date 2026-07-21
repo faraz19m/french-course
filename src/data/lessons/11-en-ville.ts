@@ -84,5 +84,28 @@ export const lesson11: Lesson = {
         ],
       },
     },
+
+    {
+      type: 'reading',
+      title: 'Où est la pharmacie ?',
+      paragraphs: [
+        '— Pardon monsieur, où est la pharmacie ?',
+        '— C’est facile. Vous allez tout droit, puis vous tournez à gauche. La pharmacie est à côté de la banque, en face du café.',
+        '— C’est loin ?',
+        '— Non, c’est à cinq minutes. C’est tout près !',
+      ],
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'Compréhension : où est la pharmacie ?',
+        items: [
+          { q: 'Où est la pharmacie ?', options: ['À côté de la banque', 'À côté de la gare', 'Dans le café'], answer: 'À côté de la banque' },
+          { q: 'La pharmacie est loin. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Faux', why: 'C’est à cinq minutes, tout près.' },
+          { q: 'Pour aller à la pharmacie, on tourne à…', options: ['gauche', 'droite', 'tout droit'], answer: 'gauche' },
+        ],
+      },
+    },
   ],
 };

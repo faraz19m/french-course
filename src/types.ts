@@ -60,6 +60,7 @@ export type ContentBlock =
   | { type: 'note'; text: string }
   | { type: 'table'; head: string[]; rows: string[][] }
   | { type: 'vocab'; items: VocabItem[] }
+  | { type: 'reading'; title: string; paragraphs: string[] }
   | { type: 'exercise'; exercise: Exercise };
 
 export interface Lesson {

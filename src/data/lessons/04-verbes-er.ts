@@ -81,5 +81,26 @@ export const lesson04: Lesson = {
         ],
       },
     },
+
+    {
+      type: 'reading',
+      title: 'La journée de Sophie',
+      paragraphs: [
+        'Sophie habite à Lyon. Elle travaille dans une école : elle est professeur.',
+        'Le matin, elle écoute la radio et mange un croissant. Elle aime beaucoup son travail. Le soir, elle regarde un film ou parle avec ses amis.',
+      ],
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'Compréhension : la journée de Sophie',
+        items: [
+          { q: 'Où habite Sophie ?', options: ['À Lyon', 'À Paris', 'À Nice'], answer: 'À Lyon' },
+          { q: 'Quel est le travail de Sophie ?', options: ['Professeur', 'Médecin', 'Étudiante'], answer: 'Professeur' },
+          { q: 'Le soir, Sophie travaille. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Faux', why: 'Le soir, elle regarde un film ou parle avec ses amis.' },
+        ],
+      },
+    },
   ],
 };

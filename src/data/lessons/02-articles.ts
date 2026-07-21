@@ -111,5 +111,26 @@ export const lesson02: Lesson = {
         ],
       },
     },
+
+    {
+      type: 'reading',
+      title: 'La chambre de Léa',
+      paragraphs: [
+        'Voici la chambre de Léa. Dans la chambre, il y a un lit, une table et une grande fenêtre.',
+        'Sur la table, il y a des livres, un ordinateur et une tasse de café. Léa aime lire : elle a beaucoup de livres. Le chat de Léa dort sur le lit.',
+      ],
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'Compréhension : la chambre de Léa',
+        items: [
+          { q: 'Qu’est-ce qu’il y a sur la table ?', options: ['Des livres et un ordinateur', 'Un lit', 'Un chat'], answer: 'Des livres et un ordinateur' },
+          { q: 'Léa aime lire. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
+          { q: 'Où dort le chat ?', options: ['Sur le lit', 'Sur la table', 'Sur la chaise'], answer: 'Sur le lit' },
+        ],
+      },
+    },
   ],
 };

@@ -629,3 +629,118 @@ input.fill.wrong {
   background: var(--ochre);
   color: var(--slate);
 }
+
+/* ---------- Reading comprehension ---------- */
+.reading {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--slate);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin: 20px 0;
+  box-shadow: var(--shadow);
+}
+.reading-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.reading-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--slate);
+  color: var(--cream);
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.reading-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--slate);
+}
+.reading-hint {
+  font-size: 12.5px;
+  color: var(--muted);
+  font-style: italic;
+  margin: 2px 0 12px;
+}
+.reading-p {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--ink);
+  margin: 10px 0;
+}
+/* Clickable words in a passage */
+.tword {
+  cursor: pointer;
+  border-radius: 3px;
+  transition:
+    background 0.1s,
+    box-shadow 0.1s;
+}
+.tword:hover {
+  background: rgba(224, 163, 62, 0.22);
+  box-shadow: 0 1px 0 var(--ochre-dk);
+}
+.tword:focus-visible {
+  outline: 2px solid var(--ochre-dk);
+  outline-offset: 1px;
+  background: rgba(224, 163, 62, 0.22);
+}
+
+/* ---------- Translation popover ---------- */
+.tpop {
+  position: fixed;
+  z-index: 1000;
+  background: var(--slate);
+  color: var(--cream);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 30px -8px rgba(27, 58, 58, 0.55);
+  font-family: 'Public Sans', system-ui, sans-serif;
+  animation: tpop-in 0.12s ease-out;
+}
+@keyframes tpop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.tpop-src {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ochre);
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+.tpop-res {
+  font-size: 14.5px;
+  line-height: 1.4;
+  color: #fff;
+  word-break: break-word;
+}
+.tpop-res.is-error {
+  color: #f0b8a8;
+  font-size: 13px;
+}
+.tpop-loading {
+  color: #9db8b6;
+}
+.tpop-cite {
+  margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7f9a98;
+}

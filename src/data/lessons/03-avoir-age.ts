@@ -109,5 +109,26 @@ export const lesson03: Lesson = {
         ],
       },
     },
+
+    {
+      type: 'reading',
+      title: 'La famille de Marc',
+      paragraphs: [
+        'Marc a vingt-cinq ans. Il a une sœur et un frère. Sa sœur a trente ans et son frère a dix-huit ans.',
+        'Dans la maison, il y a un chien et deux chats. Marc aime sa famille. Le week-end, ils mangent ensemble.',
+      ],
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'Compréhension : la famille de Marc',
+        items: [
+          { q: 'Quel âge a Marc ?', options: ['Vingt-cinq ans', 'Trente ans', 'Dix-huit ans'], answer: 'Vingt-cinq ans' },
+          { q: 'Combien de chats y a-t-il ?', options: ['Deux', 'Un', 'Trois'], answer: 'Deux' },
+          { q: 'Marc a une sœur. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
+        ],
+      },
+    },
   ],
 };

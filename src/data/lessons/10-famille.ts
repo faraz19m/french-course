@@ -77,5 +77,26 @@ export const lesson10: Lesson = {
         ],
       },
     },
+
+    {
+      type: 'reading',
+      title: 'La famille de Nadia',
+      paragraphs: [
+        'Je m’appelle Nadia. Ma famille est grande. Mon père est médecin et ma mère est professeur.',
+        'J’ai deux frères et une sœur. Mes frères aiment le football. Ma sœur, Amina, a douze ans : elle adore la musique. Nous habitons ensemble à Marseille.',
+      ],
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'Compréhension : la famille de Nadia',
+        items: [
+          { q: 'Quel est le travail du père de Nadia ?', options: ['Médecin', 'Professeur', 'Musicien'], answer: 'Médecin' },
+          { q: 'Combien de frères a Nadia ?', options: ['Deux', 'Un', 'Trois'], answer: 'Deux' },
+          { q: 'La sœur de Nadia adore la musique. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
+        ],
+      },
+    },
   ],
 };

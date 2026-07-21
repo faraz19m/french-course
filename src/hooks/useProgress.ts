@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { readJSON, writeJSON } from '../lib/storage';
 
 /**
  * Learner progress, persisted to localStorage so it survives page reloads and
@@ -26,19 +27,11 @@ export interface ProgressState {
 const EMPTY: ProgressState = { completed: {}, scores: {} };
 
 function load(): ProgressState {
-  if (typeof localStorage === 'undefined') return EMPTY;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return EMPTY;
-    const parsed = JSON.parse(raw) as Partial<ProgressState>;
-    return {
-      completed: parsed.completed ?? {},
-      scores: parsed.scores ?? {},
-    };
-  } catch {
-    // Corrupt or unreadable storage — start fresh rather than crash.
-    return EMPTY;
-  }
+  const parsed = readJSON<Partial<ProgressState>>(STORAGE_KEY, {});
+  return {
+    completed: parsed.completed ?? {},
+    scores: parsed.scores ?? {},
+  };
 }
 
 export function exerciseKey(lessonId: number, exerciseId: string): string {
@@ -64,15 +57,10 @@ export interface UseProgress {
 export function useProgressStore(): UseProgress {
   const [state, setState] = useState<ProgressState>(load);
 
-  // Persist on every change.
+  // Persist on every change. Best-effort: if storage is full or blocked (e.g.
+  // private mode) progress simply won't persist this session.
   useEffect(() => {
-    if (typeof localStorage === 'undefined') return;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch {
-      // Storage full or blocked (e.g. private mode) — progress simply won't
-      // persist this session; not worth interrupting the learner over.
-    }
+    writeJSON(STORAGE_KEY, state);
   }, [state]);
 
   const isDone = useCallback(

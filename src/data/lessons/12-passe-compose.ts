@@ -104,5 +104,26 @@ export const lesson12: Lesson = {
         'Cycle back through the lessons and re-run every exercise until you score 100% without hesitation — that’s A1 mastery.',
       ],
     },
+
+    {
+      type: 'reading',
+      title: 'Le week-end de Lucas',
+      paragraphs: [
+        'Le week-end dernier, Lucas est allé à Paris avec ses amis. Ils ont visité le musée du Louvre et ont mangé dans un petit restaurant.',
+        'Le soir, ils ont vu la tour Eiffel. Dimanche, Lucas est rentré à la maison, fatigué mais content. « J’ai passé un week-end formidable ! » a-t-il dit.',
+      ],
+    },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'mcq',
+        title: 'Compréhension : le week-end de Lucas',
+        items: [
+          { q: 'Où est allé Lucas le week-end dernier ?', options: ['À Paris', 'À Lyon', 'À Nice'], answer: 'À Paris' },
+          { q: 'Ils ont visité le Louvre. Vrai ou faux ?', options: ['Vrai', 'Faux'], answer: 'Vrai' },
+          { q: 'Quand Lucas est-il rentré à la maison ?', options: ['Dimanche', 'Samedi', 'Lundi'], answer: 'Dimanche' },
+        ],
+      },
+    },
   ],
 };
