@@ -78,11 +78,13 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
     setState(null);
   }, []);
 
-  // Select-to-translate: on any completed selection, translate it.
+  // Select-to-translate: on any completed selection, translate it. Desktop
+  // finalises a selection on `mouseup`; touch browsers (iOS Safari, Android
+  // Chrome) don't reliably synthesise `mouseup` after a long-press-and-drag
+  // selection, firing `touchend` instead — so we listen for both.
   useEffect(() => {
-    const onMouseUp = (e: MouseEvent) => {
+    const handleSelection = (target: Element | null) => {
       // Ignore selections that start inside the popover itself.
-      const target = e.target instanceof Element ? e.target : null;
       if (target?.closest('.tpop')) return;
 
       const selection = window.getSelection();
@@ -103,8 +105,22 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
       if (rect.width === 0 && rect.height === 0) return;
       translateAt(text, rect);
     };
+
+    const onMouseUp = (e: MouseEvent) => {
+      handleSelection(e.target instanceof Element ? e.target : null);
+    };
+    // On touch, the selection often isn't finalised in the same tick as
+    // `touchend` (the OS is still settling the drag handles), so defer a frame.
+    const onTouchEnd = (e: TouchEvent) => {
+      const target = e.target instanceof Element ? e.target : null;
+      setTimeout(() => handleSelection(target), 0);
+    };
     document.addEventListener('mouseup', onMouseUp);
-    return () => document.removeEventListener('mouseup', onMouseUp);
+    document.addEventListener('touchend', onTouchEnd);
+    return () => {
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchend', onTouchEnd);
+    };
   }, [translateAt]);
 
   return (

@@ -40,24 +40,36 @@ export function TranslationPopover({
   // How far the page has scrolled since the popover opened, so a fixed-position
   // card can follow the anchored word rather than drifting off it.
   const [scroll, setScroll] = useState({ x: 0, y: 0 });
+  // Bumped on visual-viewport changes (pinch-zoom, the mobile address bar
+  // growing/shrinking) so the clamp below re-runs against the real visible area.
+  const [vpTick, setVpTick] = useState(0);
 
   // Clamp within the viewport once we know the popover's real size. Re-runs when
-  // the content changes (loading → done) since that changes the height.
+  // the content changes (loading → done) since that changes the height, and when
+  // the visual viewport changes on mobile.
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const width = Math.min(WIDTH, window.innerWidth - 24);
+    // The visual viewport is the actually-visible area on mobile (after the
+    // address bar and pinch-zoom); fall back to the layout viewport elsewhere.
+    const vv = window.visualViewport;
+    const vw = vv?.width ?? window.innerWidth;
+    const vh = vv?.height ?? window.innerHeight;
+    const width = Math.min(WIDTH, vw - 24);
     const height = el.offsetHeight;
     let top = anchor.bottom + 8;
-    if (top + height > window.innerHeight - 12) {
+    if (top + height > vh - 12) {
       top = Math.max(12, anchor.top - height - 8); // flip above if no room below
     }
-    const left = Math.max(12, Math.min(anchor.left, window.innerWidth - width - 12));
+    const left = Math.max(12, Math.min(anchor.left, vw - width - 12));
     setPos({ top, left, width });
-  }, [anchor, status, result]);
+  }, [anchor, status, result, vpTick]);
 
   useEffect(() => {
-    const onDown = (e: MouseEvent) => {
+    // Close when the user starts a new interaction outside the card. mousedown
+    // (not click) so starting a fresh selection elsewhere closes this first;
+    // touchstart mirrors it for touch devices, where mousedown isn't reliable.
+    const onDown = (e: Event) => {
       if (ref.current && !ref.current.contains(e.target as Node)) onClose();
     };
     const onKey = (e: KeyboardEvent) => {
@@ -66,14 +78,21 @@ export function TranslationPopover({
     const originX = window.scrollX;
     const originY = window.scrollY;
     const onScroll = () => setScroll({ x: window.scrollX - originX, y: window.scrollY - originY });
-    // mousedown (not click) so starting a fresh selection elsewhere closes this first.
+    const onViewport = () => setVpTick((t) => t + 1);
     document.addEventListener('mousedown', onDown);
+    document.addEventListener('touchstart', onDown, { passive: true });
     document.addEventListener('keydown', onKey);
     window.addEventListener('scroll', onScroll, { passive: true });
+    // Track pinch-zoom / address-bar changes so the card stays put on mobile.
+    window.visualViewport?.addEventListener('resize', onViewport);
+    window.visualViewport?.addEventListener('scroll', onViewport);
     return () => {
       document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('touchstart', onDown);
       document.removeEventListener('keydown', onKey);
       window.removeEventListener('scroll', onScroll);
+      window.visualViewport?.removeEventListener('resize', onViewport);
+      window.visualViewport?.removeEventListener('scroll', onViewport);
     };
   }, [onClose]);
 

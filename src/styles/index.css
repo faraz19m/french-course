@@ -720,9 +720,16 @@ input.fill.wrong {
   transition:
     background 0.1s,
     box-shadow 0.1s;
+  /* Suppress the default grey tap flash so our own :active state reads cleanly. */
+  -webkit-tap-highlight-color: transparent;
 }
 .tword:hover {
   background: rgba(224, 163, 62, 0.22);
+  box-shadow: 0 1px 0 var(--ochre-dk);
+}
+/* Touch has no hover — give an immediate press state so a tap feels responsive. */
+.tword:active {
+  background: rgba(224, 163, 62, 0.35);
   box-shadow: 0 1px 0 var(--ochre-dk);
 }
 .tword:focus-visible {
