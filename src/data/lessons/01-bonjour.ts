@@ -176,9 +176,17 @@ export const lesson01: Lesson = {
       exercise: {
         kind: 'listening',
         title: 'Écoute : Léa se présente',
+        pace: 'slow',
         transcript: [
-          'Bonjour ! Je m’appelle Léa. Je suis française et j’habite à Lyon.',
-          'Je suis étudiante. J’aime la musique et le cinéma. Enchantée !',
+          {
+            speaker: 'Léa',
+            text: 'Bonjour ! Je m’appelle Léa. Je suis française et j’habite à Lyon.',
+          },
+          {
+            speaker: 'Léa',
+            text: 'Je suis étudiante. J’aime la musique et le cinéma. Enchantée !',
+            delivery: 'enthusiastic',
+          },
         ],
         items: [
           {

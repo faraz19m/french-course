@@ -97,10 +97,38 @@ export const lesson11: Lesson = {
       exercise: {
         kind: 'listening',
         title: 'Écoute : le chemin de la gare',
+        pace: 'natural',
         transcript: [
-          'Vous êtes devant la mairie et vous voulez aller à la gare. D’abord, traversez la place et continuez tout droit dans la rue Victor-Hugo. Vous allez passer devant une boulangerie, puis devant une pharmacie. Ne tournez pas à la pharmacie.',
-          'Continuez jusqu’à la banque, au bout de la rue. Après la banque, tournez à droite et marchez environ deux cents mètres. Au premier carrefour, ne prenez pas la rue à droite : prenez la deuxième rue à gauche, juste après le grand parc.',
-          'Continuez encore tout droit. Vous verrez un hôtel jaune sur votre gauche et un petit café sur votre droite. La gare est en face de l’hôtel, à côté du café. L’entrée principale se trouve derrière l’arrêt de bus. À pied, le trajet dure environ dix minutes.',
+          {
+            speaker: 'Voyageuse',
+            text: 'Bonjour monsieur, excusez-moi. Je suis devant la mairie et je cherche la gare. Pouvez-vous m’aider ?',
+            delivery: 'hesitant',
+          },
+          {
+            speaker: 'Habitant',
+            text: 'Bien sûr ! D’abord, traversez la place et continuez tout droit dans la rue Victor-Hugo. Vous allez passer devant une boulangerie, puis devant une pharmacie.',
+          },
+          {
+            speaker: 'Voyageuse',
+            text: 'Est-ce que je dois tourner après la pharmacie ?',
+          },
+          {
+            speaker: 'Habitant',
+            text: 'Non, ne tournez pas à la pharmacie. Continuez jusqu’à la banque, au bout de la rue. Après la banque, tournez à droite et marchez environ deux cents mètres.',
+          },
+          {
+            speaker: 'Voyageuse',
+            text: 'Et au premier carrefour, je prends quelle rue ?',
+          },
+          {
+            speaker: 'Habitant',
+            text: 'Prenez la deuxième rue à gauche, juste après le grand parc, puis continuez tout droit. Vous verrez un hôtel jaune sur votre gauche et un petit café sur votre droite. La gare est en face de l’hôtel, à côté du café. Son entrée principale se trouve derrière l’arrêt de bus. Le trajet dure environ dix minutes.',
+          },
+          {
+            speaker: 'Voyageuse',
+            text: 'Merci beaucoup ! Avec vos explications, je vais facilement trouver la gare.',
+            delivery: 'enthusiastic',
+          },
         ],
         items: [
           {

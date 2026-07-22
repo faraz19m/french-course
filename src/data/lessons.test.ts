@@ -75,8 +75,33 @@ describe('exercise integrity', () => {
     for (const { lesson, ex } of listening) {
       if (ex.kind !== 'listening') continue;
       expect(ex.transcript.length, `lesson ${lesson}`).toBeGreaterThan(0);
-      expect(ex.transcript.every((line) => line.trim().length > 0)).toBe(true);
+      expect(
+        ex.transcript.every(
+          (turn) => turn.speaker.trim().length > 0 && turn.text.trim().length > 0,
+        ),
+      ).toBe(true);
       expect(ex.items.length, `lesson ${lesson}`).toBeGreaterThan(0);
+    }
+  });
+
+  it('introduces more speakers and faster pacing as listening difficulty advances', () => {
+    const listening = exercises
+      .filter(({ ex }) => ex.kind === 'listening')
+      .map(({ lesson, ex }) => ({
+        lesson,
+        pace: ex.kind === 'listening' ? ex.pace : 'slow',
+        speakers:
+          ex.kind === 'listening' ? new Set(ex.transcript.map((turn) => turn.speaker)).size : 0,
+      }))
+      .sort((a, b) => a.lesson - b.lesson);
+    const paceRank = { slow: 0, steady: 1, natural: 2 };
+
+    expect(listening[0].speakers).toBe(1);
+    expect(listening.slice(1).every(({ speakers }) => speakers >= 2)).toBe(true);
+    expect(listening.at(-1)?.speakers).toBeGreaterThanOrEqual(3);
+
+    for (let i = 1; i < listening.length; i += 1) {
+      expect(paceRank[listening[i].pace]).toBeGreaterThanOrEqual(paceRank[listening[i - 1].pace]);
     }
   });
 
@@ -85,7 +110,10 @@ describe('exercise integrity', () => {
       .filter(({ ex }) => ex.kind === 'listening')
       .map(({ lesson, ex }) => ({
         lesson,
-        words: ex.kind === 'listening' ? countWords(ex.transcript.join(' ')) : 0,
+        words:
+          ex.kind === 'listening'
+            ? countWords(ex.transcript.map((turn) => turn.text).join(' '))
+            : 0,
       }))
       .sort((a, b) => a.lesson - b.lesson);
 

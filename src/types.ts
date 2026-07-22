@@ -48,11 +48,25 @@ export interface FillItem {
   hint?: string;
 }
 
+export type ListeningDelivery = 'neutral' | 'question' | 'enthusiastic' | 'hesitant';
+export type ListeningPace = 'slow' | 'steady' | 'natural';
+
+export interface ListeningTurn {
+  /** Stable display label used to keep one voice assigned to the same speaker. */
+  speaker: string;
+  /** Original French dialogue or narration spoken by this person. */
+  text: string;
+  /** Optional performance hint; punctuation supplies the default intonation. */
+  delivery?: ListeningDelivery;
+}
+
 export interface ListeningExercise {
   kind: 'listening';
   title: string;
-  /** Speaker-labelled transcript, available on demand for accessibility and review. */
-  transcript: string[];
+  /** Speaker-aware transcript, available on demand for accessibility and review. */
+  transcript: ListeningTurn[];
+  /** Course-controlled speech speed; later lessons approach a natural pace. */
+  pace: ListeningPace;
   items: McqItem[];
 }
 
