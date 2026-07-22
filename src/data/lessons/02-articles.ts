@@ -116,8 +116,8 @@ export const lesson02: Lesson = {
       type: 'reading',
       title: 'La chambre de Léa',
       paragraphs: [
-        'Voici la chambre de Léa. Dans la chambre, il y a un lit, une table et une grande fenêtre.',
-        'Sur la table, il y a des livres, un ordinateur et une tasse de café. Léa aime lire : elle a beaucoup de livres. Le chat de Léa dort sur le lit.',
+        'Voici la chambre de Léa. Elle est petite, calme et très claire. Dans la chambre, il y a un lit, une table, une chaise et une grande fenêtre. Près de la fenêtre, une plante verte est dans un pot blanc.',
+        'Sur la table, il y a des livres, un ordinateur et une tasse de café. Léa aime lire : elle a beaucoup de livres dans une bibliothèque. Son sac est sous la chaise et son manteau est derrière la porte. Le chat de Léa dort tranquillement sur le lit.',
       ],
     },
     {

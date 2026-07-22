@@ -127,8 +127,9 @@ export const lesson08: Lesson = {
       type: 'reading',
       title: 'La semaine de Thomas',
       paragraphs: [
-        'Thomas se lève à sept heures. Le lundi et le mercredi, il travaille. Le samedi, il ne travaille pas : il fait du sport.',
-        'En hiver, il fait froid, alors il reste à la maison. Son anniversaire est le premier mars. Aujourd’hui, il fait beau et Thomas est content.',
+        'Thomas se lève à sept heures tous les jours. Il prend son petit-déjeuner à sept heures et demie, puis il quitte la maison à huit heures. Le lundi et le mercredi, il travaille à la bibliothèque jusqu’à dix-sept heures. Le mardi matin, il suit un cours de musique et, le jeudi après-midi, il retrouve sa sœur au centre-ville.',
+        'Le vendredi soir, Thomas prépare souvent le dîner pour ses amis. Le samedi, il ne travaille pas : il fait du sport à dix heures, puis il va au marché. Le dimanche est une journée tranquille pour lire et téléphoner à sa famille.',
+        'En hiver, il fait froid, alors il reste plus souvent à la maison. Son anniversaire est le premier mars et il organise toujours une petite fête. Aujourd’hui, il fait beau, le soleil brille et Thomas est content de sortir après le déjeuner.',
       ],
     },
     {

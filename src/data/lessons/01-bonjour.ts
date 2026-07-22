@@ -206,8 +206,8 @@ export const lesson01: Lesson = {
       type: 'reading',
       title: 'Les présentations',
       paragraphs: [
-        "Bonjour ! Je m'appelle Camille. Je suis française et j'habite à Paris. Je suis étudiante à l'université.",
-        'Voici mon ami Tom. Il est anglais, mais il habite à Nice. Il travaille dans un café. Nous sommes amis. Enchanté !',
+        "Bonjour ! Je m'appelle Camille. Je suis française et j'habite à Paris. Je suis étudiante à l'université. J'étudie les langues et j'aime parler avec mes camarades.",
+        'Voici mon ami Tom. Il est anglais, mais il habite à Nice. Il travaille dans un café près de la mer. Nous sommes amis et nous parlons souvent au téléphone. Enchanté !',
       ],
     },
     {

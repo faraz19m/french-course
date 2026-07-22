@@ -113,8 +113,10 @@ export const lesson12: Lesson = {
       type: 'reading',
       title: 'Le week-end de Lucas',
       paragraphs: [
-        'Le week-end dernier, Lucas est allé à Paris avec ses amis. Ils ont visité le musée du Louvre et ont mangé dans un petit restaurant.',
-        'Le soir, ils ont vu la tour Eiffel. Dimanche, Lucas est rentré à la maison, fatigué mais content. « J’ai passé un week-end formidable ! » a-t-il dit.',
+        'Le week-end dernier, Lucas est allé à Paris avec trois amis. Ils sont partis en train samedi matin à huit heures et sont arrivés deux heures plus tard. Après avoir déposé leurs sacs à l’hôtel, ils ont marché jusqu’à la Seine. Le temps a été frais, mais le soleil est apparu avant midi.',
+        'Ils ont d’abord visité le musée du Louvre. Lucas a admiré les grandes salles, tandis que son amie Emma a pris beaucoup de photos dans la cour. La visite a duré presque trois heures. Ensuite, ils ont mangé dans un petit restaurant près du musée. Lucas a choisi une soupe et un sandwich ; ses amis ont commandé des salades.',
+        'Dans l’après-midi, le groupe a traversé un jardin et a acheté quelques souvenirs. Le soir, ils ont vu la tour Eiffel illuminée. Ils sont montés au deuxième étage et ont observé les lumières de la ville. Après cette longue journée, tout le monde est rentré tôt à l’hôtel.',
+        'Dimanche matin, ils ont pris un café dans une boulangerie, puis ils ont fait une promenade dans un quartier calme. Avant de partir, Lucas a envoyé une carte postale à ses parents. Il est rentré à la maison dimanche soir, fatigué mais content. « J’ai passé un week-end formidable et j’ai découvert beaucoup de choses ! » a-t-il dit.',
       ],
     },
     {

@@ -118,8 +118,8 @@ export const lesson03: Lesson = {
       type: 'reading',
       title: 'La famille de Marc',
       paragraphs: [
-        'Marc a vingt-cinq ans. Il a une sœur et un frère. Sa sœur a trente ans et son frère a dix-huit ans.',
-        'Dans la maison, il y a un chien et deux chats. Marc aime sa famille. Le week-end, ils mangent ensemble.',
+        'Marc a vingt-cinq ans et il habite dans une maison à Toulouse. Il a une sœur et un frère. Sa sœur, Pauline, a trente ans et son frère, Hugo, a dix-huit ans. Pauline a une petite fille qui aime jouer avec son oncle Marc.',
+        'Dans la maison familiale, il y a un chien et deux chats. Le chien a cinq ans, mais les chats ont seulement deux ans. Marc aime beaucoup sa famille. Le week-end, ils mangent ensemble dans le jardin quand il fait beau. Après le repas, ils ont souvent le temps de jouer aux cartes.',
       ],
     },
     {

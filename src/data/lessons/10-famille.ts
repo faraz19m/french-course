@@ -87,8 +87,9 @@ export const lesson10: Lesson = {
       type: 'reading',
       title: 'La famille de Nadia',
       paragraphs: [
-        'Je m’appelle Nadia. Ma famille est grande. Mon père est médecin et ma mère est professeur.',
-        'J’ai deux frères et une sœur. Mes frères aiment le football. Ma sœur, Amina, a douze ans : elle adore la musique. Nous habitons ensemble à Marseille.',
+        'Je m’appelle Nadia et j’ai seize ans. Ma famille est grande et très active. Mon père est médecin dans un hôpital près de chez nous. Ma mère est professeur de sciences dans mon école, mais je ne suis pas dans sa classe. Ils travaillent beaucoup pendant la semaine et aiment se reposer avec nous le dimanche.',
+        'J’ai deux frères et une sœur. Mes frères, Karim et Samir, aiment le football. Karim est plus âgé que moi et joue dans une équipe locale. Samir est le plus jeune garçon de la famille ; il préfère regarder les matchs avec notre grand-père. Ma sœur, Amina, a douze ans : elle adore la musique et apprend à jouer du piano.',
+        'Nous habitons tous ensemble à Marseille, dans une maison proche de la mer. Notre tante Leïla vient souvent déjeuner avec ses deux enfants. Quand toute la famille est réunie, la maison devient bruyante, mais j’aime cette ambiance. Après le repas, mes cousins jouent dans le jardin pendant que les adultes discutent. Pour moi, ces dimanches en famille sont toujours importants.',
       ],
     },
     {

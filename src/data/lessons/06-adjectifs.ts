@@ -149,8 +149,8 @@ export const lesson06: Lesson = {
       type: 'reading',
       title: 'Le nouvel appartement',
       paragraphs: [
-        'Marie a un nouvel appartement. Il est petit mais joli. Les murs sont blancs et la porte est bleue.',
-        'Dans le salon, il y a un grand canapé rouge et une petite table noire. Marie est très contente : c’est un bel appartement !',
+        'Marie a un nouvel appartement dans une rue calme. Il est petit mais joli, lumineux et pratique. Les murs sont blancs et la porte est bleue. Les grandes fenêtres donnent sur un beau jardin public. La cuisine moderne est étroite, mais elle a des placards jaunes et un nouveau four gris.',
+        'Dans le salon, il y a un grand canapé rouge, une petite table noire et deux fauteuils confortables. Une vieille lampe verte est posée près du canapé. La chambre est simple : Marie a choisi un lit blanc et une armoire brune. La salle de bains est minuscule, mais très propre. Elle a aussi un balcon agréable avec trois petites plantes fleuries. Marie est très contente : pour elle, c’est un bel appartement chaleureux !',
       ],
     },
     {

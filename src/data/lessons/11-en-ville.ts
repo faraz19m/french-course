@@ -98,13 +98,13 @@ export const lesson11: Lesson = {
         kind: 'listening',
         title: 'Écoute : le chemin de la gare',
         transcript: [
-          'Pour aller à la gare, continuez tout droit jusqu’à la banque.',
-          'Tournez à droite après la banque, puis prenez la deuxième rue à gauche.',
-          'La gare est en face de l’hôtel, à côté d’un petit café. C’est à dix minutes.',
+          'Vous êtes devant la mairie et vous voulez aller à la gare. D’abord, traversez la place et continuez tout droit dans la rue Victor-Hugo. Vous allez passer devant une boulangerie, puis devant une pharmacie. Ne tournez pas à la pharmacie.',
+          'Continuez jusqu’à la banque, au bout de la rue. Après la banque, tournez à droite et marchez environ deux cents mètres. Au premier carrefour, ne prenez pas la rue à droite : prenez la deuxième rue à gauche, juste après le grand parc.',
+          'Continuez encore tout droit. Vous verrez un hôtel jaune sur votre gauche et un petit café sur votre droite. La gare est en face de l’hôtel, à côté du café. L’entrée principale se trouve derrière l’arrêt de bus. À pied, le trajet dure environ dix minutes.',
         ],
         items: [
           {
-            q: 'Quel bâtiment faut-il atteindre en premier ?',
+            q: 'Jusqu’à quel bâtiment faut-il continuer avant de tourner ?',
             options: ['La banque', 'L’hôtel', 'Le café'],
             answer: 'La banque',
           },
@@ -123,6 +123,11 @@ export const lesson11: Lesson = {
             options: ['Dix minutes', 'Cinq minutes', 'Vingt minutes'],
             answer: 'Dix minutes',
           },
+          {
+            q: 'Où se trouve l’entrée principale de la gare ?',
+            options: ['Derrière l’arrêt de bus', 'Devant la pharmacie', 'À gauche de la mairie'],
+            answer: 'Derrière l’arrêt de bus',
+          },
         ],
       },
     },
@@ -132,9 +137,14 @@ export const lesson11: Lesson = {
       title: 'Où est la pharmacie ?',
       paragraphs: [
         '— Pardon monsieur, où est la pharmacie ?',
-        '— C’est facile. Vous allez tout droit, puis vous tournez à gauche. La pharmacie est à côté de la banque, en face du café.',
-        '— C’est loin ?',
-        '— Non, c’est à cinq minutes. C’est tout près !',
+        '— C’est facile. Continuez tout droit dans cette rue jusqu’au premier feu. Vous allez passer devant une boulangerie et un petit hôtel. Au feu, vous tournez à gauche dans la rue Victor-Hugo. La pharmacie est à côté de la banque, en face du café.',
+        '— Est-ce que je dois traverser la grande place ? Je vois une place derrière l’église.',
+        '— Non, ne traversez pas cette place. Elle est dans la direction opposée. Après avoir tourné à gauche, marchez environ deux cents mètres. Vous verrez d’abord la poste à votre droite, puis une librairie. La banque se trouve juste après la librairie.',
+        '— C’est loin d’ici ? Je dois retrouver une amie à la gare dans vingt minutes.',
+        '— Non, c’est à cinq minutes à pied. C’est tout près ! Quand vous sortez de la pharmacie, vous pouvez rejoindre la gare en prenant la deuxième rue à droite. La gare est derrière le musée.',
+        '— Merci beaucoup pour vos explications. Je ne connais pas encore bien ce quartier.',
+        'Le monsieur sourit et montre le chemin.',
+        '— Je vous en prie. Faites attention en traversant au feu et bonne journée !',
       ],
     },
     {
