@@ -11,26 +11,23 @@ type ListeningProps = Omit<ListeningExercise, 'kind' | 'title'> & {
   onChecked: (score: number, total: number) => void;
 };
 
-const PACE_PROFILES: Record<
-  ListeningPace,
-  { rate: number; sentencePauseMs: number; turnPauseMs: number; label: string }
-> = {
-  slow: { rate: 0.82, sentencePauseMs: 450, turnPauseMs: 800, label: 'slow pace' },
-  steady: { rate: 0.9, sentencePauseMs: 350, turnPauseMs: 600, label: 'steady pace' },
-  natural: { rate: 0.98, sentencePauseMs: 250, turnPauseMs: 450, label: 'natural pace' },
+const PACE_PROFILES: Record<ListeningPace, { rate: number; turnPauseMs: number; label: string }> = {
+  slow: { rate: 0.88, turnPauseMs: 550, label: 'slow pace' },
+  steady: { rate: 0.94, turnPauseMs: 400, label: 'steady pace' },
+  natural: { rate: 1, turnPauseMs: 280, label: 'natural pace' },
 };
 
 const DELIVERY_PROFILES: Record<ListeningDelivery, { pitch: number; rate: number }> = {
   neutral: { pitch: 0, rate: 0 },
-  question: { pitch: 0.08, rate: -0.01 },
-  enthusiastic: { pitch: 0.1, rate: 0.03 },
-  hesitant: { pitch: -0.04, rate: -0.06 },
+  question: { pitch: 0, rate: 0 },
+  enthusiastic: { pitch: 0.02, rate: 0.01 },
+  hesitant: { pitch: -0.01, rate: -0.025 },
 };
 
-const FALLBACK_SPEAKER_PITCH = [0, -0.08, 0.08];
-const FALLBACK_SPEAKER_RATE = [0, 0.015, -0.015];
+const FALLBACK_SPEAKER_PITCH = [0, -0.025, 0.025];
+const FALLBACK_SPEAKER_RATE = [0, 0.005, -0.005];
 
-interface SpeechSegment {
+interface SpeechTurn {
   text: string;
   speaker: string;
   speakerIndex: number;
@@ -38,36 +35,30 @@ interface SpeechSegment {
   pauseAfterMs: number;
 }
 
-function inferDelivery(text: string): ListeningDelivery {
-  if (text.endsWith('?')) return 'question';
-  if (text.endsWith('!')) return 'enthusiastic';
-  if (text.endsWith('…')) return 'hesitant';
-  return 'neutral';
-}
-
-/** Split authored turns into utterances so punctuation, pauses and speakers remain explicit. */
-function buildSpeechSegments(transcript: ListeningTurn[], pace: ListeningPace): SpeechSegment[] {
+/** Keep each speaker turn continuous so the voice engine can produce natural sentence prosody. */
+function buildSpeechTurns(transcript: ListeningTurn[], pace: ListeningPace): SpeechTurn[] {
   const profile = PACE_PROFILES[pace];
   const speakers = [...new Set(transcript.map((turn) => turn.speaker))];
 
-  return transcript.flatMap((turn) => {
-    const sentences = turn.text.match(/[^.!?…]+(?:[.!?…]+|$)/g) ?? [turn.text];
+  return transcript.reduce<SpeechTurn[]>((turns, turn) => {
+    const previous = turns[turns.length - 1];
+    if (previous?.speaker === turn.speaker) {
+      previous.text = `${previous.text} ${turn.text}`;
+      if (previous.delivery === 'neutral' && turn.delivery) {
+        previous.delivery = turn.delivery;
+      }
+      return turns;
+    }
 
-    return sentences
-      .map((sentence) => sentence.trim())
-      .filter(Boolean)
-      .map((text, index, all) => {
-        const punctuationDelivery = inferDelivery(text);
-        return {
-          text,
-          speaker: turn.speaker,
-          speakerIndex: speakers.indexOf(turn.speaker),
-          delivery:
-            punctuationDelivery === 'neutral' ? (turn.delivery ?? 'neutral') : punctuationDelivery,
-          pauseAfterMs: index === all.length - 1 ? profile.turnPauseMs : profile.sentencePauseMs,
-        };
-      });
-  });
+    turns.push({
+      text: turn.text,
+      speaker: turn.speaker,
+      speakerIndex: speakers.indexOf(turn.speaker),
+      delivery: turn.delivery ?? 'neutral',
+      pauseAfterMs: profile.turnPauseMs,
+    });
+    return turns;
+  }, []);
 }
 
 function getFrenchVoices(synthesis: SpeechSynthesis): SpeechSynthesisVoice[] {
@@ -141,7 +132,7 @@ export function Listening({ transcript, pace, items, onChecked }: ListeningProps
 
     const synthesis = window.speechSynthesis;
     synthesis.cancel();
-    const segments = buildSpeechSegments(transcript, pace);
+    const turns = buildSpeechTurns(transcript, pace);
     const speakers = [...new Set(transcript.map((turn) => turn.speaker))];
     const frenchVoices = voicesRef.current.length ? voicesRef.current : getFrenchVoices(synthesis);
     const needsSyntheticContrast = frenchVoices.length < speakers.length;
@@ -161,39 +152,39 @@ export function Listening({ transcript, pace, items, onChecked }: ListeningProps
       setSpeaking(false);
     };
 
-    const speakSegment = (index: number) => {
+    const speakTurn = (index: number) => {
       if (playbackId !== playbackIdRef.current) return;
-      const segment = segments[index];
-      if (!segment) {
+      const turn = turns[index];
+      if (!turn) {
         finish();
         return;
       }
 
-      const delivery = DELIVERY_PROFILES[segment.delivery];
+      const delivery = DELIVERY_PROFILES[turn.delivery];
       const fallbackPitch = needsSyntheticContrast
-        ? FALLBACK_SPEAKER_PITCH[segment.speakerIndex % FALLBACK_SPEAKER_PITCH.length]
+        ? FALLBACK_SPEAKER_PITCH[turn.speakerIndex % FALLBACK_SPEAKER_PITCH.length]
         : 0;
       const fallbackRate = needsSyntheticContrast
-        ? FALLBACK_SPEAKER_RATE[segment.speakerIndex % FALLBACK_SPEAKER_RATE.length]
+        ? FALLBACK_SPEAKER_RATE[turn.speakerIndex % FALLBACK_SPEAKER_RATE.length]
         : 0;
-      const utterance = new SpeechSynthesisUtterance(segment.text);
-      const voice = voiceBySpeaker.get(segment.speaker);
+      const utterance = new SpeechSynthesisUtterance(turn.text);
+      const voice = voiceBySpeaker.get(turn.speaker);
 
       utterance.lang = 'fr-FR';
-      utterance.rate = clamp(PACE_PROFILES[pace].rate + delivery.rate + fallbackRate, 0.7, 1.1);
-      utterance.pitch = clamp(1 + delivery.pitch + fallbackPitch, 0.75, 1.25);
+      utterance.rate = clamp(PACE_PROFILES[pace].rate + delivery.rate + fallbackRate, 0.8, 1.05);
+      utterance.pitch = clamp(1 + delivery.pitch + fallbackPitch, 0.9, 1.1);
       if (voice) utterance.voice = voice;
       utterance.onend = () => {
         if (playbackId !== playbackIdRef.current) return;
-        if (index === segments.length - 1) {
+        if (index === turns.length - 1) {
           finish();
           return;
         }
 
         pauseTimerRef.current = window.setTimeout(() => {
           pauseTimerRef.current = null;
-          speakSegment(index + 1);
-        }, segment.pauseAfterMs);
+          speakTurn(index + 1);
+        }, turn.pauseAfterMs);
       };
       utterance.onerror = finish;
 
@@ -202,7 +193,7 @@ export function Listening({ transcript, pace, items, onChecked }: ListeningProps
     };
 
     setSpeaking(true);
-    speakSegment(0);
+    speakTurn(0);
   };
 
   const speakerCount = new Set(transcript.map((turn) => turn.speaker)).size;
