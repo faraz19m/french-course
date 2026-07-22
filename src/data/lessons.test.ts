@@ -53,15 +53,27 @@ describe('exercise integrity', () => {
     }
   });
 
-  it("every MCQ's answer is one of its options", () => {
+  it("every choice-based question's answer is one of its options", () => {
     for (const { lesson, ex } of exercises) {
-      if (ex.kind !== 'mcq') continue;
+      if (ex.kind !== 'mcq' && ex.kind !== 'listening') continue;
       for (const item of ex.items) {
         expect(item.options.length, `lesson ${lesson}: "${item.q}"`).toBeGreaterThanOrEqual(2);
         expect(item.options, `lesson ${lesson}: "${item.q}"`).toContain(item.answer);
         // No duplicate options.
         expect(new Set(item.options).size).toBe(item.options.length);
       }
+    }
+  });
+
+  it('has complete listening exercises', () => {
+    const listening = exercises.filter(({ ex }) => ex.kind === 'listening');
+    expect(listening.length).toBeGreaterThanOrEqual(4);
+
+    for (const { lesson, ex } of listening) {
+      if (ex.kind !== 'listening') continue;
+      expect(ex.transcript.length, `lesson ${lesson}`).toBeGreaterThan(0);
+      expect(ex.transcript.every((line) => line.trim().length > 0)).toBe(true);
+      expect(ex.items.length, `lesson ${lesson}`).toBeGreaterThan(0);
     }
   });
 

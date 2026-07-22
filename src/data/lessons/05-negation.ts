@@ -99,6 +99,37 @@ export const lesson05: Lesson = {
         ],
       },
     },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'listening',
+        title: 'Écoute : où est Emma ?',
+        transcript: [
+          '— Salut Emma, où es-tu ? Est-ce que tu es à la maison ?',
+          '— Non, je ne suis pas à la maison. Je suis à la bibliothèque.',
+          '— Tu travailles ?',
+          '— Non, je ne travaille pas. Je cherche un livre pour mon cours de français.',
+        ],
+        items: [
+          {
+            q: 'Où est Emma ?',
+            options: ['À la bibliothèque', 'À la maison', 'Au café'],
+            answer: 'À la bibliothèque',
+          },
+          {
+            q: 'Emma travaille. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Faux',
+            why: 'Elle ne travaille pas.',
+          },
+          {
+            q: 'Qu’est-ce qu’elle cherche ?',
+            options: ['Un livre', 'Son téléphone', 'Un café'],
+            answer: 'Un livre',
+          },
+        ],
+      },
+    },
 
     {
       type: 'reading',

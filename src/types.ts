@@ -48,9 +48,18 @@ export interface FillItem {
   hint?: string;
 }
 
+export interface ListeningExercise {
+  kind: 'listening';
+  title: string;
+  /** Speaker-labelled transcript, available on demand for accessibility and review. */
+  transcript: string[];
+  items: McqItem[];
+}
+
 export type Exercise =
   | { kind: 'mcq'; title: string; items: McqItem[] }
-  | { kind: 'fill'; title: string; items: FillItem[] };
+  | { kind: 'fill'; title: string; items: FillItem[] }
+  | ListeningExercise;
 
 export type ContentBlock =
   | { type: 'hero'; title: string; goals: string[]; pills?: string[] }

@@ -25,7 +25,8 @@ export const studyPlan: PlanRow[] = [
   {
     time: '40–55 min',
     title: 'Exercises',
-    detail: "Do every exercise. Aim for full marks; hit 'Try again' on any you miss.",
+    detail:
+      "Do every exercise, including the listening activities. Aim for full marks; hit 'Try again' on any you miss.",
   },
   {
     time: '55–60 min',

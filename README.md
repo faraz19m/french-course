@@ -2,7 +2,7 @@
 
 A complete, self-paced French **A1** course: 12 one-hour lessons from _"Bonjour"_ to the
 _passé composé_, each with reference tables, vocabulary, a **reading-comprehension passage**
-with follow-up questions, and interactive self-checking exercises.
+with follow-up questions, **audio listening activities**, and interactive self-checking exercises.
 
 Built as a small React + TypeScript single-page app. Progress (completed lessons and best
 exercise scores) is saved in the browser, so you can pick up where you left off.
@@ -56,6 +56,10 @@ Unit tests live next to the code they cover as `*.test.ts(x)` files and run unde
 localStorage helpers, the translation layer (network mocked), the progress store, and the
 integrity of the course data.
 
+Content provenance and the licenses for fonts and production dependencies are documented in
+[THIRD_PARTY_NOTICES.md](./public/THIRD_PARTY_NOTICES.md). The notice is included in every
+production build.
+
 ## Project structure
 
 ```
@@ -71,7 +75,7 @@ src/
 │  ├─ Layout.tsx, Sidebar.tsx
 │  ├─ ContentRenderer.tsx   # maps a ContentBlock → component
 │  ├─ content/              # HeroCard, Heading, Prose, Note, Table, Vocab
-│  └─ exercises/            # MCQ, Fill, Exercise wrapper
+│  └─ exercises/            # MCQ, Fill, Listening, Exercise wrapper
 ├─ pages/                   # HomePage, LessonPage, NotFound
 └─ data/
    ├─ lessons/              # one typed data file per lesson (01…12) + index
@@ -84,6 +88,11 @@ Lessons are **data, not markup**. Each lesson is a `Lesson` object (`src/data/le
 `blocks` array is a sequence of typed `ContentBlock`s (`heading`, `prose`, `note`, `table`,
 `vocab`, `hero`, `exercise`). `ContentRenderer` is the single place that decides how each block
 type is displayed. To add or edit content, edit the data file — no component changes needed.
+
+Exercises can be multiple choice, fill-in-the-blank, or listening comprehension. Listening
+activities use the browser's built-in French speech synthesis and include an on-demand transcript
+for review and accessibility; no third-party voice recordings or models are distributed by the app.
+Their scores are saved exactly like the other exercise types.
 
 Text fields may contain a small set of trusted inline tags (`<b>`, `<i>`, `<br/>`) rendered via the
 `Rich` component. All content is static and authored in-repo; no user input is ever rendered as HTML.
