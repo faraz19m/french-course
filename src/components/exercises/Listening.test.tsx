@@ -92,16 +92,16 @@ describe('Listening', () => {
     fireEvent.click(screen.getByRole('button', { name: '▶ Listen to the passage' }));
     const first = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
     expect(first.voice?.name).toBe('French One');
-    expect(first.rate).toBe(0.9);
+    expect(first.rate).toBe(0.94);
 
     act(() => (first.onend as () => void)());
-    act(() => vi.advanceTimersByTime(600));
+    act(() => vi.advanceTimersByTime(400));
     const second = speak.mock.calls[1][0] as SpeechSynthesisUtterance;
     expect(second.voice?.name).toBe('French Two');
-    expect(second.pitch).toBe(1.1);
+    expect(second.pitch).toBe(1);
 
     act(() => (second.onend as () => void)());
-    act(() => vi.advanceTimersByTime(600));
+    act(() => vi.advanceTimersByTime(400));
     expect((speak.mock.calls[2][0] as SpeechSynthesisUtterance).voice?.name).toBe('French One');
     expect(screen.getByText('French · 2 speakers · steady pace')).toBeInTheDocument();
   });
@@ -123,13 +123,13 @@ describe('Listening', () => {
     fireEvent.click(screen.getByRole('button', { name: '▶ Listen to the passage' }));
     const first = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
     act(() => (first.onend as () => void)());
-    act(() => vi.advanceTimersByTime(600));
+    act(() => vi.advanceTimersByTime(400));
     const second = speak.mock.calls[1][0] as SpeechSynthesisUtterance;
 
     expect(first.voice).toBe(second.voice);
     expect(first.pitch).toBe(1);
-    expect(second.pitch).toBe(0.92);
-    expect(second.rate).toBeCloseTo(0.915);
+    expect(second.pitch).toBe(0.975);
+    expect(second.rate).toBeCloseTo(0.945);
   });
 
   it('loads voices that become available after the component mounts', () => {
@@ -154,7 +154,7 @@ describe('Listening', () => {
     expect(utterance.lang).toBe('fr-FR');
   });
 
-  it('uses punctuation to add question and exclamation intonation', () => {
+  it('keeps punctuation inside one continuous utterance for natural prosody', () => {
     render(
       <Listening
         {...props}
@@ -164,17 +164,22 @@ describe('Listening', () => {
     );
     fireEvent.click(screen.getByRole('button', { name: '▶ Listen to the passage' }));
 
-    const question = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
-    expect(question.text).toBe('Tu viens ?');
-    expect(question.pitch).toBe(1.08);
-    expect(question.rate).toBeCloseTo(0.81);
+    const utterance = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
+    expect(utterance.text).toBe('Tu viens ? C’est parfait !');
+    expect(utterance.pitch).toBe(1);
+    expect(utterance.rate).toBe(0.88);
+    expect(speak).toHaveBeenCalledOnce();
+  });
 
-    act(() => (question.onend as () => void)());
-    act(() => vi.advanceTimersByTime(450));
-    const exclamation = speak.mock.calls[1][0] as SpeechSynthesisUtterance;
-    expect(exclamation.text).toBe('C’est parfait !');
-    expect(exclamation.pitch).toBe(1.1);
-    expect(exclamation.rate).toBe(0.85);
+  it('merges adjacent authored lines from the same speaker', () => {
+    render(<Listening {...props} onChecked={vi.fn()} />);
+    fireEvent.click(screen.getByRole('button', { name: '▶ Listen to the passage' }));
+
+    const utterance = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
+    expect(utterance.text).toBe('Bonjour, je suis Léa. J’habite à Lyon. Enchantée !');
+    act(() => (utterance.onend as () => void)());
+    act(() => vi.advanceTimersByTime(1_000));
+    expect(speak).toHaveBeenCalledOnce();
   });
 
   it('honours an authored delivery hint on neutral text', () => {
@@ -188,27 +193,30 @@ describe('Listening', () => {
     fireEvent.click(screen.getByRole('button', { name: '▶ Listen to the passage' }));
 
     const utterance = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
-    expect(utterance.pitch).toBe(0.96);
-    expect(utterance.rate).toBe(0.76);
+    expect(utterance.pitch).toBe(0.99);
+    expect(utterance.rate).toBeCloseTo(0.855);
   });
 
-  it('adds a short sentence pause and a longer pause between speaker turns', () => {
-    render(<Listening {...props} onChecked={vi.fn()} />);
+  it('adds a short pause only between different speaker turns', () => {
+    render(
+      <Listening
+        {...props}
+        transcript={[
+          { speaker: 'Léa', text: 'Bonjour. J’habite à Lyon.' },
+          { speaker: 'Marc', text: 'Enchanté !' },
+        ]}
+        onChecked={vi.fn()}
+      />,
+    );
     fireEvent.click(screen.getByRole('button', { name: '▶ Listen to the passage' }));
 
     const first = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
+    expect(first.text).toBe('Bonjour. J’habite à Lyon.');
     act(() => (first.onend as () => void)());
-    act(() => vi.advanceTimersByTime(449));
+    act(() => vi.advanceTimersByTime(549));
     expect(speak).toHaveBeenCalledTimes(1);
     act(() => vi.advanceTimersByTime(1));
-    expect((speak.mock.calls[1][0] as SpeechSynthesisUtterance).text).toBe('J’habite à Lyon.');
-
-    const second = speak.mock.calls[1][0] as SpeechSynthesisUtterance;
-    act(() => (second.onend as () => void)());
-    act(() => vi.advanceTimersByTime(799));
-    expect(speak).toHaveBeenCalledTimes(2);
-    act(() => vi.advanceTimersByTime(1));
-    expect((speak.mock.calls[2][0] as SpeechSynthesisUtterance).text).toBe('Enchantée !');
+    expect((speak.mock.calls[1][0] as SpeechSynthesisUtterance).text).toBe('Enchanté !');
   });
 
   it('exposes speaker labels in the optional transcript', () => {
