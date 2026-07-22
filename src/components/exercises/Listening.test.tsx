@@ -1,9 +1,9 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { Listening } from './Listening';
 
 const props = {
-  transcript: ['Bonjour, je suis Léa.'],
+  transcript: ['Bonjour, je suis Léa. J’habite à Lyon.', 'Enchantée !'],
   items: [
     {
       q: 'Comment s’appelle la femme ?',
@@ -18,6 +18,7 @@ describe('Listening', () => {
   const cancel = vi.fn();
 
   beforeEach(() => {
+    vi.useFakeTimers();
     vi.stubGlobal(
       'SpeechSynthesisUtterance',
       class {
@@ -41,11 +42,13 @@ describe('Listening', () => {
   });
 
   afterEach(() => {
+    vi.runOnlyPendingTimers();
+    vi.useRealTimers();
     vi.unstubAllGlobals();
     vi.clearAllMocks();
   });
 
-  it('speaks the original transcript with an on-device French voice', () => {
+  it('speaks the original transcript with a browser French voice', () => {
     render(<Listening {...props} onChecked={vi.fn()} />);
 
     fireEvent.click(screen.getByRole('button', { name: '▶ Listen to the passage' }));
@@ -53,10 +56,33 @@ describe('Listening', () => {
     expect(cancel).toHaveBeenCalledOnce();
     expect(speak).toHaveBeenCalledOnce();
     const utterance = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
-    expect(utterance.text).toBe(props.transcript[0]);
+    expect(utterance.text).toBe('Bonjour, je suis Léa.');
     expect(utterance.lang).toBe('fr-FR');
     expect(utterance.rate).toBe(0.85);
     expect(screen.getByRole('button', { name: '■ Stop' })).toBeInTheDocument();
+  });
+
+  it('adds a short sentence pause and a longer pause between transcript lines', () => {
+    render(<Listening {...props} onChecked={vi.fn()} />);
+    fireEvent.click(screen.getByRole('button', { name: '▶ Listen to the passage' }));
+
+    const first = speak.mock.calls[0][0] as SpeechSynthesisUtterance;
+    act(() => (first.onend as () => void)());
+    act(() => vi.advanceTimersByTime(449));
+    expect(speak).toHaveBeenCalledTimes(1);
+    act(() => vi.advanceTimersByTime(1));
+    expect((speak.mock.calls[1][0] as SpeechSynthesisUtterance).text).toBe('J’habite à Lyon.');
+
+    const second = speak.mock.calls[1][0] as SpeechSynthesisUtterance;
+    act(() => (second.onend as () => void)());
+    act(() => vi.advanceTimersByTime(799));
+    expect(speak).toHaveBeenCalledTimes(2);
+    act(() => vi.advanceTimersByTime(1));
+    expect((speak.mock.calls[2][0] as SpeechSynthesisUtterance).text).toBe('Enchantée !');
+
+    const third = speak.mock.calls[2][0] as SpeechSynthesisUtterance;
+    act(() => (third.onend as () => void)());
+    expect(screen.getByRole('button', { name: '▶ Listen to the passage' })).toBeInTheDocument();
   });
 
   it('exposes an optional transcript for accessibility and review', () => {
