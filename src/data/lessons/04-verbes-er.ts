@@ -98,8 +98,8 @@ export const lesson04: Lesson = {
       type: 'reading',
       title: 'La journée de Sophie',
       paragraphs: [
-        'Sophie habite à Lyon. Elle travaille dans une école : elle est professeur.',
-        'Le matin, elle écoute la radio et mange un croissant. Elle aime beaucoup son travail. Le soir, elle regarde un film ou parle avec ses amis.',
+        'Sophie habite à Lyon dans un appartement près du centre. Elle travaille dans une école : elle est professeur. Elle enseigne le français et prépare ses cours à la maison. Du lundi au vendredi, elle commence à huit heures et termine à quatre heures.',
+        'Le matin, elle écoute souvent la radio et mange un croissant avec un café. Ensuite, elle marche jusqu’à l’école parce qu’elle habite tout près. Elle aime beaucoup son travail et ses élèves posent beaucoup de questions. Après les cours, Sophie range la classe et rentre chez elle. Le soir, elle ne travaille pas : elle regarde un film ou parle avec ses amis.',
       ],
     },
     {

@@ -109,6 +109,8 @@ export const lesson05: Lesson = {
           '— Non, je ne suis pas à la maison. Je suis à la bibliothèque.',
           '— Tu travailles ?',
           '— Non, je ne travaille pas. Je cherche un livre pour mon cours de français.',
+          '— Pourquoi est-ce que tu ne prends pas le livre à la maison ?',
+          '— Parce que je n’ai pas d’ordinateur aujourd’hui. Et la bibliothèque ferme à six heures.',
         ],
         items: [
           {
@@ -127,6 +129,15 @@ export const lesson05: Lesson = {
             options: ['Un livre', 'Son téléphone', 'Un café'],
             answer: 'Un livre',
           },
+          {
+            q: 'Pourquoi Emma reste-t-elle à la bibliothèque ?',
+            options: [
+              'Elle n’a pas d’ordinateur aujourd’hui',
+              'Elle travaille à six heures',
+              'Sa maison est fermée',
+            ],
+            answer: 'Elle n’a pas d’ordinateur aujourd’hui',
+          },
         ],
       },
     },
@@ -136,10 +147,11 @@ export const lesson05: Lesson = {
       title: 'Au téléphone',
       paragraphs: [
         '— Allô Paul ? Est-ce que tu es à la maison ?',
-        '— Non, je ne suis pas à la maison. Je suis au café.',
-        '— Tu manges quelque chose ?',
-        '— Non, je ne mange pas. Et toi, où es-tu ?',
-        '— Je suis à la gare. Je n’aime pas attendre !',
+        '— Non, je ne suis pas à la maison. Je suis au café. Je ne vois pas Chloé.',
+        '— Tu manges quelque chose ? Le gâteau au chocolat est très bon dans ce café.',
+        '— Non, je ne mange pas et je ne bois rien. Je n’ai pas faim. J’attends Chloé depuis vingt minutes, mais elle n’arrive pas. Et toi, où es-tu ?',
+        '— Je suis à la gare. Mon train ne part pas parce qu’il y a un problème. Je n’aime pas attendre ! Je vais prendre le bus et je peux venir au café après.',
+        '— Bonne idée ! Ne te dépêche pas : Chloé et moi, nous ne partons pas avant six heures.',
       ],
     },
     {

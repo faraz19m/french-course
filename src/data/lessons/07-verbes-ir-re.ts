@@ -137,8 +137,8 @@ export const lesson07: Lesson = {
       type: 'reading',
       title: 'Les projets du week-end',
       paragraphs: [
-        'Ce week-end, Julie va faire beaucoup de choses. Samedi, elle va aller au marché et elle va faire la cuisine.',
-        'Dimanche, elle finit ses devoirs, puis elle va voir un film avec Léo. « Nous allons passer un bon week-end ! » dit-elle.',
+        'Ce week-end, Julie va faire beaucoup de choses. Samedi matin, elle va aller au marché avec sa voisine. Elles vont choisir des tomates, des pommes et du fromage. Ensuite, Julie va rentrer chez elle et va faire la cuisine pour ses amis. Elle veut préparer une grande salade et un gâteau aux fruits.',
+        'Samedi soir, ses amis vont arriver vers sept heures. Ils vont dîner ensemble, puis ils vont écouter de la musique. Dimanche matin, Julie finit ses devoirs de français et répond à ses courriels. Après le déjeuner, elle va retrouver Léo devant le cinéma pour voir un film. Léo va acheter les billets et Julie va prendre deux boissons. Après le film, ils vont marcher ensemble et discuter de leurs projets pour les prochaines vacances. « Nous allons passer un bon week-end ! » dit-elle.',
       ],
     },
     {

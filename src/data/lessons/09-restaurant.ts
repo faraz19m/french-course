@@ -82,12 +82,14 @@ export const lesson09: Lesson = {
         kind: 'listening',
         title: 'Écoute : la commande de Sophie',
         transcript: [
-          '— Bonjour madame. Vous avez choisi ?',
-          '— Oui. Je voudrais une salade et du poisson avec des légumes, s’il vous plaît.',
-          '— Et comme boisson ?',
-          '— De l’eau, merci. Je ne veux pas de vin.',
-          '— Vous prenez un dessert ?',
-          '— Non merci. L’addition, s’il vous plaît.',
+          '— Bonjour madame. Bienvenue au restaurant Le Jardin. Vous avez choisi ?',
+          '— Oui. Comme entrée, je voudrais une salade. Ensuite, je prends du poisson avec des légumes, s’il vous plaît.',
+          '— Très bien. Aujourd’hui, le poisson est servi avec des carottes et des pommes de terre.',
+          '— Parfait. Est-ce que je peux avoir un peu de pain aussi ?',
+          '— Bien sûr. Et comme boisson ? Nous avons du vin blanc et du jus de pomme.',
+          '— De l’eau, merci. Je ne veux pas de vin à midi.',
+          '— Vous prenez un dessert ? La tarte aux pommes est très bonne.',
+          '— Non merci. Je n’ai plus faim. Un café et l’addition, s’il vous plaît.',
         ],
         items: [
           {
@@ -104,11 +106,21 @@ export const lesson09: Lesson = {
             q: 'Sophie prend un dessert. Vrai ou faux ?',
             options: ['Vrai', 'Faux'],
             answer: 'Faux',
+            why: 'Elle n’a plus faim.',
+          },
+          {
+            q: 'Quels légumes accompagnent le poisson ?',
+            options: [
+              'Des carottes et des pommes de terre',
+              'Des tomates et des haricots',
+              'Une salade verte',
+            ],
+            answer: 'Des carottes et des pommes de terre',
           },
           {
             q: 'Qu’est-ce qu’elle demande à la fin ?',
-            options: ['L’addition', 'Le menu', 'Du pain'],
-            answer: 'L’addition',
+            options: ['Un café et l’addition', 'Le menu et du pain', 'Un dessert et du thé'],
+            answer: 'Un café et l’addition',
           },
         ],
       },
@@ -118,8 +130,9 @@ export const lesson09: Lesson = {
       type: 'reading',
       title: 'Au restaurant',
       paragraphs: [
-        'Au restaurant, Claire regarde le menu. Elle voudrait du poisson avec des légumes. Son ami Marc préfère de la viande et des frites.',
-        'Ils boivent de l’eau et un verre de vin. Après le repas, Claire demande l’addition : « L’addition, s’il vous plaît ! »',
+        'Ce vendredi soir, Claire et son ami Marc entrent dans un petit restaurant du centre-ville. Une serveuse leur apporte la carte et explique le menu du jour. Comme entrée, ils partagent une salade de tomates. Claire regarde ensuite les plats : elle voudrait du poisson avec des légumes, parce qu’elle ne mange pas souvent de viande.',
+        'Marc préfère de la viande et des frites. Il commande le steak, mais demande peu de sel. Ils boivent une grande bouteille d’eau et prennent aussi un verre de vin. La serveuse apporte du pain frais et leur demande si tout va bien. Claire trouve son poisson excellent et Marc aime beaucoup les frites croustillantes.',
+        'Après le repas, ils hésitent devant les desserts. Finalement, ils partagent une tarte aux pommes avec deux cafés. Claire demande ensuite l’addition : « L’addition, s’il vous plaît ! » Marc propose de payer, mais Claire préfère partager le prix. Ils remercient la serveuse avant de quitter le restaurant.',
       ],
     },
     {

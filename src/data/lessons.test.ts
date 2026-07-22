@@ -2,6 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { adjacentLessons, lessonBySlug, lessons } from './lessons';
 import { normalizeAnswer } from '../lib/text';
 
+const countWords = (text: string) =>
+  text.match(/[\p{L}\p{N}]+(?:[’'-][\p{L}\p{N}]+)*/gu)?.length ?? 0;
+
 describe('course structure', () => {
   it('has 12 lessons numbered 1..12 in order', () => {
     expect(lessons).toHaveLength(12);
@@ -77,6 +80,25 @@ describe('exercise integrity', () => {
     }
   });
 
+  it('increases listening length as the course level advances', () => {
+    const listening = exercises
+      .filter(({ ex }) => ex.kind === 'listening')
+      .map(({ lesson, ex }) => ({
+        lesson,
+        words: ex.kind === 'listening' ? countWords(ex.transcript.join(' ')) : 0,
+      }))
+      .sort((a, b) => a.lesson - b.lesson);
+
+    for (let i = 1; i < listening.length; i += 1) {
+      const previous = listening[i - 1];
+      const current = listening[i];
+      expect(
+        current.words - previous.words,
+        `lesson ${current.lesson} should be at least 20 words longer than lesson ${previous.lesson}`,
+      ).toBeGreaterThanOrEqual(20);
+    }
+  });
+
   it('every Fill question has exactly one answer-set per ___ blank', () => {
     for (const { lesson, ex } of exercises) {
       if (ex.kind !== 'fill') continue;
@@ -134,6 +156,27 @@ describe('reading comprehension', () => {
           `lesson ${l.id}: reading "${b.title}" must be followed by a comprehension exercise`,
         ).toBe(true);
       });
+    }
+  });
+
+  it('increases reading length as the course level advances', () => {
+    const readings = lessons.map((lesson) => {
+      const passage = lesson.blocks.find((block) => block.type === 'reading');
+      expect(passage, `lesson ${lesson.id}`).toBeDefined();
+
+      return {
+        lesson: lesson.id,
+        words: passage?.type === 'reading' ? countWords(passage.paragraphs.join(' ')) : 0,
+      };
+    });
+
+    for (let i = 1; i < readings.length; i += 1) {
+      const previous = readings[i - 1];
+      const current = readings[i];
+      expect(
+        current.words - previous.words,
+        `lesson ${current.lesson} should be at least 8 words longer than lesson ${previous.lesson}`,
+      ).toBeGreaterThanOrEqual(8);
     }
   });
 });
