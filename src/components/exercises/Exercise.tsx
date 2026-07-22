@@ -2,6 +2,7 @@ import type { Exercise as ExerciseData } from '../../types';
 import { useProgress } from '../../hooks/ProgressContext';
 import { MCQ } from './MCQ';
 import { Fill } from './Fill';
+import { Listening } from './Listening';
 
 interface ExerciseProps {
   exercise: ExerciseData;
@@ -24,10 +25,31 @@ export function Exercise({ exercise, lessonId }: ExerciseProps) {
   const onChecked = (score: number, total: number) =>
     recordScore(lessonId, exercise.title, score, total);
 
+  const content = (() => {
+    switch (exercise.kind) {
+      case 'mcq':
+        return <MCQ items={exercise.items} onChecked={onChecked} />;
+      case 'fill':
+        return <Fill items={exercise.items} onChecked={onChecked} />;
+      case 'listening':
+        return (
+          <Listening
+            transcript={exercise.transcript}
+            items={exercise.items}
+            onChecked={onChecked}
+          />
+        );
+      default: {
+        const _never: never = exercise;
+        return _never;
+      }
+    }
+  })();
+
   return (
     <div className="ex">
       <div className="ex-head">
-        <span className="ex-badge">Exercice</span>
+        <span className="ex-badge">{exercise.kind === 'listening' ? 'Écoute' : 'Exercice'}</span>
         <span className="ex-title">{exercise.title}</span>
         {best && (
           <span className="ex-best" title="Your best score">
@@ -35,11 +57,7 @@ export function Exercise({ exercise, lessonId }: ExerciseProps) {
           </span>
         )}
       </div>
-      {exercise.kind === 'mcq' ? (
-        <MCQ items={exercise.items} onChecked={onChecked} />
-      ) : (
-        <Fill items={exercise.items} onChecked={onChecked} />
-      )}
+      {content}
     </div>
   );
 }

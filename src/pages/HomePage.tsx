@@ -15,8 +15,8 @@ export function HomePage() {
       </h1>
       <p className="lede">
         Study one lesson per sitting. Each is built for a focused 60-minute block: grammar,
-        vocabulary, and self-checking exercises with instant feedback. Work top to bottom, then mark
-        it complete to fill your progress spine.
+        vocabulary, reading, listening, and self-checking exercises with instant feedback. Work top
+        to bottom, then mark it complete to fill your progress spine.
       </p>
 
       <h2>

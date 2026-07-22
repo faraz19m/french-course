@@ -76,6 +76,43 @@ export const lesson09: Lesson = {
         ],
       },
     },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'listening',
+        title: 'Écoute : la commande de Sophie',
+        transcript: [
+          '— Bonjour madame. Vous avez choisi ?',
+          '— Oui. Je voudrais une salade et du poisson avec des légumes, s’il vous plaît.',
+          '— Et comme boisson ?',
+          '— De l’eau, merci. Je ne veux pas de vin.',
+          '— Vous prenez un dessert ?',
+          '— Non merci. L’addition, s’il vous plaît.',
+        ],
+        items: [
+          {
+            q: 'Qu’est-ce que Sophie commande ?',
+            options: [
+              'Une salade et du poisson',
+              'De la viande et des frites',
+              'Du fromage et du pain',
+            ],
+            answer: 'Une salade et du poisson',
+          },
+          { q: 'Que boit-elle ?', options: ['De l’eau', 'Du vin', 'Un café'], answer: 'De l’eau' },
+          {
+            q: 'Sophie prend un dessert. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Faux',
+          },
+          {
+            q: 'Qu’est-ce qu’elle demande à la fin ?',
+            options: ['L’addition', 'Le menu', 'Du pain'],
+            answer: 'L’addition',
+          },
+        ],
+      },
+    },
 
     {
       type: 'reading',

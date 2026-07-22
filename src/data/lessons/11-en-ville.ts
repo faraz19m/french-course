@@ -92,6 +92,40 @@ export const lesson11: Lesson = {
         ],
       },
     },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'listening',
+        title: 'Écoute : le chemin de la gare',
+        transcript: [
+          'Pour aller à la gare, continuez tout droit jusqu’à la banque.',
+          'Tournez à droite après la banque, puis prenez la deuxième rue à gauche.',
+          'La gare est en face de l’hôtel, à côté d’un petit café. C’est à dix minutes.',
+        ],
+        items: [
+          {
+            q: 'Quel bâtiment faut-il atteindre en premier ?',
+            options: ['La banque', 'L’hôtel', 'Le café'],
+            answer: 'La banque',
+          },
+          {
+            q: 'Après la banque, il faut tourner…',
+            options: ['à droite', 'à gauche', 'tout droit'],
+            answer: 'à droite',
+          },
+          {
+            q: 'Où est la gare ?',
+            options: ['En face de l’hôtel', 'Derrière la banque', 'Dans la deuxième rue à droite'],
+            answer: 'En face de l’hôtel',
+          },
+          {
+            q: 'Le trajet dure combien de temps ?',
+            options: ['Dix minutes', 'Cinq minutes', 'Vingt minutes'],
+            answer: 'Dix minutes',
+          },
+        ],
+      },
+    },
 
     {
       type: 'reading',

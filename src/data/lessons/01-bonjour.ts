@@ -171,6 +171,36 @@ export const lesson01: Lesson = {
         ],
       },
     },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'listening',
+        title: 'Écoute : Léa se présente',
+        transcript: [
+          'Bonjour ! Je m’appelle Léa. Je suis française et j’habite à Lyon.',
+          'Je suis étudiante. J’aime la musique et le cinéma. Enchantée !',
+        ],
+        items: [
+          {
+            q: 'Comment s’appelle la femme ?',
+            options: ['Léa', 'Emma', 'Camille'],
+            answer: 'Léa',
+          },
+          { q: 'Où habite-t-elle ?', options: ['À Lyon', 'À Paris', 'À Nice'], answer: 'À Lyon' },
+          {
+            q: 'Quelle est sa nationalité ?',
+            options: ['Française', 'Anglaise', 'Canadienne'],
+            answer: 'Française',
+          },
+          {
+            q: 'Léa est professeur. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Faux',
+            why: 'Elle est étudiante.',
+          },
+        ],
+      },
+    },
 
     {
       type: 'reading',
