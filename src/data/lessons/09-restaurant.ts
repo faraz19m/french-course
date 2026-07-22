@@ -81,15 +81,41 @@ export const lesson09: Lesson = {
       exercise: {
         kind: 'listening',
         title: 'Écoute : la commande de Sophie',
+        pace: 'natural',
         transcript: [
-          '— Bonjour madame. Bienvenue au restaurant Le Jardin. Vous avez choisi ?',
-          '— Oui. Comme entrée, je voudrais une salade. Ensuite, je prends du poisson avec des légumes, s’il vous plaît.',
-          '— Très bien. Aujourd’hui, le poisson est servi avec des carottes et des pommes de terre.',
-          '— Parfait. Est-ce que je peux avoir un peu de pain aussi ?',
-          '— Bien sûr. Et comme boisson ? Nous avons du vin blanc et du jus de pomme.',
-          '— De l’eau, merci. Je ne veux pas de vin à midi.',
-          '— Vous prenez un dessert ? La tarte aux pommes est très bonne.',
-          '— Non merci. Je n’ai plus faim. Un café et l’addition, s’il vous plaît.',
+          {
+            speaker: 'Serveuse',
+            text: 'Bonjour madame. Bienvenue au restaurant Le Jardin. Vous avez choisi ?',
+            delivery: 'enthusiastic',
+          },
+          {
+            speaker: 'Sophie',
+            text: 'Oui. Comme entrée, je voudrais une salade. Ensuite, je prends du poisson avec des légumes, s’il vous plaît.',
+          },
+          {
+            speaker: 'Serveuse',
+            text: 'Très bien. Aujourd’hui, le poisson est servi avec des carottes et des pommes de terre.',
+          },
+          {
+            speaker: 'Sophie',
+            text: 'Parfait. Est-ce que je peux avoir un peu de pain aussi ?',
+          },
+          {
+            speaker: 'Serveuse',
+            text: 'Bien sûr. Et comme boisson ? Nous avons du vin blanc et du jus de pomme.',
+          },
+          {
+            speaker: 'Sophie',
+            text: 'De l’eau, merci. Je ne veux pas de vin à midi.',
+          },
+          {
+            speaker: 'Serveuse',
+            text: 'Vous prenez un dessert ? La tarte aux pommes est très bonne.',
+          },
+          {
+            speaker: 'Sophie',
+            text: 'Non merci. Je n’ai plus faim. Un café et l’addition, s’il vous plaît.',
+          },
         ],
         items: [
           {

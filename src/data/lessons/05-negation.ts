@@ -104,13 +104,29 @@ export const lesson05: Lesson = {
       exercise: {
         kind: 'listening',
         title: 'Écoute : où est Emma ?',
+        pace: 'steady',
         transcript: [
-          '— Salut Emma, où es-tu ? Est-ce que tu es à la maison ?',
-          '— Non, je ne suis pas à la maison. Je suis à la bibliothèque.',
-          '— Tu travailles ?',
-          '— Non, je ne travaille pas. Je cherche un livre pour mon cours de français.',
-          '— Pourquoi est-ce que tu ne prends pas le livre à la maison ?',
-          '— Parce que je n’ai pas d’ordinateur aujourd’hui. Et la bibliothèque ferme à six heures.',
+          {
+            speaker: 'Lucas',
+            text: 'Salut Emma, où es-tu ? Est-ce que tu es à la maison ?',
+          },
+          {
+            speaker: 'Emma',
+            text: 'Non, je ne suis pas à la maison. Je suis à la bibliothèque.',
+          },
+          { speaker: 'Lucas', text: 'Tu travailles ?' },
+          {
+            speaker: 'Emma',
+            text: 'Non, je ne travaille pas. Je cherche un livre pour mon cours de français.',
+          },
+          {
+            speaker: 'Lucas',
+            text: 'Pourquoi est-ce que tu ne prends pas le livre à la maison ?',
+          },
+          {
+            speaker: 'Emma',
+            text: 'Parce que je n’ai pas d’ordinateur aujourd’hui. Et la bibliothèque ferme à six heures.',
+          },
         ],
         items: [
           {

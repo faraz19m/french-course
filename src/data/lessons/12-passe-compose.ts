@@ -99,6 +99,92 @@ export const lesson12: Lesson = {
         ],
       },
     },
+    {
+      type: 'exercise',
+      exercise: {
+        kind: 'listening',
+        title: 'Écoute : trois amis racontent leur week-end',
+        pace: 'natural',
+        transcript: [
+          {
+            speaker: 'Nora',
+            text: 'Alors, qu’est-ce que vous avez fait ce week-end ? Racontez-moi tout !',
+            delivery: 'enthusiastic',
+          },
+          {
+            speaker: 'Lucas',
+            text: 'Samedi matin, je suis allé à Paris avec ma sœur. Nous avons pris le train de huit heures et nous sommes arrivés avant dix heures. Nous avons visité le musée des sciences, puis nous avons déjeuné dans un petit café.',
+          },
+          {
+            speaker: 'Yanis',
+            text: 'Est-ce que vous avez eu beau temps ? Il a beaucoup plu chez moi samedi matin.',
+          },
+          {
+            speaker: 'Lucas',
+            text: 'Il a plu pendant notre voyage, mais le soleil est revenu dans l’après-midi. Nous avons marché près de la Seine et j’ai envoyé plusieurs photos à mes parents.',
+          },
+          {
+            speaker: 'Nora',
+            text: 'Moi, je suis restée à la maison samedi. J’ai fini un livre, j’ai préparé une soupe et j’ai regardé un film. Dimanche, j’ai pris le bus pour aller chez ma grand-mère. Nous avons fait une longue promenade dans le parc.',
+          },
+          {
+            speaker: 'Lucas',
+            text: 'Et toi, Yanis, tu as encore joué au football ?',
+          },
+          {
+            speaker: 'Yanis',
+            text: 'Oui, mon équipe a participé à un tournoi dimanche. Nous avons gagné le premier match, mais nous avons perdu le deuxième. J’étais un peu déçu, puis notre entraîneuse nous a félicités pour nos efforts.',
+            delivery: 'hesitant',
+          },
+          {
+            speaker: 'Nora',
+            text: 'Qu’est-ce que vous avez fait après le tournoi ?',
+          },
+          {
+            speaker: 'Yanis',
+            text: 'Nous avons mangé des pizzas ensemble et nous avons beaucoup ri. Je suis rentré chez moi vers neuf heures, très fatigué mais content.',
+          },
+          {
+            speaker: 'Lucas',
+            text: 'Finalement, nous avons tous passé un week-end bien rempli !',
+            delivery: 'enthusiastic',
+          },
+        ],
+        items: [
+          {
+            q: 'Comment Lucas est-il allé à Paris ?',
+            options: ['En train', 'En bus', 'En voiture'],
+            answer: 'En train',
+          },
+          {
+            q: 'Qu’est-ce que Lucas et sa sœur ont visité ?',
+            options: ['Le musée des sciences', 'Le Louvre', 'La tour Eiffel'],
+            answer: 'Le musée des sciences',
+          },
+          {
+            q: 'Nora est sortie samedi. Vrai ou faux ?',
+            options: ['Vrai', 'Faux'],
+            answer: 'Faux',
+            why: 'Elle est restée à la maison samedi.',
+          },
+          {
+            q: 'Combien de matchs l’équipe de Yanis a-t-elle gagnés ?',
+            options: ['Un', 'Deux', 'Aucun'],
+            answer: 'Un',
+          },
+          {
+            q: 'Qu’ont-ils mangé après le tournoi ?',
+            options: ['Des pizzas', 'Une soupe', 'Des sandwichs'],
+            answer: 'Des pizzas',
+          },
+          {
+            q: 'Qui a envoyé des photos à ses parents ?',
+            options: ['Lucas', 'Nora', 'Yanis'],
+            answer: 'Lucas',
+          },
+        ],
+      },
+    },
 
     {
       type: 'hero',

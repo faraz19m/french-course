@@ -35,6 +35,7 @@ export function Exercise({ exercise, lessonId }: ExerciseProps) {
         return (
           <Listening
             transcript={exercise.transcript}
+            pace={exercise.pace}
             items={exercise.items}
             onChecked={onChecked}
           />
